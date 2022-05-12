@@ -2,15 +2,42 @@
     <string name="app_name">Anticede</string>
     <string name="logo_description">Logo Aplikasi Anticede</string>
 
-    <string name="alfi_karom">Muchammad Alfi Karom\n(M7012F1248)</string>
-    <string name="martina">Martina Steffany Darmawan\n(M2002G0035)</string>
-    <string name="rashid">Rashid Adani Maulana Jatri\n(A7214F1985)</string>
-    <string name="rio_risqi">Rio Risqi Akbar Herlambang\n(A2214F1986)</string>
-    <string name="vasant">Vasant Paradissa Nuno Sakti\n(C2214F1987)</string>
-    <string name="zaky">Muhammad Zaky Al Fatih\n(C2012F1251)</string>
     <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
 
     <string name="title_home">Home</string>
     <string name="title_dashboard">About</string>
     <string name="title_notifications">Disclaimer</string>
+
+    <string name="team_member_photo">Team Member Photo</string>
+    <string name="name">Team Member Name</string>
+    <string name="id">Team Member Bangkit Id</string>
+
+    <!-- "About Us" Page Data Resources -->
+    <string-array name="name">
+        <item>Muchammad Alfi Karom</item>
+        <item>Martina Steffany Darmawan</item>
+        <item>Rashid Adani Maulana Jatri</item>
+        <item>Rio Risqi Akbar Herlambang</item>
+        <item>Vasant Paradissa Nuno Sakti</item>
+        <item>Muhammad Zaky Al Fatih</item>
+    </string-array>
+
+    <string-array name="id">
+        <item>(M7012F1248)</item>
+        <item>(M2002G0035)</item>
+        <item>(A7214F1985)</item>
+        <item>(A2214F1986)</item>
+        <item>(C2214F1987)</item>
+        <item>(C2012F1251)</item>
+    </string-array>
+
+    <integer-array name="photo">
+        <item>@drawable/alfi</item>
+        <item>@drawable/martina</item>
+        <item>@drawable/rashid</item>
+        <item>@drawable/rio</item>
+        <item>@drawable/vasant</item>
+        <item>@drawable/zaky</item>
+    </integer-array>
+
 </resources>
