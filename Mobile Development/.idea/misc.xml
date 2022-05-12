@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/ic_launcher_background.xml" value="0.281" />
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_home.xml" value="0.18" />
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.243" />
         <entry key="..\:/Android_projects/Anticede/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
       </map>
     </option>
