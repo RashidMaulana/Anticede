@@ -10,10 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Anticede">
         <activity
-            android:name=".AboutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
+            android:name=".BottomNavigationActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

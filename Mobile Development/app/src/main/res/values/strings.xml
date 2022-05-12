@@ -8,4 +8,9 @@
     <string name="rio_risqi">Rio Risqi Akbar Herlambang\n(A2214F1986)</string>
     <string name="vasant">Vasant Paradissa Nuno Sakti\n(C2214F1987)</string>
     <string name="zaky">Muhammad Zaky Al Fatih\n(C2012F1251)</string>
+    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">About</string>
+    <string name="title_notifications">Disclaimer</string>
 </resources>
