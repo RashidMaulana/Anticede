@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Anticede</string>
     <string name="logo_description">Logo Aplikasi Anticede</string>
+
+    <string name="alfi_karom">Muchammad Alfi Karom\n(M7012F1248)</string>
+    <string name="martina">Martina Steffany Darmawan\n(M2002G0035)</string>
+    <string name="rashid">Rashid Adani Maulana Jatri\n(A7214F1985)</string>
+    <string name="rio_risqi">Rio Risqi Akbar Herlambang\n(A2214F1986)</string>
+    <string name="vasant">Vasant Paradissa Nuno Sakti\n(C2214F1987)</string>
+    <string name="zaky">Muhammad Zaky Al Fatih\n(C2012F1251)</string>
 </resources>
