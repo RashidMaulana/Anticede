@@ -14,12 +14,12 @@
     <fragment
         android:id="@+id/navigation_about"
         android:name="com.bangkit.anticede.ui.about.AboutFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_about"
         tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/navigation_disclaimer"
         android:name="com.bangkit.anticede.ui.disclaimer.DisclaimerFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_disclaimer"
         tools:layout="@layout/fragment_disclaimer" />
 </navigation>

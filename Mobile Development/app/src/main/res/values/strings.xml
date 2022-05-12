@@ -5,8 +5,8 @@
     <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
 
     <string name="title_home">Home</string>
-    <string name="title_dashboard">About</string>
-    <string name="title_notifications">Disclaimer</string>
+    <string name="title_about">About Us</string>
+    <string name="title_disclaimer">Disclaimer</string>
 
     <string name="team_member_photo">Team Member Photo</string>
     <string name="name">Team Member Name</string>
