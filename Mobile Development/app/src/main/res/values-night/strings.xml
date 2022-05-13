@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="logo_description">Logo Aplikasi Anticede</string>
+    <string name="disclaimer_text">Disclaimer</string>
+    <string name="disclaimer_info_text_1">Segala informasi yang digunakan untuk aplikasi ini dibuat dengan maksud baik dan hanya untuk wawasan saja. Aplikasi ini tidak menjamin kelengkapan, keakuratan, dan keandalan segala informasi yang digunakan.</string>
 </resources>

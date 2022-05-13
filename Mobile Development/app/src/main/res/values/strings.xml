@@ -11,6 +11,15 @@
     <string name="team_member_photo">Team Member Photo</string>
     <string name="name">Team Member Name</string>
     <string name="id">Team Member Bangkit Id</string>
+    <string name="disclaimer_text">Disclaimer</string>
+    <string name="disclaimer_info_text_1">Segala informasi yang digunakan untuk aplikasi ini dibuat dengan maksud baik dan hanya untuk wawasan saja. Aplikasi ini tidak menjamin kelengkapan, keakuratan, dan keandalan segala informasi yang digunakan.</string>
+    <string name="disclaimer_info_text_2">Segala tindakan yang anda lakukan atas informasi yang kami sediakan adalah tanggung jawab anda. Pengembang aplikasi ini tidak akan menanggung segala kerugian dan / atau kerusakan yang anda alami berkat menggunakan aplikasi ini.</string>
+    <string name="additional_info">Informasi Tambahan</string>
+    <string name="additional_info_description_1">Salah satu prioritas aplikasi ini adalah menyediakan perlindungan bagi anak-anak saat mereka menggunakan internet. Kami menyarankan para orang tua atau wali untuk mengawasi, berpartisipasi, dan / atau membimbing aktivitas mereka.</string>
+    <string name="additional_info_description_2">Aplikasi ini tidak menyimpan informasi pribadi penggunanya. Bila anda merasa memasukkan informasi pribadi anda pada aplikasi ini, kami sarankan untuk menghubungi kami sesegera mungkin dan kami akan menghapus informasi tersebut.</string>
+    <string name="agreement">Persetujuan</string>
+    <string name="agreement_description">Dengan menggunakan aplikasi ini, Anda setuju dengan syarat, ketentuan, dan disklaimer aplikasi ini.</string>
+    <string name="button_report_text">Lapor</string>
 
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">
