@@ -2,14 +2,20 @@ package com.bangkit.anticede.ui.about
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.adapter.AboutAdapter
 import com.bangkit.anticede.databinding.FragmentAboutBinding
@@ -34,6 +40,9 @@ class AboutFragment : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
+
+        val actionBar : ActionBar? = (activity as BottomNavigationActivity).supportActionBar
+        actionBar?.setTitleColor(Color.BLACK)
 
         binding.rvMember.setHasFixedSize(true)
         list.addAll(listMember)
@@ -74,7 +83,12 @@ class AboutFragment : Fragment() {
             }
         })
     }
-//        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+
+    private fun ActionBar.setTitleColor(color: Int) {
+        val text = SpannableString(title ?: "")
+        text.setSpan(ForegroundColorSpan(color),0,text.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+        title = text
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,7 +1,11 @@
 package com.bangkit.anticede
 
+import android.graphics.Color
 import android.os.Bundle
-import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -24,7 +28,6 @@ class BottomNavigationActivity : AppCompatActivity() {
         //change action bar background color
         supportActionBar?.setBackgroundDrawable(AppCompatResources.getDrawable(this,R.color.white))
 
-
         val navView: BottomNavigationView = binding.navView
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_bottom_navigation) as NavHostFragment
@@ -38,4 +41,5 @@ class BottomNavigationActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
 }

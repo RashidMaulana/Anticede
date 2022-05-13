@@ -2,12 +2,18 @@ package com.bangkit.anticede.ui.disclaimer
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
+import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.BuildConfig
 import com.bangkit.anticede.databinding.FragmentDisclaimerBinding
 
@@ -31,6 +37,10 @@ class DisclaimerFragment : Fragment() {
     @SuppressLint("QueryPermissionsNeeded")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val actionBar : ActionBar? = (activity as BottomNavigationActivity).supportActionBar
+        actionBar?.setTitleColor(Color.BLACK)
+
         binding.button2.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:") // only email apps should handle this
@@ -45,9 +55,16 @@ class DisclaimerFragment : Fragment() {
         }
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun ActionBar.setTitleColor(color: Int) {
+        val text = SpannableString(title ?: "")
+        text.setSpan(ForegroundColorSpan(color),0,text.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+        title = text
     }
 
     companion object{
