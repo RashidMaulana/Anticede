@@ -7,5 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class TeamMember(
     var photo: Int,
     var name: String,
-    var id: String
+    var id: String,
+    var linkedin: String
 ): Parcelable

@@ -40,6 +40,15 @@
         <item>(C2012F1251)</item>
     </string-array>
 
+    <string-array name="linkedin">
+        <item>https://www.linkedin.com/in/muchammad-alfi-karom-74b9b2201/</item>
+        <item>https://www.linkedin.com/in/martina-steffany/</item>
+        <item>https://www.linkedin.com/in/rashidmaulana08/</item>
+        <item>https://www.linkedin.com/in/rio-risqi-akbar-herlambang-61134b202/</item>
+        <item>https://www.linkedin.com/in/vasantpns/</item>
+        <item>https://www.linkedin.com/in/muhammad-zaky-al-fatih-447231201/</item>
+    </string-array>
+
     <integer-array name="photo">
         <item>@drawable/alfi</item>
         <item>@drawable/martina</item>

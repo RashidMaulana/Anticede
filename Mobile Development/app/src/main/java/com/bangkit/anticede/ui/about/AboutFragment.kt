@@ -1,6 +1,8 @@
 package com.bangkit.anticede.ui.about
 
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,9 +45,11 @@ class AboutFragment : Fragment() {
             val dataName = resources.getStringArray(R.array.name)
             val dataId = resources.getStringArray(R.array.id)
             val dataPhoto = resources.obtainTypedArray(R.array.photo)
+            val dataLinkedIn = resources.getStringArray(R.array.linkedin)
             val listMember = ArrayList<TeamMember>()
             for(i in dataName.indices){
-                val member = TeamMember(dataPhoto.getResourceId(i, -1), dataName[i], dataId[i])
+                val member = TeamMember(dataPhoto.getResourceId(i, -1), dataName[i],
+                    dataId[i], dataLinkedIn[i])
                 listMember.add(member)
             }
             dataPhoto.recycle()
@@ -61,7 +65,16 @@ class AboutFragment : Fragment() {
         }
         val aboutAdapter = AboutAdapter(list)
         binding.rvMember.adapter = aboutAdapter
+
+        aboutAdapter.setOnItemClickCallback(object : AboutAdapter.OnItemClickCallback{
+            override fun onItemClicked(data: TeamMember) {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(data.linkedin)
+                startActivity(intent)
+            }
+        })
     }
+//        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
 
     override fun onDestroyView() {
         super.onDestroyView()
