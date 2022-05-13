@@ -1,8 +1,10 @@
 package com.bangkit.anticede
 
 import android.os.Bundle
+import android.text.Html
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,6 +20,10 @@ class BottomNavigationActivity : AppCompatActivity() {
 
         binding = ActivityBottomNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //change action bar background color
+        supportActionBar?.setBackgroundDrawable(AppCompatResources.getDrawable(this,R.color.white))
+
 
         val navView: BottomNavigationView = binding.navView
 

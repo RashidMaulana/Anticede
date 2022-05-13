@@ -20,8 +20,6 @@ class MainActivity : AppCompatActivity() {
             delay(3000L)
             val intent = Intent(this@MainActivity, BottomNavigationActivity::class.java)
             startActivity(intent)
-
-
             finish()
         }
     }
