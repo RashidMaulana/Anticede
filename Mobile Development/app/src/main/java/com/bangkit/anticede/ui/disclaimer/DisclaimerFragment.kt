@@ -19,15 +19,19 @@ class DisclaimerFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    @SuppressLint("QueryPermissionsNeeded")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentDisclaimerBinding.inflate(inflater, container, false)
-        binding.button2.setOnClickListener { view ->
+        return binding.root
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.button2.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:") // only email apps should handle this
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(DEV_EMAIL))
@@ -39,8 +43,6 @@ class DisclaimerFragment : Fragment() {
                 startActivity(intent)
             }
         }
-        val root: View = binding.root
-        return root
     }
 
     override fun onDestroyView() {
