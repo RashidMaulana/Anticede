@@ -25,26 +25,28 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="100dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/white"
+        android:contentDescription="@string/record_button_description"
         android:scaleType="centerInside"
         android:src="@drawable/recordbutton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/record_button_description" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginEnd="100dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/white"
+        android:contentDescription="@string/upload_file_description"
         android:scaleType="centerInside"
         android:src="@drawable/vector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/upload_file_description" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
