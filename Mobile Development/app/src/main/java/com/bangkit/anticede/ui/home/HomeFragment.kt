@@ -8,10 +8,8 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.databinding.FragmentHomeBinding
 
