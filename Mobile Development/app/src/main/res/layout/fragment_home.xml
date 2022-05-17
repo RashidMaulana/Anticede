@@ -76,4 +76,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
 
+    <TextView
+        android:id="@+id/tvWarn"
+        android:layout_width="268dp"
+        android:layout_height="125dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/border_back"
+        android:fontFamily="@font/montserrat_bold"
+        android:maxLines="4"
+        android:text="@string/sample_text"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/imageButton2"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

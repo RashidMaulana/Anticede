@@ -24,6 +24,7 @@
     <string name="upload_file_description">Pilih File Audio</string>
     <string name="record_label">Rekam\nAudio</string>
     <string name="upload_file_label">File \n Audio</string>
+    <string name="sample_text">Sample\nText</string>
 
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">
