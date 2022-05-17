@@ -1,6 +1,6 @@
-const uuidv4 =  require('uuid');
+const uuidv4 = require('uuid');
 
-const users = require('./users.js');
+const users = require('./users');
 
 const getAllUsersHandler = () => ({
     status: 'success',
@@ -31,30 +31,32 @@ const addUserHandler = (req, h) => {
     };
 
     if (firstName === undefined) {
-        const response = h.response ({
+        const response = h.response({
             status: 'fail',
             message: 'Failed to add new member, please fill your first name.',
-        })
+        });
         response.code(400);
         return response;
     }
     if (lastName === undefined) {
-        const response = h.response ({
+        const response = h.response({
             status: 'fail',
             message: 'Failed to add new member, please fill your last name.',
-        })
+        });
         response.code(400);
         return response;
     }
     if (age === undefined) {
-        const response = h.response ({
+        const response = h.response({
             status: 'fail',
             message: 'Failed to add new member, please fill your age.',
-        })
+        });
         response.code(400);
         return response;
     }
+
     users.push(newUser);
+
     const isSuccess = users.filter((user) => user.id === id).length > 0;
     if (isSuccess) {
         const response = h.response({
@@ -66,16 +68,17 @@ const addUserHandler = (req, h) => {
         });
         response.code(201);
         return response;
-    } 
+    }
+
     const response = h.response({
         status: 'fail',
         message: 'Failed to add new member.',
     });
     response.code(500);
     return response;
-}
+};
 
-module.exports = { addUserHandler, getAllUsersHandler } ;
+module.exports = { addUserHandler, getAllUsersHandler };
 
 // router.get('/', (req, res) => {
 //     console.log(users);

@@ -12,6 +12,7 @@
     },
     "rules": {
         "no-console": "off",
+        "indent": ["error", 4],
         "eqeqeq": 1
     }
 }

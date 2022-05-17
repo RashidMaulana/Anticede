@@ -15,5 +15,5 @@ app.listen(PORT, () => {
 app.route('routes');
 
 app.get('/', (req, res) => {
-    res.send(`Hello from Homepage.`)
+    res.send('Hello from Homepage.');
 });
