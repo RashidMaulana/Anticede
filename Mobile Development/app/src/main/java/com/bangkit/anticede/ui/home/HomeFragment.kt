@@ -1,5 +1,6 @@
 package com.bangkit.anticede.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,18 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val getPreviewImage =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                val voiceUri = result.data!!.data
+                Log.d("HomeFragment", "voice: $voiceUri")
+            }
+        }
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,17 +51,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val actionBar : ActionBar? = (activity as BottomNavigationActivity).supportActionBar
+
+        val actionBar: ActionBar? = (activity as BottomNavigationActivity).supportActionBar
         actionBar?.setTitleColor(Color.BLACK)
 
-        val getContent = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()){it ->
-
-        }
-
         binding.imageButton2.setOnClickListener {
-            val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
-            getContent.launch(intent)
+            getPreviewImage.launch(Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION))
         }
     }
 
@@ -61,5 +70,9 @@ class HomeFragment : Fragment() {
         val text = SpannableString(title ?: "")
         text.setSpan(ForegroundColorSpan(color),0,text.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         title = text
+    }
+
+    companion object{
+        private const val RECORD_CODE = 1
     }
 }
