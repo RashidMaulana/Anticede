@@ -1,17 +1,21 @@
 package com.bangkit.anticede.ui.home
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
 
@@ -35,6 +39,16 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val actionBar : ActionBar? = (activity as BottomNavigationActivity).supportActionBar
         actionBar?.setTitleColor(Color.BLACK)
+
+        val getContent = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()){it ->
+
+        }
+
+        binding.imageButton2.setOnClickListener {
+            val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
+            getContent.launch(intent)
+        }
     }
 
 
