@@ -82,13 +82,24 @@
         android:layout_marginBottom="40dp"
         android:background="@drawable/border_back"
         android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
         android:maxLines="4"
         android:text="@string/sample_text"
         android:textAlignment="center"
-        android:gravity="center"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/imageButton2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="@string/send_text"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/imageButton2"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvWarn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

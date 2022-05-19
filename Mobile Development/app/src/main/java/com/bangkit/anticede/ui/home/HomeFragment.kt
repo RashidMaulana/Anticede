@@ -3,6 +3,7 @@ package com.bangkit.anticede.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Spannable
@@ -14,9 +15,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.databinding.FragmentHomeBinding
+import com.bangkit.anticede.utilities.Utils.createTempRecordFile
+import java.io.File
 
 
 class HomeFragment : Fragment() {
@@ -27,17 +31,18 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val getPreviewImage =
+    private var getFile: File? = null
+    private lateinit var currentRecordPath: String
+
+    private val getVoice =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                val voiceUri = result.data!!.data
-                Log.d("HomeFragment", "voice: $voiceUri")
+            if (result.resultCode == Activity.RESULT_OK) {
+                val myFile = File(currentRecordPath)
+                getFile = myFile
             }
         }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +61,10 @@ class HomeFragment : Fragment() {
         actionBar?.setTitleColor(Color.BLACK)
 
         binding.imageButton2.setOnClickListener {
-            getPreviewImage.launch(Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION))
+            startRecording()
+            Log.d("HomeFragment", "${getFile}")
+            Log.d("HomeFragment", "${getFile?.absolutePath}")
+            Log.d("HomeFragment", currentRecordPath)
         }
     }
 
@@ -72,7 +80,19 @@ class HomeFragment : Fragment() {
         title = text
     }
 
-    companion object{
-        private const val RECORD_CODE = 1
+    private fun startRecording() {
+        val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
+        intent.resolveActivity(requireActivity().packageManager)
+
+        createTempRecordFile(requireActivity().application).also {
+            val recordURI : Uri = FileProvider.getUriForFile(
+                requireContext(),
+                "com.bangkit.anticede",
+                it
+            )
+            currentRecordPath = it.absolutePath
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, recordURI)
+            getVoice.launch(intent)
+        }
     }
 }
