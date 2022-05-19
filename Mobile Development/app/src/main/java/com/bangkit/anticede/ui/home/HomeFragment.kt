@@ -30,7 +30,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var getFile: File? = null
-    private lateinit var currentRecordPath: String
 
     private val getVoice =
         registerForActivityResult(
