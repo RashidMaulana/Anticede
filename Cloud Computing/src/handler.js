@@ -1,84 +1,156 @@
-const uuidv4 = require('uuid');
-
+const express = require('express');
+const { v4: uuidv4 } = require('uuid');
 const users = require('./users');
 
-const getAllUsersHandler = () => ({
-    status: 'success',
-    data: {
-        users: users.map((user) => ({
-            id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            age: user.age,
-        })),
-    },
-});
+const router = express.Router();
 
-const addUserHandler = (req, h) => {
-    const {
-        firstName,
-        lastName,
-        age,
-    } = req.payload;
+router
+    .route('/members')
+    .get((req, res) => {
+        res.send('hi get /members/members');
+    })
+    .post((req, res) => {
+        const {
+            firstName,
+            lastName,
+            age,
+        } = req.body;
 
-    const id = uuidv4();
+        const id = uuidv4();
 
-    const newUser = {
-        id,
-        firstName,
-        lastName,
-        age,
-    };
+        const newUser = {
+            id,
+            firstName,
+            lastName,
+            age,
+        };
 
-    if (firstName === undefined) {
-        const response = h.response({
+        if (firstName === undefined) {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your first name.',
+            });
+            response.status(400);
+            return response;
+        }
+        if (lastName === undefined) {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your last name.',
+            });
+            response.status(400);
+            return response;
+        }
+        if (age === undefined) {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your age.',
+            });
+            response.status(400);
+            return response;
+        }
+
+        users.push(newUser);
+
+        const isSuccess = users.filter((user) => user.id === id).length > 0;
+        if (isSuccess) {
+            const response = res.send({
+                status: 'success',
+                message: 'New member is successfully added.',
+                data: {
+                    userId: id,
+                },
+            });
+            response.status(201);
+            return response;
+        }
+
+        const response = res.send({
             status: 'fail',
-            message: 'Failed to add new member, please fill your first name.',
+            message: 'Failed to add new member.',
         });
-        response.code(400);
+        response.status(500);
         return response;
-    }
-    if (lastName === undefined) {
-        const response = h.response({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your last name.',
-        });
-        response.code(400);
-        return response;
-    }
-    if (age === undefined) {
-        const response = h.response({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your age.',
-        });
-        response.code(400);
-        return response;
-    }
-
-    users.push(newUser);
-
-    const isSuccess = users.filter((user) => user.id === id).length > 0;
-    if (isSuccess) {
-        const response = h.response({
-            status: 'success',
-            message: 'New member is successfully added.',
-            data: {
-                userId: id,
-            },
-        });
-        response.code(201);
-        return response;
-    }
-
-    const response = h.response({
-        status: 'fail',
-        message: 'Failed to add new member.',
     });
-    response.code(500);
-    return response;
-};
 
-module.exports = { addUserHandler, getAllUsersHandler };
+// const getAllUsersHandler = () => ({
+//     status: 'success',
+//     data: {
+//         users: users.map((user) => ({
+//             id: user.id,
+//             firstName: user.firstName,
+//             lastName: user.lastName,
+//             age: user.age,
+//         })),
+//     },
+// });
+
+// const addUserHandler = (req, h) => {
+//     const {
+//         firstName,
+//         lastName,
+//         age,
+//     } = req.payload;
+
+//     const id = uuidv4();
+
+//     const newUser = {
+//         id,
+//         firstName,
+//         lastName,
+//         age,
+//     };
+
+//     if (firstName === undefined) {
+//         const response = h.response({
+//             status: 'fail',
+//             message: 'Failed to add new member, please fill your first name.',
+//         });
+//         response.code(400);
+//         return response;
+//     }
+//     if (lastName === undefined) {
+//         const response = h.response({
+//             status: 'fail',
+//             message: 'Failed to add new member, please fill your last name.',
+//         });
+//         response.code(400);
+//         return response;
+//     }
+//     if (age === undefined) {
+//         const response = h.response({
+//             status: 'fail',
+//             message: 'Failed to add new member, please fill your age.',
+//         });
+//         response.code(400);
+//         return response;
+//     }
+
+//     users.push(newUser);
+
+//     const isSuccess = users.filter((user) => user.id === id).length > 0;
+//     if (isSuccess) {
+//         const response = h.response({
+//             status: 'success',
+//             message: 'New member is successfully added.',
+//             data: {
+//                 userId: id,
+//             },
+//         });
+//         response.code(201);
+//         return response;
+//     }
+
+//     const response = h.response({
+//         status: 'fail',
+//         message: 'Failed to add new member.',
+//     });
+//     response.code(500);
+//     return response;
+// };
+
+// module.exports = { getAllUsersHandler };
+module.exports = router;
 
 // router.get('/', (req, res) => {
 //     console.log(users);
@@ -112,7 +184,7 @@ module.exports = { addUserHandler, getAllUsersHandler };
 // router.put('/:id', (req, res) => {
 //     const { id } = req.params;
 //     const { firstName, lastName, age } = req.body;
-    
+
 //     const user = users.find((user) => user.id === id);
 
 //     if (firstName) {
