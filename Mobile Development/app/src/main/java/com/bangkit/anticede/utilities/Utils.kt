@@ -21,8 +21,6 @@ object Utils {
         Locale.US
     ).format(System.currentTimeMillis())
 
-
-    // Untuk kasus Intent Camera
     fun createTempRecordFile(context: Context): File {
         val storageDir: File? = context.getExternalFilesDir("Recordings")
         return File.createTempFile(timeStamp, ".aac", storageDir)

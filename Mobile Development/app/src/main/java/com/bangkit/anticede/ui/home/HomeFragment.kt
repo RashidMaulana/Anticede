@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.databinding.FragmentHomeBinding
@@ -43,6 +44,17 @@ class HomeFragment : Fragment() {
             }
         }
 
+    private val launcherIntentPick = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == AppCompatActivity.RESULT_OK) {
+            val selectedImg: Uri = result.data?.data as Uri
+
+            val myFile = uriToFile(selectedImg, requireContext())
+            getFile = myFile
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,6 +73,10 @@ class HomeFragment : Fragment() {
 
         binding.imageButton2.setOnClickListener {
             startRecording()
+        }
+
+        binding.imageButton3.setOnClickListener {
+            startPick()
         }
     }
 
@@ -81,4 +97,12 @@ class HomeFragment : Fragment() {
         intent.resolveActivity(requireActivity().packageManager)
             getVoice.launch(intent)
         }
+
+    private fun startPick() {
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "audio/*"
+        val chooser = Intent.createChooser(intent, "Choose a Recording")
+        launcherIntentPick.launch(chooser)
+    }
 }
