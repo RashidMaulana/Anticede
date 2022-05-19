@@ -9,17 +9,15 @@ import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.databinding.FragmentHomeBinding
-import com.bangkit.anticede.utilities.Utils.createTempRecordFile
+import com.bangkit.anticede.utilities.Utils.uriToFile
 import java.io.File
 
 
@@ -39,8 +37,8 @@ class HomeFragment : Fragment() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val myFile = File(currentRecordPath)
-                getFile = myFile
+                val recordVoice = result.data?.data as Uri
+                getFile = uriToFile(recordVoice,requireContext())
             }
         }
 
@@ -62,9 +60,6 @@ class HomeFragment : Fragment() {
 
         binding.imageButton2.setOnClickListener {
             startRecording()
-            Log.d("HomeFragment", "${getFile}")
-            Log.d("HomeFragment", "${getFile?.absolutePath}")
-            Log.d("HomeFragment", currentRecordPath)
         }
     }
 
@@ -83,16 +78,6 @@ class HomeFragment : Fragment() {
     private fun startRecording() {
         val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
         intent.resolveActivity(requireActivity().packageManager)
-
-        createTempRecordFile(requireActivity().application).also {
-            val recordURI : Uri = FileProvider.getUriForFile(
-                requireContext(),
-                "com.bangkit.anticede",
-                it
-            )
-            currentRecordPath = it.absolutePath
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, recordURI)
             getVoice.launch(intent)
         }
-    }
 }
