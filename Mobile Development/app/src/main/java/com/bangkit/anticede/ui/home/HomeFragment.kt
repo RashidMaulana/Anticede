@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val recordVoice = result.data?.data as Uri
                 getFile = uriToFile(recordVoice,requireContext())
+                Log.d("HomeFragment", "getFile: $getFile")
             }
         }
 
