@@ -20,6 +20,12 @@
     <string name="agreement">Persetujuan</string>
     <string name="agreement_description">Dengan menggunakan aplikasi ini, Anda setuju dengan syarat, ketentuan, dan disklaimer aplikasi ini.</string>
     <string name="button_report_text">Lapor</string>
+    <string name="record_button_description">Rekam Suara Anda</string>
+    <string name="upload_file_description">Pilih File Audio</string>
+    <string name="record_label">Rekam\nAudio</string>
+    <string name="upload_file_label">File \n Audio</string>
+    <string name="sample_text">Sample\nText</string>
+    <string name="send_text">Kirim</string>
 
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">

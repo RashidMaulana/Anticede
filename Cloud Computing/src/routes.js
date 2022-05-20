@@ -1,16 +1,19 @@
-const { addUserHandler, getAllUsersHandler } = require('./handler');
+const multer = require('multer');
+const { Router } = require('express');
+const { nanoid } = require('nanoid');
+const uploadController = require('./controller');
 
-const routes = [
-    {
-        method: 'GET',
-        path: '/',
-        handler: getAllUsersHandler,
-    },
-    {
-        method: 'POST',
-        path: '/users',
-        handler: addUserHandler,
-    },
-];
+const router = Router();
 
-module.exports = { routes };
+const storage = multer.diskStorage({
+    destination: './uploads',
+    filename: (req, file, callback) => {
+        callback(null, `${nanoid()}.mp3`);
+    },
+});
+
+const upload = multer({ storage });
+
+router.post('/upload_audio', upload.single('audio'), uploadController);
+
+module.exports = router;
