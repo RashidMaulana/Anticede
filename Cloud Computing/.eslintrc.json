@@ -17,6 +17,7 @@
         "no-console": "off",
         "indent": ["error", 4],
         "eqeqeq": 1
-    }
+    },
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
 }
 
