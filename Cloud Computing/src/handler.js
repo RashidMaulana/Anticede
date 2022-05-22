@@ -1,5 +1,8 @@
 const express = require('express');
 const { nanoid } = require('nanoid');
+const multer = require('multer');
+const uploadController = require('./controller');
+
 const users = require('./users');
 
 const router = express.Router();
@@ -76,36 +79,29 @@ router
 router
     .route('/members/:id')
     .get((req, res) => {
-        const { id } = req.params.id;
+        const { id } = req.params;
 
-        if (typeof users.id === 'undefined') {
-            console.log('users.id is undefinded');
-        }
+        const user = users.filter((b) => b.id === id);
 
-        const user = users.filter((b) => b.id === id)[0];
-
-        if (user !== undefined) {
-            return {
+        if (user.length > 0) {
+            return res.json({
                 status: 'success',
                 data: {
                     user,
                 },
-            };
+            });
         }
 
         const response = res.send({
             status: 'fail',
             message: 'Member with id is not found',
-            req_params_id: req.params.id,
-            user1: users[0],
-            bool: user === undefined,
-            tesst: console.log(JSON.stringify(user)),
         });
         response.status(404);
         return response;
     })
+
     .put((req, res) => {
-        const { id } = req.params.id;
+        const { id } = req.params;
 
         const {
             firstName,
@@ -148,6 +144,7 @@ router
             const response = res.send({
                 status: 'success',
                 message: 'User berhasil diperbarui',
+                id_User: id,
             });
             response.status(200);
             return response;
@@ -161,8 +158,9 @@ router
         response.status(404);
         return response;
     })
+
     .delete((req, res) => {
-        const { id } = req.params.id;
+        const { id } = req.params;
 
         const index = users.findIndex((u) => u.id === id);
 
@@ -183,5 +181,16 @@ router
         response.status(404);
         return response;
     });
+
+const storage = multer.diskStorage({
+    destination: './uploads',
+    filename: (req, file, callback) => {
+        callback(null, `${nanoid()}.mp3`);
+    },
+});
+
+const upload = multer({ storage });
+
+router.post('/upload_audio', upload.single('audio'), uploadController);
 
 module.exports = router;
