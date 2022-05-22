@@ -1,6 +1,8 @@
 const express = require('express');
+const bodyParser = require('body-parser')
+const cors = require('cors');
 
-const routes = require('./routes');
+const routes = require('./handler');
 
 const app = express();
 
@@ -10,7 +12,7 @@ app.use(express.json());
 app.use(routes); // temporarily use routes.js ^_^
 
 app.listen(PORT, () => {
-    console.log(`Server running on port: http://localhost:${PORT}`);
+    console.log(`Server running on port: http://localhost:${PORT}/`);
 });
 
 app.get('/', (req, res) => {
