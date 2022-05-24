@@ -184,9 +184,10 @@ router
 
 const storage = multer.diskStorage({
     destination: './uploads',
-    filename: (req, file, callback) => {
-        callback(null, `${nanoid()}.aac`);
-    },
+    // uncomment below if filename is actually needed
+    // filename: (req, file, callback) => {
+    //     callback(null, `${nanoid()}.aac`);
+    // },
 });
 
 const upload = multer({ storage });

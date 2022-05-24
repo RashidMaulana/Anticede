@@ -1,33 +1,31 @@
-const CuteFFMPEG = require("cute-ffmpeg").CuteFFMPEG;
-const FFMPEGRequest = require("cute-ffmpeg").FFMPEGRequest;
+const { CuteFFMPEG } = require('cute-ffmpeg');
+const { FFMPEGRequest } = require('cute-ffmpeg');
 const { nanoid } = require('nanoid');
 
 const uploadController = (req, res) => {
-    let file = req.file;
+    const { file } = req;
     res.send(`done! ${file.filename}`);
 
     const ffmpeg = new CuteFFMPEG({
-        overwrite: true
-      });
-      
-      const request = new FFMPEGRequest({
+        overwrite: true,
+    });
+
+    const request = new FFMPEGRequest({
         input: {
-          path: `./uploads/${file.filename}`
+            path: `./uploads/${file.filename}`,
         },
         output: {
-          path: `./processed-audio/$(nanoid)`,
-          bitrate: 320,
-        }
-      });
-      
-      ffmpeg.convert(request)
-      .then(filePath => {
-        // Done
-      })
-      .catch(error => {
-        // Something went wrong
-      })
-      ;
+            path: `./processed-audio/${nanoid()}.flac`,
+        },
+    });
+
+    ffmpeg.convert(request);
+    // .then((filePath) => {
+    // // Done
+    // })
+    // .catch((error) => {
+    // // Something went wrong
+    // });
 };
 
 module.exports = uploadController;
