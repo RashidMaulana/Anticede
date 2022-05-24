@@ -129,8 +129,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# audio uploads
+# audio files 
 uploads
+processed-audio
 
 # vasant's personal notes
 vasant-notes
