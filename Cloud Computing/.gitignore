@@ -131,3 +131,9 @@ dist
 
 # audio uploads
 uploads
+
+# vasant's personal notes
+vasant-notes
+
+# .env
+.env
