@@ -2,7 +2,9 @@ const { CuteFFMPEG } = require('cute-ffmpeg');
 const { FFMPEGRequest } = require('cute-ffmpeg');
 const { nanoid } = require('nanoid');
 const { Storage } = require('@google-cloud/storage');
-const path = require('path');
+const { existsSync } = require('fs');
+// const fs = require('fs');
+// const path = require('path');
 
 const uploadController = (req, res) => {
     const { file } = req;
@@ -25,6 +27,7 @@ const uploadController = (req, res) => {
     });
 
     ffmpeg.convert(request);
+
     // .then((filePath) => {
     // // Done
     // })
@@ -32,19 +35,27 @@ const uploadController = (req, res) => {
     // // Something went wrong
     // });
 
-    const bucketName = 'anticede-speech-test';
-    const absoluteFilePath = path.join(__dirname, `../processed-audio/${processedFile}`);
-
     const storage = new Storage();
+
+    const bucketName = 'anticede-speech-test';
+
     async function uploadFile() {
-        await storage.bucket(bucketName).upload(absoluteFilePath, {
-            destination: processedFile,
+        await storage.bucket(bucketName).upload(processedFilePath, {
+            destination: `audio/${processedFile}`,
         });
 
-        console.log(`${absoluteFilePath} uploaded to ${bucketName}`);
+        console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
     }
 
-    uploadFile().catch(console.error);
+    const checkTime = 1000;
+
+    const timerId = setInterval(() => {
+        const isExists = existsSync(processedFilePath);
+        if (isExists) {
+            uploadFile().catch(console.error);
+            clearInterval(timerId);
+        }
+    }, checkTime);
 };
 
 module.exports = uploadController;
