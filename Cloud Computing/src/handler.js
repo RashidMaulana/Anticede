@@ -1,15 +1,36 @@
 const express = require('express');
 const { nanoid } = require('nanoid');
 const multer = require('multer');
+
+const jwt = require('jsonwebtoken');
+
 const uploadController = require('./controller');
 
 const users = require('./users');
 
 const router = express.Router();
 
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers.authorization;
+
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return res.sendStatus(401);
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+        req.user = user;
+        next();
+    });
+}
+
 router
     .route('/members')
-    .get((req, res) => {
+    .get(authenticateToken, (req, res) => {
+        res.json(users.filter(post => post.firstName === req.user.firstName));
         res.send(users);
     })
     .post((req, res) => {
@@ -53,6 +74,8 @@ router
             return response;
         }
 
+        const accessToken = jwt.sign(newUser, process.env.ACCESS_TOKEN_SECRET);
+        res.json({ accessToken: accessToken });
         users.push(newUser);
 
         const isSuccess = users.filter((user) => user.id === id).length > 0;
