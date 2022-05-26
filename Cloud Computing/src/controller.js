@@ -47,7 +47,7 @@ const uploadController = (req, res) => {
         console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
     }
 
-    const checkTime = 1000;
+    const checkTime = 5000;
 
     const timerId = setInterval(() => {
         const isExists = existsSync(processedFilePath);
