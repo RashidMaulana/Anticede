@@ -22,10 +22,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentHomeBinding
 import com.bangkit.anticede.utilities.Utils.uriToFile
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -109,6 +113,12 @@ class HomeFragment : Fragment() {
         val actionBar: ActionBar? = (activity as BottomNavigationActivity).supportActionBar
         actionBar?.setTitleColor(Color.BLACK)
 
+        val homeViewModel by viewModels<HomeViewModel>()
+
+        homeViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
         binding.imageButton2.setOnClickListener {
             startRecording()
             if (isReady) {
@@ -151,6 +161,20 @@ class HomeFragment : Fragment() {
                 }
             } else {
                 Toast.makeText(requireActivity(), getString(R.string.warning2), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
+        binding.button.setOnClickListener {
+            val fileUpload = getFile
+            if (fileUpload != null) {
+                val requestVoiceFile = fileUpload.asRequestBody("audio/aac".toMediaTypeOrNull())
+                val requestBody = MultipartBody.Part.createFormData("audio", fileUpload.name, requestVoiceFile)
+                    homeViewModel.uploadVoice(requireContext(), requestBody)
+            } else{
+                Toast.makeText(requireActivity(), "Rekam atau pilih file terlebih dahulu!",
+                    Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -229,5 +253,14 @@ class HomeFragment : Fragment() {
         finalTimer = "$finalTimer$minutes:$secondTimer"
 
         return finalTimer
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 }
