@@ -6,7 +6,7 @@ const routes = require('./handler');
 
 const app = express();
 
-const PORT = 5000;
+const PORT = 8080;
 
 app.use(express.json());
 app.use(routes); // temporarily use routes.js ^_^
