@@ -102,4 +102,64 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWarn" />
 
+    <ImageView
+        android:id="@+id/playBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/play_button"
+        android:src="@drawable/ic_baseline_play_circle_filled_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button" />
+
+    <ImageView
+        android:id="@+id/stopBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/play_button"
+        android:src="@drawable/ic_baseline_stop_circle_24"
+        app:layout_constraintStart_toEndOf="@id/playBtn"
+        app:layout_constraintTop_toTopOf="@id/playBtn" />
+
+    <TextView
+        android:id="@+id/recordingTitle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:maxLines="2"
+        android:text="@string/recording_name"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/stopBtn"
+        app:layout_constraintTop_toTopOf="@+id/stopBtn" />
+
+    <TextView
+        android:id="@+id/recordingDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        android:textSize="12sp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="@string/recording_date"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@id/stopBtn"
+        app:layout_constraintTop_toBottomOf="@+id/recordingTitle" />
+
+    <TextView
+        android:id="@+id/recordingLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="@string/recording_length"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

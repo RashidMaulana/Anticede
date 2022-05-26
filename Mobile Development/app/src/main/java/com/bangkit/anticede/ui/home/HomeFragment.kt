@@ -1,8 +1,12 @@
 package com.bangkit.anticede.ui.home
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,25 +17,34 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bangkit.anticede.BottomNavigationActivity
+import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentHomeBinding
 import com.bangkit.anticede.utilities.Utils.uriToFile
 import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
+    private var mMp: MediaPlayer? = null
+    private var isReady: Boolean = false
+
     private var getFile: File? = null
+
+    @SuppressLint("SimpleDateFormat")
+    private val dateFormatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
+    private val mMr = MediaMetadataRetriever()
 
     private val getVoice =
         registerForActivityResult(
@@ -41,6 +54,19 @@ class HomeFragment : Fragment() {
                 val recordVoice = result.data?.data as Uri
                 getFile = uriToFile(recordVoice,requireContext())
                 Log.d("HomeFragment", "getFile: $getFile")
+
+                val filePath = getFile?.absolutePath
+
+                binding.recordingTitle.text = getFile?.name
+
+                val fileDate = Date(getFile?.lastModified()!!)
+                binding.recordingDate.text = dateFormatter.format(fileDate).toString()
+
+                mMr.setDataSource(filePath)
+                val duration = mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
+                binding.recordingLength.text = durationFormat(duration!!)
+
+                initMp(filePath)
             }
         }
 
@@ -52,6 +78,19 @@ class HomeFragment : Fragment() {
 
             val myFile = uriToFile(selectedImg, requireContext())
             getFile = myFile
+
+            val filePath = getFile?.absolutePath
+
+            binding.recordingTitle.text = myFile.name
+
+            val fileDate = Date(myFile.lastModified())
+            binding.recordingDate.text = dateFormatter.format(fileDate).toString()
+
+            mMr.setDataSource(filePath)
+            val duration = mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
+            binding.recordingLength.text = durationFormat(duration!!)
+
+            initMp(filePath)
         }
     }
 
@@ -61,8 +100,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,13 +111,49 @@ class HomeFragment : Fragment() {
 
         binding.imageButton2.setOnClickListener {
             startRecording()
+            if (isReady) {
+                mMp?.stop()
+                isReady = false
+            }
         }
 
         binding.imageButton3.setOnClickListener {
             startPick()
+            if (isReady) {
+                mMp?.stop()
+                isReady = false
+            }
+        }
+
+        binding.playBtn.setOnClickListener {
+            if (mMp != null){
+                if(!isReady){
+                    mMp?.prepareAsync()
+                } else {
+                    if(mMp?.isPlaying as Boolean){
+                        mMp?.pause()
+                        binding.playBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
+                    } else {
+                        mMp?.start()
+                        binding.playBtn.setImageResource(R.drawable.ic_baseline_pause_circle_24)
+                    }
+                }
+            } else {
+                Toast.makeText(requireActivity(), getString(R.string.warning2), Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.stopBtn.setOnClickListener {
+            if (mMp != null){
+                if (mMp?.isPlaying as Boolean || isReady) {
+                    mMp?.stop()
+                    isReady = false
+                    binding.playBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
+                }
+            } else {
+                Toast.makeText(requireActivity(), getString(R.string.warning2), Toast.LENGTH_SHORT).show()
+            }
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -102,7 +176,58 @@ class HomeFragment : Fragment() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "audio/*"
-        val chooser = Intent.createChooser(intent, "Choose a Recording")
+        val chooser = Intent.createChooser(intent, getString(R.string.chooseRecorder))
         launcherIntentPick.launch(chooser)
+    }
+
+    private fun initMp(filePath: String?){
+        if (mMp == null) {
+            mMp = MediaPlayer()
+        } else {
+            mMp?.reset()
+        }
+        val attribute = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_MEDIA)
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .build()
+        mMp?.setAudioAttributes(attribute)
+
+        if(filePath != null){
+            Log.d("HomeFragment", "filepath: $filePath")
+            try{
+                mMp?.setDataSource(filePath)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            mMp?.setOnPreparedListener {
+                isReady = true
+                mMp?.start()
+                binding.playBtn.setImageResource(R.drawable.ic_baseline_pause_circle_24)
+            }
+        } else {
+            isReady = false
+        }
+        mMp?.setOnCompletionListener { binding.playBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24) }
+
+        mMp?.setOnErrorListener { _, _, _ -> false }
+    }
+
+    private fun durationFormat(milli: Long): String{
+        var finalTimer = ""
+        val secondTimer: String
+
+        val hours: Long = (milli / (1000 * 60 * 60))
+        val minutes = (milli % (1000 * 60 * 60)).toInt() / (1000 * 60)
+        val seconds = (milli % (1000 * 60 * 60) % (1000 * 60) / 1000)
+
+        if(hours > 0) finalTimer = "$hours:"
+        secondTimer = if(seconds < 10){
+            "0$seconds"
+        } else {
+            "$seconds"
+        }
+        finalTimer = "$finalTimer$minutes:$secondTimer"
+
+        return finalTimer
     }
 }
