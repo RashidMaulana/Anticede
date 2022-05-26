@@ -16,11 +16,13 @@
             android:id="@+id/textView11"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/montserrat_regular"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:text="@string/disclaimer_info_text_1"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,24 +30,28 @@
             android:id="@+id/textView12"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_regular"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:text="@string/disclaimer_info_text_2"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <TextView
             android:id="@+id/textView13"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/montserrat_bold"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:text="@string/additional_info"
             android:textColor="@color/black"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -53,11 +59,13 @@
             android:id="@+id/textView14"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_regular"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:text="@string/additional_info_description_1"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -65,24 +73,28 @@
             android:id="@+id/textView15"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_regular"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:text="@string/additional_info_description_2"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
         <TextView
             android:id="@+id/textView16"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/montserrat_bold"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:text="@string/agreement"
             android:textColor="@color/black"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -90,11 +102,13 @@
             android:id="@+id/textView17"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_regular"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:text="@string/agreement_description"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
 

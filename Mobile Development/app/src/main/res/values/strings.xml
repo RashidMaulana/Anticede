@@ -26,6 +26,12 @@
     <string name="upload_file_label">File \n Audio</string>
     <string name="sample_text">Sample\nText</string>
     <string name="send_text">Kirim</string>
+    <string name="play_button">Play Audio</string>
+    <string name="recording_name">File Name</string>
+    <string name="recording_date">File Date</string>
+    <string name="recording_length">00:00</string>
+    <string name="chooseRecorder">Choose a Recording</string>
+    <string name="warning2">Belum ada file untuk di putar/stop!</string>
 
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">
