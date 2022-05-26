@@ -28,6 +28,7 @@ const uploadController = (req, res) => {
     // .catch((error) => {
     // // Something went wrong
     // });
+    //
 };
 
 module.exports = uploadController;

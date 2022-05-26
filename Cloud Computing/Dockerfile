@@ -6,6 +6,7 @@ COPY package*.json ./
 COPY . .
 
 RUN npm ci --only=production
+RUN apt-get -y update && apt-get -y install ffmpeg
 
 EXPOSE 8080
 
