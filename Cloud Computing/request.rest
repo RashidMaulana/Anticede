@@ -1,0 +1,12 @@
+
+POST http://localhost:8080/members
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIyU29xRWdoQlNKXzlqaXciLCJmaXJzdE5hbWUiOiJaYWhyYSIsImxhc3ROYW1lIjoiUHV0cmkiLCJhZ2UiOjIwLCJpYXQiOjE2NTM1NzkzODd9.r52eKgi9frUr619dW7bgEoiJ5MqwqSrQ3JjXLiBM7rg
+Content-Type: application/json
+
+{
+    "firstName": "Zahra",
+    "lastName": "Putri",
+    "age": 20
+}
+
+GET http://localhost:8080/members

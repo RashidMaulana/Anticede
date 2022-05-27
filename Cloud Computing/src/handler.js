@@ -29,14 +29,13 @@ function authenticateToken(req, res, next) {
 
 router
     .route('/members')
-    .get(authenticateToken, (req, res) => {
-        res.json(users.filter(post => post.firstName === req.user.firstName));
+    .get((req, res) => {
         res.send(users);
     })
     .post((req, res) => {
         const {
-            firstName,
-            lastName,
+            userName,
+            email,
             age,
         } = req.body;
 
@@ -44,12 +43,12 @@ router
 
         const newUser = {
             id,
-            firstName,
-            lastName,
+            userName,
+            email,
             age,
         };
 
-        if (firstName === '') {
+        if (userName === '') {
             const response = res.send({
                 status: 'fail',
                 message: 'Failed to add new member, please fill your first name.',
@@ -57,7 +56,7 @@ router
             response.status(400);
             return response;
         }
-        if (lastName === '') {
+        if (email === '') {
             const response = res.send({
                 status: 'fail',
                 message: 'Failed to add new member, please fill your last name.',
@@ -74,8 +73,9 @@ router
             return response;
         }
 
-        const accessToken = jwt.sign(newUser, process.env.ACCESS_TOKEN_SECRET);
-        res.json({ accessToken: accessToken });
+        // res.json(users.filter(post => post.firstName === req.user.firstName));
+        // const accessToken = jwt.sign(newUser, process.env.ACCESS_TOKEN_SECRET);
+        // res.json({ accessToken: accessToken });
         users.push(newUser);
 
         const isSuccess = users.filter((user) => user.id === id).length > 0;
@@ -127,8 +127,8 @@ router
         const { id } = req.params;
 
         const {
-            firstName,
-            lastName,
+            userName,
+            email,
             age,
         } = req.body;
 
@@ -136,11 +136,11 @@ router
         if (index !== -1) {
             users[index] = {
                 ...users[index],
-                firstName,
-                lastName,
+                userName,
+                email,
                 age,
             };
-            if (firstName === '') {
+            if (userName === '') {
                 const response = res.send({
                     status: 'fail',
                     message: 'Failed to add new member, please fill your first name.',
@@ -148,7 +148,7 @@ router
                 response.status(400);
                 return response;
             }
-            if (lastName === '') {
+            if (email === '') {
                 const response = res.send({
                     status: 'fail',
                     message: 'Failed to add new member, please fill your last name.',
