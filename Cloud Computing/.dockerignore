@@ -1,2 +1,5 @@
 node_modules
 npm-debug.log
+vasant-notes.txt
+.env
+.eslintrc.json
