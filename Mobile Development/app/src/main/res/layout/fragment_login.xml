@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/editTextTextUserName"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -17,13 +17,18 @@
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textStyle="normal"
+        android:background="@drawable/border_back_auth"
+        android:drawableStart="@drawable/ic_baseline_person_24"
+        android:drawablePadding="6dp"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -31,6 +36,10 @@
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:background="@drawable/border_back_auth"
+        android:drawableStart="@drawable/ic_baseline_password_24"
+        android:drawablePadding="6dp"
+        android:fontFamily="@font/montserrat_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -49,24 +58,22 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
         android:layout_marginTop="32dp"
         android:labelFor="@+id/editTextTextPersonName"
-        android:textColor="@color/black"
         android:text="@string/username_label"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/editTextTextUserName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/black"
-        android:text="@string/password_label"
         android:labelFor="@id/editTextTextPassword"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/password_label"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/editTextTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextUserName" />
 
     <ProgressBar
