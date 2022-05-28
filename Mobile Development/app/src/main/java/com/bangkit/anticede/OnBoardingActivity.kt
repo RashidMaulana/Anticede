@@ -2,6 +2,7 @@ package com.bangkit.anticede
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.bangkit.anticede.adapter.SectionsPagerAdapter
 import com.bangkit.anticede.databinding.ActivityOnBoardingBinding
@@ -24,6 +25,9 @@ class OnBoardingActivity : AppCompatActivity() {
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+
+        tabs.setTabTextColors(ContextCompat.getColor(this,R.color.grey),
+            ContextCompat.getColor(this,R.color.red_200))
 
         supportActionBar?.hide()
     }

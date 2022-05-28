@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".RegisterFragment">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
     <EditText
         android:id="@+id/editTextTextUserName"
@@ -60,21 +65,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/register_text"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_back_auth"
+        android:ems="10"
+        android:hint="@string/age_hint"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:fontFamily="@font/montserrat_regular"
+        android:minHeight="48dp"
+        android:drawableStart="@drawable/ic_perm_contact_calendar_24"
+        android:drawablePadding="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextConfirmationPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:labelFor="@+id/editTextTextPersonName"
         android:text="@string/username_label"
         android:textColor="@color/black"
@@ -90,7 +105,7 @@
         android:text="@string/password_label"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextUserName" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     <TextView
         android:id="@+id/textView5"
@@ -103,6 +118,29 @@
         app:layout_constraintStart_toStartOf="@id/editTextTextConfirmationPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:labelFor="@id/editTextNumber"
+        android:text="@string/age_label"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/editTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextUserName" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/register_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextConfirmationPassword" />
+
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
@@ -114,4 +152,9 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
 
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

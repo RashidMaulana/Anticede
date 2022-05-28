@@ -16,11 +16,11 @@
     <string name="disclaimer_info_text_2">Segala tindakan yang anda lakukan atas informasi yang kami sediakan adalah tanggung jawab anda. Pengembang aplikasi ini tidak akan menanggung segala kerugian dan / atau kerusakan yang anda alami berkat menggunakan aplikasi ini.</string>
     <string name="additional_info">Informasi Tambahan</string>
     <string name="additional_info_description_1">Salah satu prioritas aplikasi ini adalah menyediakan perlindungan bagi anak-anak saat mereka menggunakan internet. Kami menyarankan para orang tua atau wali untuk mengawasi, berpartisipasi, dan / atau membimbing aktivitas mereka.</string>
-    <string name="additional_info_description_2">Aplikasi ini tidak menyimpan informasi pribadi penggunanya. Kami hanya menggunakan username anda. Bila anda merasa memasukkan informasi pribadi anda pada aplikasi ini, kami sarankan untuk menghubungi kami sesegera mungkin dan kami akan menghapus informasi tersebut.</string>
+    <string name="additional_info_description_2">Aplikasi ini tidak menyimpan informasi pribadi penggunanya selain username dan umur anda. Bila anda merasa memasukkan informasi pribadi lain milik anda pada aplikasi ini, kami sarankan untuk menghubungi kami sesegera mungkin dan kami akan menghapus informasi tersebut.</string>
     <string name="agreement">Persetujuan</string>
     <string name="agreement_description">Dengan menggunakan aplikasi ini, Anda setuju dengan syarat, ketentuan, dan disklaimer aplikasi ini.</string>
-    <string name="tab_text_1">Register</string>
-    <string name="tab_text_2">Login</string>
+    <string name="tab_text_1">Daftar</string>
+    <string name="tab_text_2">Masuk</string>
     <string name="button_report_text">Lapor</string>
     <string name="record_button_description">Rekam Suara Anda</string>
     <string name="upload_file_description">Pilih File Audio</string>
@@ -34,6 +34,10 @@
     <string name="recording_length">00:00</string>
     <string name="chooseRecorder">Choose a Recording</string>
     <string name="warning2">Belum ada file untuk di putar/stop!</string>
+    <string name="warning3">Anticede Data Disclaimer Request Remove</string>
+    <string name="warning4">Mohon hapus data saya dari aplikasi Anticede</string>
+    <string name="warning5">Rekam atau pilih file terlebih dahulu!</string>
+    <string name="warning6">Install aplikasi perekam suara terlebih dahulu!</string>
 
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">
@@ -75,10 +79,13 @@
     <string name="username_hint"><font size="15">Masukkan username anda</font></string>
     <string name="password_hint"><font size="15">Masukkan kata sandi anda</font></string>
     <string name="confirm_hint"><font size="15">Pastikan kata sandi sama</font></string>
+    <string name="age_hint"><font size="15">Masukkan umur anda</font></string>
     <string name="username_label">Username</string>
     <string name="password_label">Password</string>
     <string name="register_text">Daftar</string>
     <string name="login_text">Masuk</string>
     <string name="confirm_label">Konfirmasi Password</string>
+    <string name="age_label">Umur</string>
+
 
 </resources>

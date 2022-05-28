@@ -173,7 +173,7 @@ class HomeFragment : Fragment() {
                 val requestBody = MultipartBody.Part.createFormData("audio", fileUpload.name, requestVoiceFile)
                     homeViewModel.uploadVoice(requireContext(), requestBody)
             } else{
-                Toast.makeText(requireActivity(), "Rekam atau pilih file terlebih dahulu!",
+                Toast.makeText(requireActivity(), getString(R.string.warning5),
                     Toast.LENGTH_SHORT).show()
             }
         }
@@ -192,9 +192,13 @@ class HomeFragment : Fragment() {
 
     private fun startRecording() {
         val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
-        intent.resolveActivity(requireActivity().packageManager)
+        if(intent.resolveActivity(requireActivity().packageManager) != null){
             getVoice.launch(intent)
+        } else{
+            Toast.makeText(requireActivity(), getString(R.string.warning6), Toast.LENGTH_SHORT).show()
         }
+
+    }
 
     private fun startPick() {
         val intent = Intent()
