@@ -73,7 +73,7 @@
     </integer-array>
 
     <string name="username_hint"><font size="15">Masukkan username anda</font></string>
-    <string name="password_hint"><font size="15">Masukkan Kata Sandi anda</font></string>
+    <string name="password_hint"><font size="15">Masukkan kata sandi anda</font></string>
     <string name="confirm_hint"><font size="15">Pastikan kata sandi sama</font></string>
     <string name="username_label">Username</string>
     <string name="password_label">Password</string>
