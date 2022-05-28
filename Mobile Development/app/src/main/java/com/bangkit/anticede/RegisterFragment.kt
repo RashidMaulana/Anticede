@@ -1,5 +1,6 @@
 package com.bangkit.anticede
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,5 +21,14 @@ class RegisterFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.button3.setOnClickListener {
+            val intent = Intent(activity, BottomNavigationActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
     }
 }
