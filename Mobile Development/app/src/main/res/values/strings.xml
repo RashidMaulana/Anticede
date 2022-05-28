@@ -19,6 +19,8 @@
     <string name="additional_info_description_2">Aplikasi ini tidak menyimpan informasi pribadi penggunanya. Bila anda merasa memasukkan informasi pribadi anda pada aplikasi ini, kami sarankan untuk menghubungi kami sesegera mungkin dan kami akan menghapus informasi tersebut.</string>
     <string name="agreement">Persetujuan</string>
     <string name="agreement_description">Dengan menggunakan aplikasi ini, Anda setuju dengan syarat, ketentuan, dan disklaimer aplikasi ini.</string>
+    <string name="tab_text_1">Register</string>
+    <string name="tab_text_2">Login</string>
     <string name="button_report_text">Lapor</string>
     <string name="record_button_description">Rekam Suara Anda</string>
     <string name="upload_file_description">Pilih File Audio</string>
@@ -69,5 +71,14 @@
         <item>@drawable/vasant</item>
         <item>@drawable/zaky</item>
     </integer-array>
+
+    <string name="username_hint"><font size="15">Masukkan username anda</font></string>
+    <string name="password_hint"><font size="15">Masukkan Kata Sandi anda</font></string>
+    <string name="confirm_hint"><font size="15">Pastikan kata sandi sama</font></string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
+    <string name="register_text">Daftar</string>
+    <string name="login_text">Masuk</string>
+    <string name="confirm_label">Konfirmasi Password</string>
 
 </resources>
