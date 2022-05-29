@@ -8,8 +8,6 @@ const db = require('./database');
 
 const uploadController = require('./controller');
 
-const users = require('./users');
-
 const router = express.Router();
 
 const maxExpire = 3 * 24 * 60 * 60;
