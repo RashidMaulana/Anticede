@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000L)
-            val intent = Intent(this@MainActivity, BottomNavigationActivity::class.java)
+            val intent = Intent(this@MainActivity, OnBoardingActivity::class.java)
             startActivity(intent)
             finish()
         }
