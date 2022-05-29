@@ -1,5 +1,4 @@
-const { CuteFFMPEG } = require('cute-ffmpeg');
-const { FFMPEGRequest } = require('cute-ffmpeg');
+const ffmpeg = require('fluent-ffmpeg');
 const { nanoid } = require('nanoid');
 const { Storage } = require('@google-cloud/storage');
 const { existsSync } = require('fs');
@@ -12,27 +11,11 @@ const uploadController = (req, res) => {
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
 
-    // convert from AAC to FLAC
-    const ffmpeg = new CuteFFMPEG({
-        overwrite: true,
-    });
+    ffmpeg()
+        .input(`./uploads/${file.filename}`)
+        .audioChannels(1)
+        .save(processedFilePath);
 
-    const ffmpegRequest = new FFMPEGRequest({
-        input: {
-            path: `./uploads/${file.filename}`,
-        },
-        output: {
-            path: processedFilePath,
-        },
-    });
-
-    ffmpeg.convert(ffmpegRequest)
-        // .then((filePath) => {
-        //
-        // })
-        .catch((error) => {
-            console.log(`error: ${error}`);
-        });
     // speech-to-text
     const speechClient = new speech.SpeechClient();
     const bucketName = 'anticede-speech-test';
@@ -48,7 +31,6 @@ const uploadController = (req, res) => {
         const config = {
             encoding: 'FLAC',
             languageCode: 'id-ID',
-            audioChannelCount: 2,
         };
         const speechRequest = {
             audio,
