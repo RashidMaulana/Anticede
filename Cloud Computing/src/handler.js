@@ -2,6 +2,7 @@ const express = require('express');
 const { nanoid } = require('nanoid');
 const multer = require('multer');
 const db = require('./database');
+const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 
@@ -47,13 +48,13 @@ router
             password,
             age,
         };
-        users.push(newUser);
-        db.promise().query(`INSERT INTO users VALUES('${newUser.id}', '${newUser.username}', '${newUser.password}', '${newUser.age}')`);
+        // users.push(newUser);
+        const salt = bcrypt.genSalt();
+        const hashedPassword = bcrypt.hash(password, salt);
+        console.log(password);
+        db.promise().query(`INSERT INTO users VALUES('${newUser.id}', '${newUser.username}', '${hashedPassword}', '${newUser.age}')`);
         const isSuccess = users.filter((user) => user.id === id).length > 0;
-        // if (username && password && age) {
-        //     db.promise().query(`INSERT INTO users VALUES('${newUser.id}', '${newUser.username}', '${newUser.password}', '${newUser.age}')`);
-        //     res.status(201).send({ msg: 'Created user' });
-        // }
+
         if (isSuccess) {
             const response = res.send({
                 status: 'success',
@@ -80,7 +81,7 @@ router
         const result = await db.promise().query('SELECT * FROM USERS');
         res.send(result[0]);
     })
-    .post((req, res) => {
+    .post(async (req, res) => {
         const {
             username,
             password,
@@ -95,6 +96,8 @@ router
             password,
             age,
         };
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(newUser.password, salt);
 
         if (username === '') {
             const response = res.send({
@@ -125,7 +128,7 @@ router
         // const accessToken = jwt.sign(newUser, process.env.ACCESS_TOKEN_SECRET);
         // res.json({ accessToken: accessToken });
         users.push(newUser);
-        db.promise().query(`INSERT INTO users VALUES('${newUser.id}', '${newUser.username}', '${newUser.password}', '${newUser.age}')`);
+        db.promise().query(`INSERT INTO users VALUES('${newUser.id}', '${newUser.username}', '${hashedPassword}', '${newUser.age}')`);
 
         const isSuccess = users.filter((user) => user.id === id).length > 0;
         if (isSuccess) {
@@ -236,41 +239,7 @@ router
 
         db.promise().query('DELETE from users WHERE id = ?', [req.params.id]);
         return res.status(200).json({ message: 'User with the data below successfully deleted from database', data: rows });
-        // db.getConnection((err, connection) => {
-        //     if (err) throw err;
-
-        //     connection.query('DELETE from users WHERE id = ?', [req.params.id], (err, rows) => {
-        //         if (!err) {
-        //             res.send(`User with the record ID: ${req.params.id} has been removed`);
-        //         } else {
-        //             console.log(err);
-        //         }
-        //     });
-        // });
     });
-
-    // .delete((req, res) => {
-    //     const { id } = req.params;
-
-    //     const index = users.findIndex((u) => u.id === id);
-
-    //     if (index !== -1) {
-    //         users.splice(index, 1);
-    //         const response = res.send({
-    //             status: 'success',
-    //             message: 'Member successfully deleted',
-    //         });
-    //         response.status(200);
-    //         return response;
-    //     }
-    //     const response = res.send({
-    //         status: 'fail',
-    //         message: 'Failed to delete member. Id not found',
-    //         id: req.params.id,
-    //     });
-    //     response.status(404);
-    //     return response;
-    // });
 
 const storage = multer.diskStorage({
     destination: './uploads',
