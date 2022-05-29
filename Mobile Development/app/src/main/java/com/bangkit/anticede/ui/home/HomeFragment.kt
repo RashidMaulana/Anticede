@@ -179,6 +179,19 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(getFile != null){
+            binding.recordingTitle.text = getFile?.name
+
+            val fileDate = Date(getFile?.lastModified()!!)
+            binding.recordingDate.text = dateFormatter.format(fileDate).toString()
+
+            val duration = mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
+            binding.recordingLength.text = durationFormat(duration!!)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -197,7 +210,6 @@ class HomeFragment : Fragment() {
         } else{
             Toast.makeText(requireActivity(), getString(R.string.warning6), Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun startPick() {
