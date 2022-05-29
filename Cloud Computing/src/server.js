@@ -1,8 +1,8 @@
-// require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const routes = require('./handler');
+const { requireAuth } = require('./authMiddleware');
 // const bodyParser = require('body-parser');
 
 const app = express();
@@ -17,7 +17,8 @@ app.use(express.urlencoded({
 }));
 
 // Server
-app.use(routes); // temporarily use routes.js ^_^
+// app.use(requireAuth, routes);
+app.use(routes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port: http://localhost:${PORT}/`);

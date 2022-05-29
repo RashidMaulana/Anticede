@@ -239,6 +239,14 @@ router
         return response;
     });
 
+router
+    .route('/logout')
+    .get((req, res) => {
+        res.cookie('jwt', '', { maxAge: 1 });
+        const response = res.status(200).json({ message: 'Logout success' });
+        return response;
+    });
+
 const storage = multer.diskStorage({
     destination: './uploads',
     // uncomment below if filename is actually needed
