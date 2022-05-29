@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.BuildConfig
+import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentDisclaimerBinding
 
 class DisclaimerFragment : Fragment() {
@@ -45,8 +46,8 @@ class DisclaimerFragment : Fragment() {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:") // only email apps should handle this
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(DEV_EMAIL))
-                putExtra(Intent.EXTRA_SUBJECT, "Anticede Data Disclaimer Request Remove")
-                putExtra(Intent.EXTRA_TEXT, "Mohon hapus data saya dari aplikasi Anticede")
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.warning3))
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.warning4))
             }
             val packageManager = requireContext().packageManager
             if (intent.resolveActivity(packageManager) != null) {
