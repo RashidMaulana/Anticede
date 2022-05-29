@@ -1,10 +1,8 @@
-const { CuteFFMPEG } = require('cute-ffmpeg');
-const { FFMPEGRequest } = require('cute-ffmpeg');
+const ffmpeg = require('fluent-ffmpeg');
 const { nanoid } = require('nanoid');
 const { Storage } = require('@google-cloud/storage');
 const { existsSync } = require('fs');
-// const fs = require('fs');
-// const path = require('path');
+const speech = require('@google-cloud/speech');
 
 const uploadController = (req, res) => {
     const { file } = req;
@@ -13,49 +11,58 @@ const uploadController = (req, res) => {
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
 
-    const ffmpeg = new CuteFFMPEG({
-        overwrite: true,
-    });
+    // convert from AAC to FLAC
+    ffmpeg()
+        .input(`./uploads/${file.filename}`)
+        .audioChannels(1)
+        .save(processedFilePath);
 
-    const request = new FFMPEGRequest({
-        input: {
-            path: `./uploads/${file.filename}`,
-        },
-        output: {
-            path: processedFilePath,
-        },
-    });
-
-    ffmpeg.convert(request);
-
-    // .then((filePath) => {
-    // // Done
-    // })
-    // .catch((error) => {
-    // // Something went wrong
-    // });
-
-    const storage = new Storage();
-
+    // speech-to-text
+    const speechClient = new speech.SpeechClient();
     const bucketName = 'anticede-speech-test';
+
+    async function speechToText() {
+        const gcsUri = `gs://${bucketName}/audio/${processedFile}`;
+
+        const audio = {
+            uri: gcsUri,
+        };
+        const config = {
+            encoding: 'FLAC',
+            languageCode: 'id-ID',
+        };
+        const speechRequest = {
+            audio,
+            config,
+        };
+
+        const [response] = await speechClient.recognize(speechRequest);
+        const transcription = response.results
+            .map((result) => result.alternatives[0].transcript)
+            .join('\n');
+        console.log(`Transcription: ${transcription}`);
+    }
+
+    // upload to GCS
+    const storage = new Storage();
 
     async function uploadFile() {
         await storage.bucket(bucketName).upload(processedFilePath, {
             destination: `audio/${processedFile}`,
         });
-
         console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
+        await speechToText();
     }
 
-    const checkTime = 1000;
+    const interval = 1000;
 
-    const timerId = setInterval(() => {
+    const checkLocalFile = setInterval(() => {
         const isExists = existsSync(processedFilePath);
         if (isExists) {
             uploadFile().catch(console.error);
-            clearInterval(timerId);
+            clearInterval(checkLocalFile);
         }
-    }, checkTime);
+    }, interval);
 };
 
 module.exports = uploadController;
