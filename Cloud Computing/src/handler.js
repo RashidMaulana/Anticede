@@ -1,61 +1,60 @@
 const express = require('express');
 const { nanoid } = require('nanoid');
 const multer = require('multer');
+const db = require('./database');
+const bcrypt = require('bcrypt');
+
+const jwt = require('jsonwebtoken');
+
 const uploadController = require('./controller');
 
 const users = require('./users');
 
 const router = express.Router();
 
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers.authorization;
+
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return res.sendStatus(401);
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+        req.user = user;
+        next();
+    });
+}
+
 router
-    .route('/members')
+    .route('/test')
     .get((req, res) => {
         res.send(users);
     })
     .post((req, res) => {
         const {
-            firstName,
-            lastName,
+            username,
+            password,
             age,
         } = req.body;
 
         const id = nanoid(16);
-
         const newUser = {
             id,
-            firstName,
-            lastName,
+            username,
+            password,
             age,
         };
-
-        if (firstName === '') {
-            const response = res.send({
-                status: 'fail',
-                message: 'Failed to add new member, please fill your first name.',
-            });
-            response.status(400);
-            return response;
-        }
-        if (lastName === '') {
-            const response = res.send({
-                status: 'fail',
-                message: 'Failed to add new member, please fill your last name.',
-            });
-            response.status(400);
-            return response;
-        }
-        if (age === '') {
-            const response = res.send({
-                status: 'fail',
-                message: 'Failed to add new member, please fill your age.',
-            });
-            response.status(400);
-            return response;
-        }
-
-        users.push(newUser);
-
+        // users.push(newUser);
+        const salt = bcrypt.genSalt();
+        const hashedPassword = bcrypt.hash(password, salt);
+        console.log(password);
+        db.promise().query(`INSERT INTO users VALUES('${newUser.id}', '${newUser.username}', '${hashedPassword}', '${newUser.age}')`);
         const isSuccess = users.filter((user) => user.id === id).length > 0;
+
         if (isSuccess) {
             const response = res.send({
                 status: 'success',
@@ -77,109 +76,169 @@ router
     });
 
 router
-    .route('/members/:id')
-    .get((req, res) => {
-        const { id } = req.params;
-
-        const user = users.filter((b) => b.id === id);
-
-        if (user.length > 0) {
-            return res.json({
-                status: 'success',
-                data: {
-                    user,
-                },
-            });
-        }
-
-        const response = res.send({
-            status: 'fail',
-            message: 'Member with id is not found',
-        });
-        response.status(404);
-        return response;
+    .route('/members')
+    .get(async (req, res) => {
+        const result = await db.promise().query('SELECT * FROM USERS');
+        res.send(result[0]);
     })
-
-    .put((req, res) => {
-        const { id } = req.params;
-
+    .post(async (req, res) => {
         const {
-            firstName,
-            lastName,
+            username,
+            password,
             age,
         } = req.body;
 
-        const index = users.findIndex((u) => u.id === id);
-        if (index !== -1) {
-            users[index] = {
-                ...users[index],
-                firstName,
-                lastName,
-                age,
-            };
-            if (firstName === '') {
-                const response = res.send({
-                    status: 'fail',
-                    message: 'Failed to add new member, please fill your first name.',
-                });
-                response.status(400);
-                return response;
-            }
-            if (lastName === '') {
-                const response = res.send({
-                    status: 'fail',
-                    message: 'Failed to add new member, please fill your last name.',
-                });
-                response.status(400);
-                return response;
-            }
-            if (age === '') {
-                const response = res.send({
-                    status: 'fail',
-                    message: 'Failed to add new member, please fill your age.',
-                });
-                response.status(400);
-                return response;
-            }
+        const id = nanoid(16);
+
+        const newUser = {
+            id,
+            username,
+            password,
+            age,
+        };
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(newUser.password, salt);
+
+        if (username === '') {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your username.',
+            });
+            response.status(400);
+            return response;
+        }
+        if (password === '') {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your password.',
+            });
+            response.status(400);
+            return response;
+        }
+        if (age === '') {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your age.',
+            });
+            response.status(400);
+            return response;
+        }
+
+        // res.json(users.filter(post => post.firstName === req.user.firstName));
+        // const accessToken = jwt.sign(newUser, process.env.ACCESS_TOKEN_SECRET);
+        // res.json({ accessToken: accessToken });
+        users.push(newUser);
+        db.promise().query(`INSERT INTO users VALUES('${newUser.id}', '${newUser.username}', '${hashedPassword}', '${newUser.age}')`);
+
+        const isSuccess = users.filter((user) => user.id === id).length > 0;
+        if (isSuccess) {
             const response = res.send({
                 status: 'success',
-                message: 'User berhasil diperbarui',
-                id_User: id,
+                message: 'New user is successfully added.',
+                data: {
+                    userId: id,
+                },
             });
-            response.status(200);
+            response.status(201);
             return response;
         }
 
         const response = res.send({
             status: 'fail',
-            message: 'Failed to update the member. Id not found',
-            id: req.params.id,
+            message: 'Failed to add new member.',
         });
-        response.status(404);
+        response.status(500);
+        return response;
+    });
+
+router
+    .route('/members/:id')
+    .get(async (req, res) => {
+        const [rows] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'User with id is not found' });
+        }
+
+        const response = res.status(200).json({ message: 'data found', data: rows[0] });
         return response;
     })
 
-    .delete((req, res) => {
-        const { id } = req.params;
+    .put(async (req, res) => {
+        const {
+            username,
+            password,
+            age,
+        } = req.body;
 
-        const index = users.findIndex((u) => u.id === id);
-
-        if (index !== -1) {
-            users.splice(index, 1);
-            const response = res.send({
-                status: 'success',
-                message: 'Member successfully deleted',
-            });
-            response.status(200);
-            return response;
+        const [rows] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'User with id is not found' });
         }
-        const response = res.send({
-            status: 'fail',
-            message: 'Failed to delete member. Id not found',
-            id: req.params.id,
-        });
-        response.status(404);
-        return response;
+
+        await db.promise().query('UPDATE users SET username = ?, password = ?,  age = ? WHERE id = ?', [username, password, age, req.params.id]);
+        const [result] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
+        return res.status(200).json(
+            { message: 'Data updated', data: result },
+        );
+        // const index = users.findIndex((u) => u.id === id);
+        // if (index !== -1) {
+        //     users[index] = {
+        //         ...users[index],
+        //         username,
+        //         password,
+        //         age,
+        //     };
+        //     if (username === '') {
+        //         const response = res.send({
+        //             status: 'fail',
+        //             message: 'Failed to add new member, please fill your first name.',
+        //         });
+        //         response.status(400);
+        //         return response;
+        //     }
+        //     if (password === '') {
+        //         const response = res.send({
+        //             status: 'fail',
+        //             message: 'Failed to add new member, please fill your last name.',
+        //         });
+        //         response.status(400);
+        //         return response;
+        //     }
+        //     if (age === '') {
+        //         const response = res.send({
+        //             status: 'fail',
+        //             message: 'Failed to add new member, please fill your age.',
+        //         });
+        //         response.status(400);
+        //         return response;
+        //     }
+        //     const response = res.send({
+        //         status: 'success',
+        //         message: 'User berhasil diperbarui',
+        //         id_User: id,
+        //     });
+        //     response.status(200);
+        //     return response;
+        // }
+
+        // const response = res.send({
+        //     status: 'fail',
+        //     message: 'Failed to update the member. Id not found',
+        //     id: req.params.id,
+        // });
+        // response.status(404);
+        // return response;
+    })
+
+    .delete(async (req, res) => {
+        const [rows] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'User with id is not found' });
+        }
+
+        db.promise().query('DELETE from users WHERE id = ?', [req.params.id]);
+        return res.status(200).json({ message: 'User with the data below successfully deleted from database', data: rows });
     });
 
 const storage = multer.diskStorage({
