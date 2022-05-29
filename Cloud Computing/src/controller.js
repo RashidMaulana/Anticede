@@ -11,6 +11,7 @@ const uploadController = (req, res) => {
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
 
+    // convert from AAC to FLAC
     ffmpeg()
         .input(`./uploads/${file.filename}`)
         .audioChannels(1)
@@ -21,10 +22,8 @@ const uploadController = (req, res) => {
     const bucketName = 'anticede-speech-test';
 
     async function speechToText() {
-        // The path to the remote LINEAR16 file
         const gcsUri = `gs://${bucketName}/audio/${processedFile}`;
 
-        // The audio file's encoding, sample rate in hertz, and BCP-47 language code
         const audio = {
             uri: gcsUri,
         };
@@ -37,8 +36,6 @@ const uploadController = (req, res) => {
             config,
         };
 
-        // Detects speech in the audio file
-        console.log('start speech to text');
         const [response] = await speechClient.recognize(speechRequest);
         const transcription = response.results
             .map((result) => result.alternatives[0].transcript)
@@ -53,9 +50,8 @@ const uploadController = (req, res) => {
         await storage.bucket(bucketName).upload(processedFilePath, {
             destination: `audio/${processedFile}`,
         });
-        await speechToText();
-
         console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
+        await speechToText();
     }
 
     const interval = 1000;
