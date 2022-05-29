@@ -77,21 +77,19 @@ router
         if (rows.length !== 0) {
             return res.status(500).json({ message: 'User with that username is already exist' });
         }
-        console.log(rows);
 
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
 
         await db.promise().query(`INSERT INTO users VALUES('${id}', '${username}', '${hashedPassword}', '${age}')`);
         const token = createToken(id);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxExpire * 1000 });
+        res.cookie('jwt', token, { httpOnly: false, maxAge: maxExpire * 1000 });
 
         const response = res.send({
             status: 'success',
             message: 'New user is successfully added.',
             data: {
                 userId: id,
-                cookie: token,
             },
         });
         response.status(201);
@@ -118,6 +116,47 @@ router
             age,
         } = req.body;
 
+        if (username === '') {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your username.',
+            });
+            response.status(400);
+            return response;
+        }
+        if (username.length < 6) {
+            const response = res.send({
+                status: 'fail',
+                message: 'Username length must be atleast 6 characters!',
+            });
+            response.status(400);
+            return response;
+        }
+        if (password === '') {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your password.',
+            });
+            response.status(400);
+            return response;
+        }
+        if (password.length < 6) {
+            const response = res.send({
+                status: 'fail',
+                message: 'Password length must be atleast 6 characters!',
+            });
+            response.status(400);
+            return response;
+        }
+        if (age === '') {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your age.',
+            });
+            response.status(400);
+            return response;
+        }
+
         const [rows] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
         if (rows.length === 0) {
             return res.status(404).json({ message: 'User with id is not found' });
@@ -128,54 +167,6 @@ router
         return res.status(200).json(
             { message: 'Data updated', data: result },
         );
-        // const index = users.findIndex((u) => u.id === id);
-        // if (index !== -1) {
-        //     users[index] = {
-        //         ...users[index],
-        //         username,
-        //         password,
-        //         age,
-        //     };
-        //     if (username === '') {
-        //         const response = res.send({
-        //             status: 'fail',
-        //             message: 'Failed to add new member, please fill your first name.',
-        //         });
-        //         response.status(400);
-        //         return response;
-        //     }
-        //     if (password === '') {
-        //         const response = res.send({
-        //             status: 'fail',
-        //             message: 'Failed to add new member, please fill your last name.',
-        //         });
-        //         response.status(400);
-        //         return response;
-        //     }
-        //     if (age === '') {
-        //         const response = res.send({
-        //             status: 'fail',
-        //             message: 'Failed to add new member, please fill your age.',
-        //         });
-        //         response.status(400);
-        //         return response;
-        //     }
-        //     const response = res.send({
-        //         status: 'success',
-        //         message: 'User berhasil diperbarui',
-        //         id_User: id,
-        //     });
-        //     response.status(200);
-        //     return response;
-        // }
-
-        // const response = res.send({
-        //     status: 'fail',
-        //     message: 'Failed to update the member. Id not found',
-        //     id: req.params.id,
-        // });
-        // response.status(404);
-        // return response;
     })
 
     .delete(async (req, res) => {
@@ -186,6 +177,66 @@ router
 
         db.promise().query('DELETE from users WHERE id = ?', [req.params.id]);
         return res.status(200).json({ message: 'User with the data below successfully deleted from database', data: rows });
+    });
+
+router
+    .route('/login')
+    .get(async (req, res) => {
+        const {
+            username,
+            password,
+        } = req.body;
+
+        if (username === '') {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your username.',
+            });
+            response.status(400);
+            return response;
+        }
+        if (username.length < 6) {
+            const response = res.send({
+                status: 'fail',
+                message: 'Username length must be atleast 6 characters!',
+            });
+            response.status(400);
+            return response;
+        }
+        if (password === '') {
+            const response = res.send({
+                status: 'fail',
+                message: 'Failed to add new member, please fill your password.',
+            });
+            response.status(400);
+            return response;
+        }
+        if (password.length < 6) {
+            const response = res.send({
+                status: 'fail',
+                message: 'Password length must be atleast 6 characters!',
+            });
+            response.status(400);
+            return response;
+        }
+
+        const [rows] = await db.promise().query(`SELECT * FROM users WHERE username = '${req.body.username}'`);
+        if (rows.length !== 0) {
+            const auth = bcrypt.compareSync(password, rows[0].password);
+            if (auth) {
+                const token = createToken(rows[0].id);
+                res.cookie('jwt', token, { httpOnly: false, maxAge: maxExpire * 1000 });
+                const response = res.status(200).json({
+                    message: 'Logged in!',
+                    user_id: rows[0].id,
+                });
+                return response;
+            }
+            const response = res.status(404).json({ message: 'Incorrect password!' });
+            return response;
+        }
+        const response = res.status(404).json({ message: 'Username not found!' });
+        return response;
     });
 
 const storage = multer.diskStorage({
