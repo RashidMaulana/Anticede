@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const routes = require('./handler');
+// const routerAudio = require('./handler');
+const routes = require('./routes');
 const { requireAuth } = require('./authMiddleware');
 // const bodyParser = require('body-parser');
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({
 
 // Server
 // app.use(requireAuth, routes);
+// app.use(routerAudio);
 app.use(routes);
 
 app.listen(PORT, () => {
