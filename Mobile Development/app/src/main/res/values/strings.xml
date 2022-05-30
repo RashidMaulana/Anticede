@@ -38,7 +38,8 @@
     <string name="warning4">Mohon hapus data saya dari aplikasi Anticede</string>
     <string name="warning5">Rekam atau pilih file terlebih dahulu!</string>
     <string name="warning6">Install aplikasi perekam suara terlebih dahulu!</string>
-
+    <string name="password_warning">Password tidak sama!</string>
+    <string name="username_warning">Username kurang dari 6 karakter!</string>
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">
         <item>Muchammad Alfi Karom</item>
