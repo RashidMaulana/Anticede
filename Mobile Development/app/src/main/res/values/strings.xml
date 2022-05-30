@@ -26,10 +26,9 @@
     <string name="upload_file_description">Pilih File Audio</string>
     <string name="record_label">Rekam\nAudio</string>
     <string name="upload_file_label">File \n Audio</string>
-    <string name="sample_text">Sample\nText</string>
     <string name="send_text">Kirim</string>
     <string name="play_button">Play Audio</string>
-    <string name="recording_name">File Name</string>
+    <string name="recording_name">Title</string>
     <string name="recording_date">File Date</string>
     <string name="recording_length">00:00</string>
     <string name="chooseRecorder">Choose a Recording</string>
@@ -38,7 +37,8 @@
     <string name="warning4">Mohon hapus data saya dari aplikasi Anticede</string>
     <string name="warning5">Rekam atau pilih file terlebih dahulu!</string>
     <string name="warning6">Install aplikasi perekam suara terlebih dahulu!</string>
-
+    <string name="password_warning">Password tidak sama!</string>
+    <string name="username_warning">Username kurang dari 6 karakter!</string>
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">
         <item>Muchammad Alfi Karom</item>
