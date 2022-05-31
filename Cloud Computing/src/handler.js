@@ -11,11 +11,9 @@ const uploadController = require('./controller');
 // const routerAudio = express.Router();
 
 const maxExpire = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-    return jwt.sign({ id }, 'anticede secret string', {
-        expiresIn: maxExpire,
-    });
-};
+const createToken = (id) => jwt.sign({ id }, 'anticede secret string', {
+    expiresIn: maxExpire,
+});
 
 exports.getAllMember = async (req, res) => {
     const result = await db.promise().query('SELECT * FROM USERS');
