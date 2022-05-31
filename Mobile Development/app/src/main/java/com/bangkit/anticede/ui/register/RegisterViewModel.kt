@@ -39,14 +39,14 @@ class RegisterViewModel: ViewModel() {
                     }
                 } else {
                     _isLoading.value = false
-                    Log.d(RegisterViewModel.TAG, "onResponse: ${response.body()?.message}")
+                    Log.d(TAG, "onResponse: ${response.body()?.message}")
                     Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                 _isLoading.value = false
-                Log.e(RegisterViewModel.TAG, "onFailure: ${t.message.toString()}")
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
                 Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
             }
         })
