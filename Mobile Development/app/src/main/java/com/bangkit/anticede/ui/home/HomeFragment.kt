@@ -3,27 +3,20 @@ package com.bangkit.anticede.ui.home
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentHomeBinding
 import com.bangkit.anticede.utilities.Utils.uriToFile
@@ -104,20 +97,25 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val actionBar: ActionBar? = (activity as BottomNavigationActivity).supportActionBar
-        actionBar?.setTitleColor(Color.BLACK)
 
         val homeViewModel by viewModels<HomeViewModel>()
 
         homeViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
+
+        val toolbar = binding.toolbar
+        val activity = activity as AppCompatActivity?
+
+        activity!!.setSupportActionBar(toolbar)
+        activity.title = "Home"
 
         binding.imageButton2.setOnClickListener {
             startRecording()
@@ -197,11 +195,6 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun ActionBar.setTitleColor(color: Int) {
-        val text = SpannableString(title ?: "")
-        text.setSpan(ForegroundColorSpan(color),0,text.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-        title = text
-    }
 
     private fun startRecording() {
         val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
@@ -278,5 +271,10 @@ class HomeFragment : Fragment() {
         } else {
             binding.progressBar.visibility = View.GONE
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_bar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }
