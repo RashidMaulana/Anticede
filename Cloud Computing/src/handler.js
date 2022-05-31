@@ -16,7 +16,7 @@ const createToken = (id) => jwt.sign({ id }, 'anticede secret string', {
 });
 
 exports.getAllMember = async (req, res) => {
-    const result = await db.promise().query('SELECT * FROM USERS');
+    const result = await db.promise().query('SELECT * FROM users');
     res.send(result[0]);
 };
 
