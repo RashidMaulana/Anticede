@@ -54,6 +54,7 @@ const uploadController = (req, res) => {
         await speechToText();
     }
 
+    // wait for audio process to finish
     const interval = 1000;
 
     const checkLocalFile = setInterval(() => {
