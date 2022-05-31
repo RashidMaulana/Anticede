@@ -52,6 +52,9 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
 
     //test
     testImplementation 'junit:junit:4.13.2'

@@ -8,10 +8,9 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.BuildConfig
@@ -32,6 +31,7 @@ class DisclaimerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDisclaimerBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -39,8 +39,11 @@ class DisclaimerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val actionBar : ActionBar? = (activity as BottomNavigationActivity).supportActionBar
-        actionBar?.setTitleColor(Color.BLACK)
+        val toolbar = binding.toolbar
+        val activity = activity as AppCompatActivity?
+
+        activity!!.setSupportActionBar(toolbar)
+        activity.title = "Disclaimer"
 
         binding.button2.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
@@ -62,10 +65,9 @@ class DisclaimerFragment : Fragment() {
         _binding = null
     }
 
-    private fun ActionBar.setTitleColor(color: Int) {
-        val text = SpannableString(title ?: "")
-        text.setSpan(ForegroundColorSpan(color),0,text.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-        title = text
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_bar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     companion object{
