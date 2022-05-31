@@ -22,9 +22,9 @@ routes.get('/members/:id', getMemberById);
 routes.put('/members/:id', editMemberById);
 routes.delete('/members/:id', deleteMemberById);
 
-routes.get('/login', login);
+routes.post('/login', login);
 
-routes.get('/logout', logout);
+routes.post('/logout', logout);
 
 routes.post('/upload_audio', postAudio, uploadController);
 
