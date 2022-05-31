@@ -10,7 +10,7 @@ const requireAuth = (req, res, next) => {
                 return res.status(400).json({ message: 'This is JWT error message' });
             }
             console.log(decodedToken);
-            next();
+            return next();
         });
     }
     return res.status(400).json({ message: 'You dont have the authorization to access this request, please login first!' });
