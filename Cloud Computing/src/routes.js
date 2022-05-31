@@ -2,6 +2,8 @@ const express = require('express');
 
 const routes = express.Router();
 
+const uploadController = require('./controller');
+
 const {
     getAllMember,
     signupPost,
@@ -24,6 +26,6 @@ routes.get('/login', login);
 
 routes.get('/logout', logout);
 
-routes.post('/upload_audio', postAudio);
+routes.post('/upload_audio', postAudio, uploadController);
 
 module.exports = routes;

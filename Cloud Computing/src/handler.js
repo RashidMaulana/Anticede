@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 
 const db = require('./database');
 
-const uploadController = require('./controller');
+// const uploadController = require('./controller');
 
 // const routerAudio = express.Router();
 
@@ -262,4 +262,4 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-exports.postAudio = (upload.single('audio'), uploadController);
+exports.postAudio = upload.single('audio');
