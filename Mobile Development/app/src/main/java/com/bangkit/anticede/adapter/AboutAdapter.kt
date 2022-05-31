@@ -8,11 +8,13 @@ import com.bangkit.anticede.model.TeamMember
 import com.bumptech.glide.Glide
 
 
-class AboutAdapter(private val listMember: ArrayList<TeamMember>): RecyclerView.Adapter<AboutAdapter.MemberViewHolder>() {
+class AboutAdapter(private val listMember: ArrayList<TeamMember>) :
+    RecyclerView.Adapter<AboutAdapter.MemberViewHolder>() {
     private var onItemClickCallback: OnItemClickCallback? = null
 
-    inner class MemberViewHolder(private val binding: ItemRowMemberBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(teamMember: TeamMember){
+    inner class MemberViewHolder(private val binding: ItemRowMemberBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(teamMember: TeamMember) {
             binding.root.setOnClickListener {
                 onItemClickCallback?.onItemClicked(teamMember)
             }
@@ -42,11 +44,11 @@ class AboutAdapter(private val listMember: ArrayList<TeamMember>): RecyclerView.
 
     override fun getItemCount(): Int = listMember.size
 
-    interface OnItemClickCallback{
+    interface OnItemClickCallback {
         fun onItemClicked(data: TeamMember)
     }
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 }

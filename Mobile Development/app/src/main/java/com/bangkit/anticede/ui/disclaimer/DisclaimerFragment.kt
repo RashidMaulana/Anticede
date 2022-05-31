@@ -2,17 +2,11 @@ package com.bangkit.anticede.ui.disclaimer
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.*
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.BuildConfig
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentDisclaimerBinding
@@ -70,7 +64,7 @@ class DisclaimerFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    companion object{
+    companion object {
         private const val DEV_EMAIL = BuildConfig.DEVELOPER_EMAIL
     }
 }

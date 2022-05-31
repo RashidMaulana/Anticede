@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bangkit.anticede.LoginFragment
 import com.bangkit.anticede.RegisterFragment
 
-class SectionsPagerAdapter (activity: AppCompatActivity) : FragmentStateAdapter(activity) {
+class SectionsPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int {
         return 2

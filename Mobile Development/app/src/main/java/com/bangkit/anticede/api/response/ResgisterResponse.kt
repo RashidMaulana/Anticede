@@ -7,18 +7,18 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ResgisterResponse(
 
-	@field:SerializedName("data")
-	val data: Data,
+    @field:SerializedName("data")
+    val data: Data,
 
-	@field:SerializedName("message")
-	val message: String,
+    @field:SerializedName("message")
+    val message: String,
 
-	@field:SerializedName("status")
-	val status: String
+    @field:SerializedName("status")
+    val status: String
 ) : Parcelable
 
 @Parcelize
 data class Data(
-	@field:SerializedName("userId")
-	val userId: String
+    @field:SerializedName("userId")
+    val userId: String
 ) : Parcelable

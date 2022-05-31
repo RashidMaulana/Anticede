@@ -15,15 +15,15 @@ import retrofit2.Response
 
 class HomeViewModel : ViewModel() {
 
-    var responseMessage : String? = null
+    var responseMessage: String? = null
     val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
 
     fun uploadVoice(
-        context : Context,
+        context: Context,
         file: MultipartBody.Part,
-        ) {
+    ) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().UploadVoice(file)
         client.enqueue(object : Callback<UploadResponse> {
@@ -34,13 +34,14 @@ class HomeViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     responseMessage = response.body()?.message
-                    Toast.makeText(context,responseMessage, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 } else {
                     _isLoading.value = false
                     responseMessage = response.body()?.message
-                    Toast.makeText(context,responseMessage, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 }
             }
+
             override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
