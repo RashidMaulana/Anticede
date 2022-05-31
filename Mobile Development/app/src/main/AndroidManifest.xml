@@ -29,7 +29,8 @@
         android:theme="@style/Theme.Anticede">
         <activity
             android:name=".OnBoardingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop" />
         <activity
             android:name=".BottomNavigationActivity"
             android:exported="false">

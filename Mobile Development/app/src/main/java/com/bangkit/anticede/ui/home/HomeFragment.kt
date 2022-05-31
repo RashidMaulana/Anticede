@@ -2,6 +2,7 @@ package com.bangkit.anticede.ui.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaMetadataRetriever
@@ -14,10 +15,18 @@ import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentHomeBinding
+import com.bangkit.anticede.preferences.PreferenceFactory
+import com.bangkit.anticede.preferences.PreferenceViewModel
+import com.bangkit.anticede.preferences.UserPreferences
 import com.bangkit.anticede.utilities.Utils.uriToFile
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -27,7 +36,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -110,6 +119,15 @@ class HomeFragment : Fragment() {
 
         homeViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
+        }
+
+        val pref = UserPreferences.getInstance(requireContext().dataStore)
+        val prefView = ViewModelProvider(this, PreferenceFactory(pref)).get(
+            PreferenceViewModel::class.java
+        )
+
+        prefView.getTokenUserSession().observe(viewLifecycleOwner){
+            Log.d("HomeFragment", "token: $it")
         }
 
         val toolbar = binding.toolbar
@@ -284,5 +302,30 @@ class HomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_bar, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.logout_button -> {
+                val homeViewModel by viewModels<HomeViewModel>()
+
+                homeViewModel.isLoading.observe(viewLifecycleOwner) {
+                    showLoading(it)
+                }
+
+                val pref = UserPreferences.getInstance(requireContext().dataStore)
+                val prefView = ViewModelProvider(this, PreferenceFactory(pref)).get(
+                    PreferenceViewModel::class.java
+                )
+
+                prefView.saveUserSession("null")
+                val intentToOnboard = Intent(requireContext(), OnBoardingActivity::class.java)
+                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intentToOnboard)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }
