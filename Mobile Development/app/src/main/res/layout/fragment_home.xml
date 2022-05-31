@@ -8,15 +8,28 @@
     android:orientation="vertical"
     >
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="587dp"
-        android:layout_height="503dp"
-        android:layout_marginBottom="228dp"
-        android:src="@drawable/background_colorful"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:fontFamily="@font/montserrat_bold"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/black">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="503dp"
+        android:src="@drawable/background_colorful"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="ContentDescription" />
 
     <ImageButton
