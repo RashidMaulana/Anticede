@@ -1,7 +1,5 @@
 FROM tensorflow/serving:latest
 
-COPY . /models
+COPY /anticede_model /models/anticede_model
 
-ENV MODEL_NAME=anticede-model
-
-EXPOSE 8501
+ENV MODEL_NAME=anticede_model
