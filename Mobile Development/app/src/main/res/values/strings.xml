@@ -39,6 +39,13 @@
     <string name="warning6">Install aplikasi perekam suara terlebih dahulu!</string>
     <string name="password_warning">Password tidak sama!</string>
     <string name="username_warning">Username kurang dari 6 karakter!</string>
+    <string name="warning_empty_age">Umur tidak boleh kosong</string>
+    <string name="warning_empty_password">Password tidak boleh kosong</string>
+    <string name="register_success">Register Success</string>
+    <string name="register_success2">Akun anda berhasil dibuat, silahkan untuk melakukan login</string>
+    <string name="yes">OK</string>
+    <string name="empty_username_warning">Username tidak boleh kosong</string>
+
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">
         <item>Muchammad Alfi Karom</item>
@@ -86,6 +93,7 @@
     <string name="login_text">Masuk</string>
     <string name="confirm_label">Konfirmasi Password</string>
     <string name="age_label">Umur</string>
+    <string name="password_warning2">Password kurang dari 6 karakter!</string>
 
 
 </resources>

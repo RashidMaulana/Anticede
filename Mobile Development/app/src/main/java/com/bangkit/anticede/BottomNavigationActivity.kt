@@ -58,8 +58,7 @@ class BottomNavigationActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         when (requestCode) {
-            REQUEST_CODE_ASK_PERMISSIONS -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            } else {
+            REQUEST_CODE_ASK_PERMISSIONS -> if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 // Permission Denied
                 Toast.makeText(this, "Denied", Toast.LENGTH_SHORT)
                     .show()
@@ -67,5 +66,4 @@ class BottomNavigationActivity : AppCompatActivity() {
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
-
 }

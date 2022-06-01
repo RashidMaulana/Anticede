@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ResgisterResponse(
+data class RegisterResponse(
 
     @field:SerializedName("data")
     val data: Data,
