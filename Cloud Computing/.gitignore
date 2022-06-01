@@ -138,4 +138,6 @@ vasant-notes
 
 # .env
 .env
+.env.prod
+.env.local
 secrets
