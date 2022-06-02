@@ -1,7 +1,7 @@
 // const express = require('express');
 const { nanoid } = require('nanoid');
 const { Storage } = require('@google-cloud/storage');
-const { existsSync } = require('fs');
+const fs = require('fs-extra');
 const multer = require('multer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -266,16 +266,11 @@ exports.postAudio = upload.single('audio');
 
 exports.uploadController = async (req, res) => {
     const { file } = req;
-    res.send(`done! ${file.filename}`);
+
+    res.status(200).send({ message: 'Upload finished!' });
 
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
-
-    // convert from AAC to FLAC
-    ffmpeg()
-        .input(`./uploads/${file.filename}`)
-        .audioChannels(1)
-        .save(processedFilePath);
 
     // speech-to-text
     const speechClient = new speech.SpeechClient();
@@ -296,8 +291,8 @@ exports.uploadController = async (req, res) => {
             config,
         };
 
-        const [response] = await speechClient.recognize(speechRequest);
-        const transcription = response.results
+        const [speechResponse] = await speechClient.recognize(speechRequest);
+        const transcription = speechResponse.results
             .map((result) => result.alternatives[0].transcript)
             .join('\n');
         console.log(`Transcription: ${transcription}`);
@@ -311,16 +306,24 @@ exports.uploadController = async (req, res) => {
             destination: `audio/${processedFile}`,
         });
         console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
-        await speechToText();
+        speechToText();
     };
+
+    // convert from AAC to FLAC
+    ffmpeg()
+        .input(`./uploads/${file.filename}`)
+        .audioChannels(1)
+        .save(processedFilePath);
 
     // wait for audio process to finish
     const interval = 1000;
 
     const checkLocalFile = setInterval(() => {
-        const isExists = existsSync(processedFilePath);
+        const isExists = fs.existsSync(processedFilePath);
         if (isExists) {
             uploadFile().catch(console.error);
+            fs.emptyDir('./uploads');
+            fs.emptyDir('./processed-audio');
             clearInterval(checkLocalFile);
         }
     }, interval);
