@@ -12,6 +12,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentLoginBinding
 import com.bangkit.anticede.preferences.PreferenceFactory
 import com.bangkit.anticede.preferences.PreferenceViewModel
@@ -53,7 +54,7 @@ class LoginFragment : Fragment() {
             }
 
             if(binding.editTextTextPassword.text.isNullOrBlank() || binding.editTextTextUserName.text.isNullOrBlank()){
-                Toast.makeText(requireContext(),"Isikan form dengan benar!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),getString(R.string.warning_empty_login), Toast.LENGTH_SHORT).show()
             } else{
                 loginViewModel.loginUser(requireContext(), binding.editTextTextUserName.text.toString(), binding.editTextTextPassword.text.toString())
             }
