@@ -1,4 +1,4 @@
-package com.bangkit.anticede
+package com.bangkit.anticede.ui.login
 
 import android.content.Context
 import android.os.Bundle
@@ -34,9 +34,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val homeViewModel by viewModels<HomeViewModel>()
+        val loginViewModel by viewModels<LoginViewModel>()
 
-        homeViewModel.isLoading.observe(viewLifecycleOwner) {
+        loginViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 
@@ -48,14 +48,14 @@ class LoginFragment : Fragment() {
                 PreferenceViewModel::class.java
             )
 
-            homeViewModel.getUser().observe(viewLifecycleOwner) {
+            loginViewModel.getUser().observe(viewLifecycleOwner) {
                 prefView.saveUserSession(it.userId)
             }
 
             if(binding.editTextTextPassword.text.isNullOrBlank() || binding.editTextTextUserName.text.isNullOrBlank()){
                 Toast.makeText(requireContext(),"Isikan form dengan benar!", Toast.LENGTH_SHORT).show()
             } else{
-                homeViewModel.loginUser(requireContext(), binding.editTextTextUserName.text.toString(), binding.editTextTextPassword.text.toString())
+                loginViewModel.loginUser(requireContext(), binding.editTextTextUserName.text.toString(), binding.editTextTextPassword.text.toString())
             }
         }
     }
@@ -68,6 +68,5 @@ class LoginFragment : Fragment() {
             binding.progressBar3.visibility = View.GONE
         }
     }
-
 
 }

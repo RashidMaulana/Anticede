@@ -3,7 +3,7 @@ package com.bangkit.anticede.adapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.bangkit.anticede.LoginFragment
+import com.bangkit.anticede.ui.login.LoginFragment
 import com.bangkit.anticede.ui.register.RegisterFragment
 
 class SectionsPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {

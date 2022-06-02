@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import com.bangkit.anticede.R
 import com.bangkit.anticede.api.ApiConfig
 import com.bangkit.anticede.api.response.RegisterResponse
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,8 +40,10 @@ class RegisterViewModel: ViewModel() {
                     }
                 } else {
                     _isLoading.value = false
+                    val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
+                    val responseMessage = jsonObj.getString("message")
                     Log.d(TAG, "onResponse: ${response.body()?.message}")
-                    Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 }
             }
 
