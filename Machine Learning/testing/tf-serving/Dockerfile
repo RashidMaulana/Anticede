@@ -1,5 +1,5 @@
 FROM tensorflow/serving:latest
 
-COPY /anticede_model /models/anticede_model
+COPY . /anticede_model_2 /models/anticede_model_2
 
-ENV MODEL_NAME=anticede_model
+ENV MODEL_NAME=anticede_model_2
