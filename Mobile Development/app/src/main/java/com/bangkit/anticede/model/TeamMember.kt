@@ -9,4 +9,4 @@ data class TeamMember(
     var name: String,
     var id: String,
     var linkedin: String
-): Parcelable
+) : Parcelable

@@ -3,17 +3,13 @@ package com.bangkit.anticede
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bangkit.anticede.databinding.ActivityBottomNavigationBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BottomNavigationActivity : AppCompatActivity() {
 
@@ -30,7 +26,8 @@ class BottomNavigationActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_bottom_navigation) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_bottom_navigation) as NavHostFragment
         val navController = navHostFragment.navController
 
         navView.setupWithNavController(navController)
@@ -38,12 +35,18 @@ class BottomNavigationActivity : AppCompatActivity() {
         checkUserPermission()
     }
 
-    private fun checkUserPermission(){
-        if(Build.VERSION.SDK_INT >= 23){
-            if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                    REQUEST_CODE_ASK_PERMISSIONS)
+    private fun checkUserPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions(
+                    arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                    REQUEST_CODE_ASK_PERMISSIONS
+                )
                 return
             }
         }
@@ -55,8 +58,7 @@ class BottomNavigationActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         when (requestCode) {
-            REQUEST_CODE_ASK_PERMISSIONS -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            } else {
+            REQUEST_CODE_ASK_PERMISSIONS -> if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 // Permission Denied
                 Toast.makeText(this, "Denied", Toast.LENGTH_SHORT)
                     .show()
@@ -64,5 +66,4 @@ class BottomNavigationActivity : AppCompatActivity() {
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
-
 }

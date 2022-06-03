@@ -2,6 +2,7 @@ package com.bangkit.anticede.ui.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaMetadataRetriever
@@ -14,11 +15,18 @@ import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentHomeBinding
+import com.bangkit.anticede.preferences.PreferenceFactory
+import com.bangkit.anticede.preferences.PreferenceViewModel
+import com.bangkit.anticede.preferences.UserPreferences
 import com.bangkit.anticede.utilities.Utils.uriToFile
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -28,7 +36,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -49,7 +57,7 @@ class HomeFragment : Fragment() {
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val recordVoice = result.data?.data as Uri
-                getFile = uriToFile(recordVoice,requireContext())
+                getFile = uriToFile(recordVoice, requireContext())
                 Log.d("HomeFragment", "getFile: $getFile")
 
                 val filePath = getFile?.absolutePath
@@ -60,7 +68,8 @@ class HomeFragment : Fragment() {
                 binding.recordingDate.text = dateFormatter.format(fileDate).toString()
 
                 mMr.setDataSource(filePath)
-                val duration = mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
+                val duration =
+                    mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
                 binding.recordingLength.text = durationFormat(duration!!)
 
                 initMp(filePath)
@@ -84,7 +93,8 @@ class HomeFragment : Fragment() {
             binding.recordingDate.text = dateFormatter.format(fileDate).toString()
 
             mMr.setDataSource(filePath)
-            val duration = mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
+            val duration =
+                mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
             binding.recordingLength.text = durationFormat(duration!!)
 
             initMp(filePath)
@@ -111,6 +121,15 @@ class HomeFragment : Fragment() {
             showLoading(it)
         }
 
+        val pref = UserPreferences.getInstance(requireContext().dataStore)
+        val prefView = ViewModelProvider(this, PreferenceFactory(pref)).get(
+            PreferenceViewModel::class.java
+        )
+
+        prefView.getTokenUserSession().observe(viewLifecycleOwner){
+            Log.d("HomeFragment", "token: $it")
+        }
+
         val toolbar = binding.toolbar
         val activity = activity as AppCompatActivity?
 
@@ -134,11 +153,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.playBtn.setOnClickListener {
-            if (mMp != null){
-                if(!isReady){
+            if (mMp != null) {
+                if (!isReady) {
                     mMp?.prepareAsync()
                 } else {
-                    if(mMp?.isPlaying as Boolean){
+                    if (mMp?.isPlaying as Boolean) {
                         mMp?.pause()
                         binding.playBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
                     } else {
@@ -147,18 +166,20 @@ class HomeFragment : Fragment() {
                     }
                 }
             } else {
-                Toast.makeText(requireActivity(), getString(R.string.warning2), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.warning2), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         binding.stopBtn.setOnClickListener {
-            if (mMp != null){
+            if (mMp != null) {
                 if (mMp?.isPlaying as Boolean || isReady) {
                     mMp?.stop()
                     isReady = false
                     binding.playBtn.setImageResource(R.drawable.ic_baseline_play_circle_filled_24)
                 }
             } else {
-                Toast.makeText(requireActivity(), getString(R.string.warning2), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.warning2), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -168,24 +189,28 @@ class HomeFragment : Fragment() {
             val fileUpload = getFile
             if (fileUpload != null) {
                 val requestVoiceFile = fileUpload.asRequestBody("audio/aac".toMediaTypeOrNull())
-                val requestBody = MultipartBody.Part.createFormData("audio", fileUpload.name, requestVoiceFile)
-                    homeViewModel.uploadVoice(requireContext(), requestBody)
-            } else{
-                Toast.makeText(requireActivity(), getString(R.string.warning5),
-                    Toast.LENGTH_SHORT).show()
+                val requestBody =
+                    MultipartBody.Part.createFormData("audio", fileUpload.name, requestVoiceFile)
+                homeViewModel.uploadVoice(requireContext(), requestBody)
+            } else {
+                Toast.makeText(
+                    requireActivity(), getString(R.string.warning5),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if(getFile != null){
+        if (getFile != null) {
             binding.recordingTitle.text = getFile?.name
 
             val fileDate = Date(getFile?.lastModified()!!)
             binding.recordingDate.text = dateFormatter.format(fileDate).toString()
 
-            val duration = mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
+            val duration =
+                mMr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong()
             binding.recordingLength.text = durationFormat(duration!!)
         }
     }
@@ -198,10 +223,11 @@ class HomeFragment : Fragment() {
 
     private fun startRecording() {
         val intent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
-        if(intent.resolveActivity(requireActivity().packageManager) != null){
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
             getVoice.launch(intent)
-        } else{
-            Toast.makeText(requireActivity(), getString(R.string.warning6), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireActivity(), getString(R.string.warning6), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -213,7 +239,7 @@ class HomeFragment : Fragment() {
         launcherIntentPick.launch(chooser)
     }
 
-    private fun initMp(filePath: String?){
+    private fun initMp(filePath: String?) {
         if (mMp == null) {
             mMp = MediaPlayer()
         } else {
@@ -225,9 +251,9 @@ class HomeFragment : Fragment() {
             .build()
         mMp?.setAudioAttributes(attribute)
 
-        if(filePath != null){
+        if (filePath != null) {
             Log.d("HomeFragment", "filepath: $filePath")
-            try{
+            try {
                 mMp?.setDataSource(filePath)
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -245,7 +271,7 @@ class HomeFragment : Fragment() {
         mMp?.setOnErrorListener { _, _, _ -> false }
     }
 
-    private fun durationFormat(milli: Long): String{
+    private fun durationFormat(milli: Long): String {
         var finalTimer = ""
         val secondTimer: String
 
@@ -253,8 +279,8 @@ class HomeFragment : Fragment() {
         val minutes = (milli % (1000 * 60 * 60)).toInt() / (1000 * 60)
         val seconds = (milli % (1000 * 60 * 60) % (1000 * 60) / 1000)
 
-        if(hours > 0) finalTimer = "$hours:"
-        secondTimer = if(seconds < 10){
+        if (hours > 0) finalTimer = "$hours:"
+        secondTimer = if (seconds < 10) {
             "0$seconds"
         } else {
             "$seconds"
@@ -276,5 +302,30 @@ class HomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_bar, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.logout_button -> {
+                val homeViewModel by viewModels<HomeViewModel>()
+
+                homeViewModel.isLoading.observe(viewLifecycleOwner) {
+                    showLoading(it)
+                }
+
+                val pref = UserPreferences.getInstance(requireContext().dataStore)
+                val prefView = ViewModelProvider(this, PreferenceFactory(pref)).get(
+                    PreferenceViewModel::class.java
+                )
+
+                prefView.saveUserSession("null")
+                val intentToOnboard = Intent(requireContext(), OnBoardingActivity::class.java)
+                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intentToOnboard)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }
