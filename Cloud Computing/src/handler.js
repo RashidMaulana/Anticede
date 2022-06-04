@@ -155,10 +155,27 @@ exports.editMemberById = async (req, res) => {
         return response;
     }
 
-    // Check if the id is exist in database
+    // Check if the id is exist in database.
     const [rows] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
     if (rows.length === 0) {
         return res.status(404).json({ message: 'User with id is not found' });
+    }
+
+    // Check if the username is not used by other user.
+    const [check] = await db.promise().query('SELECT * FROM users WHERE username = ?', [req.body.username]);
+    if (check.length === 0) {
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        await db.promise().query('UPDATE users SET username = ?, password = ?,  age = ? WHERE id = ?', [username, hashedPassword, age, req.params.id]);
+        return res.status(200).json(
+            { message: 'Data updated', id: req.params.id },
+        );
+    }
+
+    // Check if the username is already used by other user.
+    if (check.rows !== 0 && check[0].id !== req.params.id) {
+        return res.status(500).json({ message: 'User with that username is already exist' });
     }
 
     const salt = await bcrypt.genSalt();
