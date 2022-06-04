@@ -3,7 +3,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 // const routerAudio = require('./handler');
 const routes = require('./routes');
-const { requireAuth } = require('./authMiddleware');
 // const bodyParser = require('body-parser');
 
 const app = express();
