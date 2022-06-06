@@ -287,11 +287,12 @@ exports.uploadController = async (req, res) => {
 
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
+    let transcription = null;
 
     // post to tf-serving
     const postToModel = async () => {
         axios.post('http://localhost:8501/v1/models/anticede:predict', {
-            instances: [[46]],
+            instances: [[transcription]],
         }).then((axiosRes) => {
             console.log(`statusCode: ${axiosRes.status}`);
             console.log(axiosRes.data);
@@ -321,7 +322,7 @@ exports.uploadController = async (req, res) => {
         };
 
         const [speechResponse] = await speechClient.recognize(speechRequest);
-        const transcription = speechResponse.results
+        transcription = speechResponse.results
             .map((result) => result.alternatives[0].transcript)
             .join('\n');
         console.log(`Transcription: ${transcription}`);
