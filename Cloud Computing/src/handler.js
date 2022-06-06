@@ -263,20 +263,24 @@ exports.logout = (req, res) => {
 };
 
 // TODO
-// const limits = {
-//     files: 1,
-//     fileSize: 1024 * 1024 * 10,
-// };
+const limits = {
+    files: 1,
+    fileSize: 1024 * 1024 * 5,
+};
 
-// const fileFilter = (req, file, cb) => {
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype !== 'audio/x-aac') {
+        cb(new Error('invalid file type: only .aac audio file is allowed.'));
+    }
 
-// };
+    cb(null, true);
+};
 
 const storage = multer.diskStorage({
     destination: './uploads',
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage, limits, fileFilter });
 
 exports.postAudio = upload.single('audio');
 
@@ -344,18 +348,28 @@ exports.uploadController = async (req, res) => {
     ffmpeg()
         .input(`./uploads/${file.filename}`)
         .audioChannels(1)
-        .save(processedFilePath);
-
-    // wait for audio process to finish
-    const interval = 1000;
-
-    const checkLocalFile = setInterval(() => {
-        const isExists = fs.existsSync(processedFilePath);
-        if (isExists) {
+        .on('error', (err) => {
+            console.log(`error: ${err.message}`);
+            fs.emptyDir('./uploads');
+        })
+        .on('end', () => {
+            console.log('audio processing finished!');
             uploadFile().catch(console.error);
             fs.emptyDir('./uploads');
             fs.emptyDir('./processed-audio');
-            clearInterval(checkLocalFile);
-        }
-    }, interval);
+        })
+        .save(processedFilePath);
+
+    // wait for audio process to finish
+    // const interval = 1000;
+
+    // const checkLocalFile = setInterval(() => {
+    //     const isExists = fs.existsSync(processedFilePath);
+    //     if (isExists) {
+    //         uploadFile().catch(console.error);
+    //         fs.emptyDir('./uploads');
+    //         fs.emptyDir('./processed-audio');
+    //         clearInterval(checkLocalFile);
+    //     }
+    // }, interval);
 };
