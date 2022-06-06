@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const ffmpeg = require('fluent-ffmpeg');
 const speech = require('@google-cloud/speech');
+const axios = require('axios');
 const db = require('./database');
 
 // const uploadController = require('./controller');
@@ -261,6 +262,16 @@ exports.logout = (req, res) => {
     return response;
 };
 
+// TODO
+// const limits = {
+//     files: 1,
+//     fileSize: 1024 * 1024 * 10,
+// };
+
+// const fileFilter = (req, file, cb) => {
+
+// };
+
 const storage = multer.diskStorage({
     destination: './uploads',
 });
@@ -276,6 +287,19 @@ exports.uploadController = async (req, res) => {
 
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
+
+    // post to tf-serving
+    const postToModel = async () => {
+        axios.post('http://localhost:8501/v1/models/anticede:predict', {
+            instances: [[46]],
+        }).then((axiosRes) => {
+            console.log(`statusCode: ${axiosRes.status}`);
+            console.log(axiosRes.data);
+        })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
     // speech-to-text
     const speechClient = new speech.SpeechClient();
@@ -311,7 +335,8 @@ exports.uploadController = async (req, res) => {
             destination: `audio/${processedFile}`,
         });
         console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
-        speechToText();
+        await speechToText();
+        postToModel();
     };
 
     // convert from AAC to FLAC
