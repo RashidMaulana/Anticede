@@ -1,4 +1,3 @@
-// const express = require('express');
 const { nanoid } = require('nanoid');
 const { Storage } = require('@google-cloud/storage');
 const fs = require('fs-extra');
@@ -12,6 +11,9 @@ require('dotenv').config();
 
 const maxExpire = 3 * 24 * 60 * 60;
 const createToken = (id) => jwt.sign({ id }, process.env.SECRET_STRING, {
+    expiresIn: maxExpire,
+});
+const createTokenAdmin = (id) => jwt.sign({ id }, process.env.SECRET_STRING_ADMIN, {
     expiresIn: maxExpire,
 });
 
@@ -243,6 +245,64 @@ exports.login = async (req, res) => {
             res.cookie('jwt', token, { httpOnly: false, maxAge: maxExpire * 1000 });
             const response = res.status(200).json({
                 message: 'Logged in!',
+                user_id: rows[0].id,
+            });
+            return response;
+        }
+        const response = res.status(404).json({ message: 'Incorrect password!' });
+        return response;
+    }
+    const response = res.status(404).json({ message: 'Username not found!' });
+    return response;
+};
+
+exports.loginAdmin = async (req, res) => {
+    const {
+        username,
+        password,
+    } = req.body;
+
+    if (username === '') {
+        const response = res.send({
+            status: 'fail',
+            message: 'Failed to add new member, please fill your username.',
+        });
+        response.status(400);
+        return response;
+    }
+    if (username.length < 6) {
+        const response = res.send({
+            status: 'fail',
+            message: 'Username length must be atleast 6 characters!',
+        });
+        response.status(400);
+        return response;
+    }
+    if (password === '') {
+        const response = res.send({
+            status: 'fail',
+            message: 'Failed to add new member, please fill your password.',
+        });
+        response.status(400);
+        return response;
+    }
+    if (password.length < 6) {
+        const response = res.send({
+            status: 'fail',
+            message: 'Password length must be atleast 6 characters!',
+        });
+        response.status(400);
+        return response;
+    }
+
+    const [rows] = await db.promise().query(`SELECT * FROM admins WHERE username = '${req.body.username}'`);
+    if (rows.length !== 0) {
+        const auth = bcrypt.compareSync(password, rows[0].password);
+        if (auth) {
+            const token = createTokenAdmin(rows[0].id);
+            res.cookie('jwt', token, { httpOnly: false, maxAge: maxExpire * 1000 });
+            const response = res.status(200).json({
+                message: 'Logged in as admin!',
                 user_id: rows[0].id,
             });
             return response;
