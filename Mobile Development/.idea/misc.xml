@@ -10,7 +10,6 @@
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/round_background.xml" value="0.293" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/white_background.xml" value="0.293" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_about.xml" value="0.358695652173913" />
-        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_admin_login.xml" value="0.2755208333333333" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.2" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_home.xml" value="0.18" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -50,6 +49,7 @@
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/fragment_notifications.xml" value="0.36666666666666664" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/item_row_member.xml" value="0.2026315789473684" />
+        <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/item_row_user.xml" value="0.33" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
