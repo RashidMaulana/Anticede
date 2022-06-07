@@ -1,5 +1,6 @@
 package com.bangkit.anticede.api
 
+import com.bangkit.anticede.api.response.AdminLoginResponse
 import com.bangkit.anticede.api.response.LoginResponse
 import com.bangkit.anticede.api.response.RegisterResponse
 import com.bangkit.anticede.api.response.UploadResponse
@@ -29,4 +30,11 @@ interface ApiService {
         @Field("age") age: String,
         @Field("password") password: String
     ): Call<RegisterResponse>
+
+    @FormUrlEncoded
+    @POST("login_admin")
+    fun loginAdmin(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): Call<AdminLoginResponse>
 }

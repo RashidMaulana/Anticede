@@ -14,6 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         android:fontFamily="@font/montserrat_bold"
+        android:elevation="8dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_scrollFlags="enterAlways"
         app:layout_constraintEnd_toEndOf="parent"
