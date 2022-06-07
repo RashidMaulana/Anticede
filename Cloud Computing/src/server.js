@@ -1,9 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-// const routerAudio = require('./handler');
 const routes = require('./routes');
-// const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 8080;
@@ -17,8 +15,6 @@ app.use(express.urlencoded({
 }));
 
 // Server
-// app.use(requireAuth, routes);
-// app.use(routerAudio);
 app.use(routes);
 
 app.listen(PORT, () => {

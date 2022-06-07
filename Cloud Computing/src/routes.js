@@ -1,5 +1,5 @@
 const express = require('express');
-const { requireAuth } = require('./authMiddleware');
+const { requireAuthMember, requireAuthAdmin } = require('./middlewares');
 
 const routes = express.Router();
 
@@ -13,19 +13,22 @@ const {
     logout,
     postAudio,
     uploadController,
+    loginAdmin,
 } = require('./handler');
 
-routes.get('/members', getAllMember);
+routes.get('/members', requireAuthAdmin, getAllMember);
 routes.post('/members', signupPost);
 
-routes.get('/members/:id', getMemberById);
-routes.put('/members/:id', editMemberById);
-routes.delete('/members/:id', deleteMemberById);
+routes.get('/members/:id', requireAuthMember, getMemberById);
+routes.put('/members/:id', requireAuthMember, editMemberById);
+routes.delete('/members/:id', requireAuthAdmin, deleteMemberById);
 
 routes.post('/login', login);
 
+routes.post('/login_admin', loginAdmin);
+
 routes.post('/logout', logout);
 
-routes.post('/upload_audio', postAudio, uploadController);
+routes.post('/upload_audio', requireAuthMember, postAudio, uploadController);
 
 module.exports = routes;
