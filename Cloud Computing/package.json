@@ -11,6 +11,7 @@
   "dependencies": {
     "@google-cloud/speech": "^4.10.2",
     "@google-cloud/storage": "^6.0.1",
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",

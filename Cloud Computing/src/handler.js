@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const ffmpeg = require('fluent-ffmpeg');
 const speech = require('@google-cloud/speech');
+const axios = require('axios');
 const db = require('./database');
 
 // const uploadController = require('./controller');
@@ -261,11 +262,25 @@ exports.logout = (req, res) => {
     return response;
 };
 
+// TODO
+const limits = {
+    files: 1,
+    fileSize: 1024 * 1024 * 5,
+};
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype !== 'audio/x-aac') {
+        cb(new Error('invalid file type: only .aac audio file is allowed.'));
+    }
+
+    cb(null, true);
+};
+
 const storage = multer.diskStorage({
     destination: './uploads',
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage, limits, fileFilter });
 
 exports.postAudio = upload.single('audio');
 
@@ -276,6 +291,20 @@ exports.uploadController = async (req, res) => {
 
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
+    let transcription = null;
+
+    // post to tf-serving
+    const postToModel = async () => {
+        axios.post('http://localhost:8501/v1/models/anticede:predict', {
+            instances: [[transcription]],
+        }).then((axiosRes) => {
+            console.log(`statusCode: ${axiosRes.status}`);
+            console.log(axiosRes.data);
+        })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
     // speech-to-text
     const speechClient = new speech.SpeechClient();
@@ -297,7 +326,7 @@ exports.uploadController = async (req, res) => {
         };
 
         const [speechResponse] = await speechClient.recognize(speechRequest);
-        const transcription = speechResponse.results
+        transcription = speechResponse.results
             .map((result) => result.alternatives[0].transcript)
             .join('\n');
         console.log(`Transcription: ${transcription}`);
@@ -311,25 +340,36 @@ exports.uploadController = async (req, res) => {
             destination: `audio/${processedFile}`,
         });
         console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
-        speechToText();
+        await speechToText();
+        postToModel();
     };
 
     // convert from AAC to FLAC
     ffmpeg()
         .input(`./uploads/${file.filename}`)
         .audioChannels(1)
-        .save(processedFilePath);
-
-    // wait for audio process to finish
-    const interval = 1000;
-
-    const checkLocalFile = setInterval(() => {
-        const isExists = fs.existsSync(processedFilePath);
-        if (isExists) {
+        .on('error', (err) => {
+            console.log(`error: ${err.message}`);
+            fs.emptyDir('./uploads');
+        })
+        .on('end', () => {
+            console.log('audio processing finished!');
             uploadFile().catch(console.error);
             fs.emptyDir('./uploads');
             fs.emptyDir('./processed-audio');
-            clearInterval(checkLocalFile);
-        }
-    }, interval);
+        })
+        .save(processedFilePath);
+
+    // wait for audio process to finish
+    // const interval = 1000;
+
+    // const checkLocalFile = setInterval(() => {
+    //     const isExists = fs.existsSync(processedFilePath);
+    //     if (isExists) {
+    //         uploadFile().catch(console.error);
+    //         fs.emptyDir('./uploads');
+    //         fs.emptyDir('./processed-audio');
+    //         clearInterval(checkLocalFile);
+    //     }
+    // }, interval);
 };

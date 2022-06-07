@@ -11,16 +11,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.anticede.BuildConfig
 import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentDisclaimerBinding
-import com.bangkit.anticede.preferences.PreferenceFactory
-import com.bangkit.anticede.preferences.PreferenceViewModel
-import com.bangkit.anticede.preferences.UserPreferences
-import com.bangkit.anticede.ui.home.HomeViewModel
+import com.bangkit.anticede.preferences.user.PreferenceFactory
+import com.bangkit.anticede.preferences.user.PreferenceViewModel
+import com.bangkit.anticede.preferences.user.UserPreferences
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class DisclaimerFragment : Fragment() {
