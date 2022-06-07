@@ -8,6 +8,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const speech = require('@google-cloud/speech');
 const axios = require('axios');
 const db = require('./database');
+const wordlist = require('./wordlist');
 require('dotenv').config();
 
 const maxExpire = 3 * 24 * 60 * 60;
@@ -350,12 +351,27 @@ exports.uploadController = async (req, res) => {
 
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
+
     let transcription = null;
+    const servingInput = [];
+
+    // string to index
+    const tokenize = () => {
+        const userInputString = transcription.toLowerCase().split(' ');
+
+        userInputString.forEach((element, index) => {
+            if (wordlist.indexOf(userInputString[index]) === -1) {
+                servingInput.push(0);
+            } else {
+                servingInput.push(wordlist.indexOf(userInputString[index]));
+            }
+        });
+    };
 
     // post to tf-serving
-    const postToModel = async () => {
+    const postToModel = () => {
         axios.post('http://localhost:8501/v1/models/anticede:predict', {
-            instances: [[transcription]],
+            inputs: [servingInput],
         }).then((axiosRes) => {
             console.log(`statusCode: ${axiosRes.status}`);
             console.log(axiosRes.data);
@@ -400,6 +416,8 @@ exports.uploadController = async (req, res) => {
         });
         console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
         await speechToText();
+        await tokenize();
+        console.log(servingInput);
         postToModel();
     };
 
