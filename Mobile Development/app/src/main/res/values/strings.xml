@@ -46,6 +46,7 @@
     <string name="yes">OK</string>
     <string name="empty_username_warning">Username tidak boleh kosong</string>
     <string name="warning_empty_login">Isikan form dengan benar!</string>
+    <string name="text_login_admin">atau login sebagai admin</string>
 
     <!-- "About Us" Page Data Resources -->
     <string-array name="name">
@@ -90,10 +91,12 @@
     <string name="age_hint"><font size="15">Masukkan umur anda</font></string>
     <string name="username_label">Username</string>
     <string name="password_label">Password</string>
+    <string name="admin_username_label">Username Admin</string>
+    <string name="admin_password_label">Password Admin</string>
+    <string name="age_label">Umur</string>
+    <string name="confirm_label">Konfirmasi Password</string>
     <string name="register_text">Daftar</string>
     <string name="login_text">Masuk</string>
-    <string name="confirm_label">Konfirmasi Password</string>
-    <string name="age_label">Umur</string>
     <string name="password_warning2">Password kurang dari 6 karakter!</string>
 
 

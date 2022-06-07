@@ -28,10 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Anticede">
         <activity
+            android:name=".ui.admin.login.AdminLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".OnBoardingActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".BottomNavigationActivity"
             android:exported="false">

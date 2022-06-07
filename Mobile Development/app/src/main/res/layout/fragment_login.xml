@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
+    tools:context=".ui.login.LoginFragment">
 
 
     <EditText
@@ -76,6 +76,8 @@
         app:layout_constraintStart_toStartOf="@id/editTextTextPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextUserName" />
 
+
+
     <ProgressBar
         android:id="@+id/progressBar3"
         style="?android:attr/progressBarStyle"
@@ -86,4 +88,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/toLoginAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/text_login_admin"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3">
+    </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

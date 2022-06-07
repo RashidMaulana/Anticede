@@ -19,9 +19,9 @@ import com.bangkit.anticede.R
 import com.bangkit.anticede.adapter.AboutAdapter
 import com.bangkit.anticede.databinding.FragmentAboutBinding
 import com.bangkit.anticede.model.TeamMember
-import com.bangkit.anticede.preferences.PreferenceFactory
-import com.bangkit.anticede.preferences.PreferenceViewModel
-import com.bangkit.anticede.preferences.UserPreferences
+import com.bangkit.anticede.preferences.user.PreferenceFactory
+import com.bangkit.anticede.preferences.user.PreferenceViewModel
+import com.bangkit.anticede.preferences.user.UserPreferences
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class AboutFragment : Fragment() {

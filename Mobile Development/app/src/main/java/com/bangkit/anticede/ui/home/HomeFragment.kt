@@ -24,9 +24,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentHomeBinding
-import com.bangkit.anticede.preferences.PreferenceFactory
-import com.bangkit.anticede.preferences.PreferenceViewModel
-import com.bangkit.anticede.preferences.UserPreferences
+import com.bangkit.anticede.preferences.user.PreferenceFactory
+import com.bangkit.anticede.preferences.user.PreferenceViewModel
+import com.bangkit.anticede.preferences.user.UserPreferences
 import com.bangkit.anticede.utilities.Utils.uriToFile
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
