@@ -1,4 +1,4 @@
-package com.bangkit.anticede.preferences
+package com.bangkit.anticede.preferences.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

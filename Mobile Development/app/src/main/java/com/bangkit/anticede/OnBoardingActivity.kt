@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bangkit.anticede.adapter.SectionsPagerAdapter
 import com.bangkit.anticede.databinding.ActivityOnBoardingBinding
-import com.bangkit.anticede.preferences.PreferenceFactory
-import com.bangkit.anticede.preferences.PreferenceViewModel
-import com.bangkit.anticede.preferences.UserPreferences
+import com.bangkit.anticede.preferences.user.PreferenceFactory
+import com.bangkit.anticede.preferences.user.PreferenceViewModel
+import com.bangkit.anticede.preferences.user.UserPreferences
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

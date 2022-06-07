@@ -12,7 +12,6 @@ import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -22,11 +21,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentLoginBinding
-import com.bangkit.anticede.preferences.PreferenceFactory
-import com.bangkit.anticede.preferences.PreferenceViewModel
-import com.bangkit.anticede.preferences.UserPreferences
+import com.bangkit.anticede.preferences.user.PreferenceFactory
+import com.bangkit.anticede.preferences.user.PreferenceViewModel
+import com.bangkit.anticede.preferences.user.UserPreferences
 import com.bangkit.anticede.ui.admin.login.AdminLoginActivity
-import com.bangkit.anticede.ui.home.HomeViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class LoginFragment : Fragment() {

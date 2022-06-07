@@ -1,4 +1,4 @@
-package com.bangkit.anticede.preferences
+package com.bangkit.anticede.preferences.user
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
