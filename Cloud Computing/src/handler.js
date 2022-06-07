@@ -8,13 +8,10 @@ const bcrypt = require('bcrypt');
 const ffmpeg = require('fluent-ffmpeg');
 const speech = require('@google-cloud/speech');
 const db = require('./database');
-
-// const uploadController = require('./controller');
-
-// const routerAudio = express.Router();
+require('dotenv').config();
 
 const maxExpire = 3 * 24 * 60 * 60;
-const createToken = (id) => jwt.sign({ id }, 'anticede secret string', {
+const createToken = (id) => jwt.sign({ id }, process.env.SECRET_STRING, {
     expiresIn: maxExpire,
 });
 
@@ -189,6 +186,8 @@ exports.editMemberById = async (req, res) => {
 
 exports.deleteMemberById = async (req, res) => {
     const [rows] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
+
+    // Check if the id is found in database or not
     if (rows.length === 0) {
         return res.status(404).json({ message: 'User with id is not found' });
     }

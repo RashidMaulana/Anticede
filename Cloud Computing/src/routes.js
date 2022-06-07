@@ -15,17 +15,18 @@ const {
     uploadController,
 } = require('./handler');
 
-routes.get('/members', getAllMember);
+routes.get('/members', requireAuth, getAllMember);
 routes.post('/members', signupPost);
 
-routes.get('/members/:id', getMemberById);
-routes.put('/members/:id', editMemberById);
-routes.delete('/members/:id', deleteMemberById);
+routes.get('/members/:id', requireAuth, getMemberById);
+routes.put('/members/:id', requireAuth, editMemberById);
+routes.delete('/members/:id', requireAuth, deleteMemberById);
 
 routes.post('/login', login);
+// routes.post('/login_admin', login_admin)
 
 routes.post('/logout', logout);
 
-routes.post('/upload_audio', postAudio, uploadController);
+routes.post('/upload_audio', requireAuth, postAudio, uploadController);
 
 module.exports = routes;
