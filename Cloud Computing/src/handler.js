@@ -347,7 +347,7 @@ exports.postAudio = upload.single('audio');
 exports.uploadController = async (req, res) => {
     const { file } = req;
 
-    res.status(200).send({ message: 'Upload finished!' });
+    // res.status(200).send({ message: 'Upload finished!' });
 
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
@@ -375,6 +375,29 @@ exports.uploadController = async (req, res) => {
         }).then((axiosRes) => {
             console.log(`statusCode: ${axiosRes.status}`);
             console.log(axiosRes.data);
+            let { outputs } = axiosRes.data;
+            outputs = outputs.flat();
+            const index = outputs.indexOf(Math.max(...outputs));
+            console.log(outputs, index);
+
+            let responseMessage = null;
+            switch (index) {
+            case 0:
+                responseMessage = 'text is type A';
+                break;
+            case 1:
+                responseMessage = 'text is type B';
+                break;
+            case 2:
+                responseMessage = 'text is type C';
+                break;
+            case 3:
+                responseMessage = 'text is type D';
+                break;
+            default:
+                responseMessage = 'this is default response message';
+            }
+            res.status(200).send({ message: responseMessage });
         })
             .catch((error) => {
                 console.error(error);
@@ -416,7 +439,7 @@ exports.uploadController = async (req, res) => {
         });
         console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
         await speechToText();
-        await tokenize();
+        tokenize();
         console.log(servingInput);
         postToModel();
     };
