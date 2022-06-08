@@ -94,10 +94,14 @@
     <string name="admin_username_label">Username Admin</string>
     <string name="admin_password_label">Password Admin</string>
     <string name="age_label">Umur</string>
+    <string name="age_label2">Umur:</string>
     <string name="confirm_label">Konfirmasi Password</string>
     <string name="register_text">Daftar</string>
     <string name="login_text">Masuk</string>
     <string name="password_warning2">Password kurang dari 6 karakter!</string>
+    <string name="delete_button">delete button</string>
+    <string name="confirmationTitle">Hapus Akun</string>
+    <string name="confirmDelete">Anda yakin ingin menghapus akun ini?</string>
 
 
 </resources>
