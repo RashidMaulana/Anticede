@@ -5,13 +5,13 @@ const requireAuthMember = (req, res, next) => {
     const token = req.cookies.jwt;
 
     if (!token) {
-        return res.status(400).json({ message: 'no token found' });
+        return res.status(400).json({ message: 'Token tidak terdeteksi, harap login terlebih dahulu!' });
     }
 
     // Check JWT exist & is verified
     jwt.verify(token, (process.env.SECRET_STRING), (err) => {
         if (err) {
-            return res.status(400).json({ message: 'This is JWT error message' });
+            return res.status(400).json({ message: 'Anda tidak memiliki hak untuk mengakses request ini!' });
         }
         // console.log(decodedToken);
         return next();
@@ -23,13 +23,13 @@ const requireAuthAdmin = (req, res, next) => {
     const token = req.cookies.jwt;
 
     if (!token) {
-        return res.status(400).json({ message: 'no token found' });
+        return res.status(400).json({ message: 'Token tidak terdeteksi, harap login terlebih dahulu!' });
     }
 
     // Check JWT exist & is verified
     jwt.verify(token, (process.env.SECRET_STRING_ADMIN), (err) => {
         if (err) {
-            return res.status(400).json({ message: "You don't have authority to access this request." });
+            return res.status(400).json({ message: 'Request ini hanya bisa diakses oleh user!' });
         }
         // console.log(decodedToken);
         return next();
