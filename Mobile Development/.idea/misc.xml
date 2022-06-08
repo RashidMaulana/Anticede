@@ -18,7 +18,7 @@
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_on_boarding.xml" value="0.33" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/fragment_about.xml" value="0.25" />
-        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/fragment_disclaimer.xml" value="0.18" />
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/fragment_disclaimer.xml" value="0.33" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/fragment_register.xml" value="0.33" />
@@ -43,7 +43,9 @@
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.347" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.3515" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/drawable/ic_perm_contact_calendar_24.xml" value="0.347" />
+        <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/drawable/round_background.xml" value="0.347" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/activity_about.xml" value="0.30027173913043476" />
+        <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/activity_admin_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.36666666666666664" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/activity_home.xml" value="0.2078125" />
         <entry key="..\:/Others/Projects/Bangkit Capstone Project/Anticede/Mobile Development/app/src/main/res/layout/activity_main.xml" value="0.2078125" />
