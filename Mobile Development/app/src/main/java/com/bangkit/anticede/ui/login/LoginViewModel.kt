@@ -25,7 +25,7 @@ class LoginViewModel : ViewModel() {
 
     fun loginUser(context: Context, username : String, password : String){
         _isLoading.value = true
-        val client = ApiConfig.getApiService().loginUser(username, password)
+        val client = ApiConfig.getApiService(context).loginUser(username, password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,

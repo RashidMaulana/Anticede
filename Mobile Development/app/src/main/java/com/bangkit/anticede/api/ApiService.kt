@@ -1,8 +1,6 @@
 package com.bangkit.anticede.api
 
-import com.bangkit.anticede.api.response.LoginResponse
-import com.bangkit.anticede.api.response.RegisterResponse
-import com.bangkit.anticede.api.response.UploadResponse
+import com.bangkit.anticede.api.response.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -29,4 +27,17 @@ interface ApiService {
         @Field("age") age: String,
         @Field("password") password: String
     ): Call<RegisterResponse>
+
+    @FormUrlEncoded
+    @POST("login_admin")
+    fun loginAdmin(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): Call<AdminLoginResponse>
+
+    @GET("members")
+    fun getMembers() : Call<GetAllUserResponse>
+
+    @POST("logout")
+    fun logout() : Call<LogoutResponse>
 }

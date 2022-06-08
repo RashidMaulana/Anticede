@@ -7,11 +7,12 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bangkit.anticede.BottomNavigationActivity
+import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.api.ApiConfig
-import com.bangkit.anticede.api.response.LoginResponse
+import com.bangkit.anticede.api.response.LogoutResponse
 import com.bangkit.anticede.api.response.UploadResponse
 import okhttp3.MultipartBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,7 +30,7 @@ class HomeViewModel : ViewModel() {
         file: MultipartBody.Part,
     ) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().UploadVoice(file)
+        val client = ApiConfig.getApiService(context).UploadVoice(file)
         client.enqueue(object : Callback<UploadResponse> {
             override fun onResponse(
                 call: Call<UploadResponse>,
@@ -41,12 +42,45 @@ class HomeViewModel : ViewModel() {
                     Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 } else {
                     _isLoading.value = false
-                    responseMessage = response.body()?.message
+                    val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
+                    responseMessage = jsonObj.getString("message")
                     Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
+                _isLoading.value = false
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+                Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun logout(context: Context){
+        _isLoading.value = true
+        val client = ApiConfig.getApiService(context).logout()
+        client.enqueue(object : Callback<LogoutResponse> {
+            override fun onResponse(
+                call: Call<LogoutResponse>,
+                response: Response<LogoutResponse>
+            ) {
+                if (response.isSuccessful) {
+                    _isLoading.value = false
+                    responseMessage = response.body()?.message
+                    Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
+                    val intentToOnboard = Intent(context, OnBoardingActivity::class.java)
+                    intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intentToOnboard)
+                } else {
+                    _isLoading.value = false
+                    val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
+                    responseMessage = jsonObj.getString("message")
+                    Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
                 Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()

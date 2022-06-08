@@ -22,7 +22,7 @@ class RegisterViewModel: ViewModel() {
 
     fun registerUser(context: Context, username: String, age: String, Password: String){
         _isLoading.value = true
-        val client = ApiConfig.getApiService().register(username, age, Password)
+        val client = ApiConfig.getApiService(context).register(username, age, Password)
         client.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,

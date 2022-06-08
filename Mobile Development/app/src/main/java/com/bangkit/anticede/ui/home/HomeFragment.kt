@@ -188,7 +188,7 @@ class HomeFragment : Fragment() {
         binding.button.setOnClickListener {
             val fileUpload = getFile
             if (fileUpload != null) {
-                val requestVoiceFile = fileUpload.asRequestBody("audio/aac".toMediaTypeOrNull())
+                val requestVoiceFile = fileUpload.asRequestBody("audio/x-aac".toMediaTypeOrNull())
                 val requestBody =
                     MultipartBody.Part.createFormData("audio", fileUpload.name, requestVoiceFile)
                 homeViewModel.uploadVoice(requireContext(), requestBody)
@@ -319,10 +319,8 @@ class HomeFragment : Fragment() {
                 )
 
                 prefView.saveUserSession("null")
-                val intentToOnboard = Intent(requireContext(), OnBoardingActivity::class.java)
-                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intentToOnboard)
+
+                homeViewModel.logout(requireContext())
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
