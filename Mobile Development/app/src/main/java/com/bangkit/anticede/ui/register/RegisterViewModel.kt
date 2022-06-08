@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.anticede.R
 import com.bangkit.anticede.api.ApiConfig
+import com.bangkit.anticede.api.ApiConfigUser
 import com.bangkit.anticede.api.response.RegisterResponse
 import org.json.JSONObject
 import retrofit2.Call
@@ -22,7 +23,7 @@ class RegisterViewModel: ViewModel() {
 
     fun registerUser(context: Context, username: String, age: String, Password: String){
         _isLoading.value = true
-        val client = ApiConfig.getApiService(context).register(username, age, Password)
+        val client = ApiConfigUser.getApiService(context).register(username, age, Password)
         client.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,

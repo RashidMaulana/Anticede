@@ -12,13 +12,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bangkit.anticede.adapter.SectionsPagerAdapter
 import com.bangkit.anticede.databinding.ActivityOnBoardingBinding
+import com.bangkit.anticede.preferences.admin.AdminPreference
+import com.bangkit.anticede.preferences.admin.AdminPreferenceFactory
+import com.bangkit.anticede.preferences.admin.AdminPreferenceViewModel
 import com.bangkit.anticede.preferences.user.PreferenceFactory
 import com.bangkit.anticede.preferences.user.PreferenceViewModel
 import com.bangkit.anticede.preferences.user.UserPreferences
+import com.bangkit.anticede.ui.admin.home.AdminHomeActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+private val Context.dataStoreAdmin: DataStore<Preferences> by preferencesDataStore(name = "AdminSession")
+
 class OnBoardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnBoardingBinding
 
@@ -51,6 +57,18 @@ class OnBoardingActivity : AppCompatActivity() {
         prefview.getTokenUserSession().observe(this) {
             if (it != "null") {
                 val intentDetail = Intent(this, BottomNavigationActivity::class.java)
+                startActivity(intentDetail)
+                finish()
+            }
+        }
+
+        val prefAdmin = AdminPreference.getInstance(dataStoreAdmin)
+        val prefViewAdmin = ViewModelProvider(this, AdminPreferenceFactory(prefAdmin)).get(
+            AdminPreferenceViewModel::class.java
+        )
+        prefViewAdmin.getTokenUserSession().observe(this) {
+            if (it != "null") {
+                val intentDetail = Intent(this, AdminHomeActivity::class.java)
                 startActivity(intentDetail)
                 finish()
             }

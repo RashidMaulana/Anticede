@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.anticede.BottomNavigationActivity
 import com.bangkit.anticede.api.ApiConfig
+import com.bangkit.anticede.api.ApiConfigUser
 import com.bangkit.anticede.api.response.LoginResponse
 import org.json.JSONObject
 import retrofit2.Call
@@ -25,7 +26,7 @@ class LoginViewModel : ViewModel() {
 
     fun loginUser(context: Context, username : String, password : String){
         _isLoading.value = true
-        val client = ApiConfig.getApiService(context).loginUser(username, password)
+        val client = ApiConfigUser.getApiService(context).loginUser(username, password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,

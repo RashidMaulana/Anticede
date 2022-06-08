@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.api.ApiConfig
+import com.bangkit.anticede.api.ApiConfigUser
 import com.bangkit.anticede.api.response.LogoutResponse
 import com.bangkit.anticede.api.response.UploadResponse
 import okhttp3.MultipartBody
@@ -30,7 +31,7 @@ class HomeViewModel : ViewModel() {
         file: MultipartBody.Part,
     ) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService(context).UploadVoice(file)
+        val client = ApiConfigUser.getApiService(context).UploadVoice(file)
         client.enqueue(object : Callback<UploadResponse> {
             override fun onResponse(
                 call: Call<UploadResponse>,
@@ -58,7 +59,7 @@ class HomeViewModel : ViewModel() {
 
     fun logout(context: Context){
         _isLoading.value = true
-        val client = ApiConfig.getApiService(context).logout()
+        val client = ApiConfigUser.getApiService(context).logout()
         client.enqueue(object : Callback<LogoutResponse> {
             override fun onResponse(
                 call: Call<LogoutResponse>,
