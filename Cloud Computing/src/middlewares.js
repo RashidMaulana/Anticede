@@ -16,6 +16,7 @@ const requireAuthMember = (req, res, next) => {
         // console.log(decodedToken);
         return next();
     });
+    return 0;
 };
 
 const requireAuthAdmin = (req, res, next) => {
@@ -33,6 +34,7 @@ const requireAuthAdmin = (req, res, next) => {
         // console.log(decodedToken);
         return next();
     });
+    return 0;
 };
 
 module.exports = { requireAuthMember, requireAuthAdmin };
