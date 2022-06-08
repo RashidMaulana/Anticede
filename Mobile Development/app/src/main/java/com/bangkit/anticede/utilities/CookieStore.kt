@@ -1,12 +1,12 @@
 package com.bangkit.anticede.utilities
+import android.annotation.SuppressLint
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.io.IOException
 
-private val cookiesKey = "appCookies"
+private var cookiesKey = "appCookies"
 
 class SendSavedCookiesInterceptor(private val context: Context) : Interceptor {
 
@@ -30,11 +30,12 @@ class SaveReceivedCookiesInterceptor(private val context: Context) : Interceptor
     @JvmField
     val setCookieHeader = "Set-Cookie"
 
+    @SuppressLint("MutatingSharedPrefs")
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalResponse = chain.proceed(chain.request())
 
-        if (!originalResponse.headers(setCookieHeader).isEmpty()) {
+        if (originalResponse.headers(setCookieHeader).isNotEmpty()) {
             val cookies = PreferenceManager
                 .getDefaultSharedPreferences(context)
                 .getStringSet(cookiesKey, HashSet()) as HashSet<String>
@@ -52,11 +53,4 @@ class SaveReceivedCookiesInterceptor(private val context: Context) : Interceptor
 
         return originalResponse
     }
-
-}
-
-fun OkHttpClient.Builder.setCookieStore(context: Context) : OkHttpClient.Builder {
-    return this
-        .addInterceptor(SendSavedCookiesInterceptor(context))
-        .addInterceptor(SaveReceivedCookiesInterceptor(context))
 }
