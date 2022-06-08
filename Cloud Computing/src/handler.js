@@ -35,40 +35,40 @@ exports.signupPost = async (req, res) => {
 
     if (username === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your username.',
+            status: 'Gagal',
+            message: 'Gagal menambah member baru, username diperlukan!',
         });
         response.status(400);
         return response;
     }
     if (username.length < 6) {
         const response = res.send({
-            status: 'fail',
-            message: 'Username length must be atleast 6 characters!',
+            status: 'Gagal',
+            message: 'Panjang username harus 6 karakter atau lebih!',
         });
         response.status(400);
         return response;
     }
     if (password === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your password.',
+            status: 'Gagal',
+            message: 'Gagal menambah member baru, password diperlukan!',
         });
         response.status(400);
         return response;
     }
     if (password.length < 6) {
         const response = res.send({
-            status: 'fail',
-            message: 'Password length must be atleast 6 characters!',
+            status: 'Gagal',
+            message: 'Panjang password harus 6 karakter atau lebih!',
         });
         response.status(400);
         return response;
     }
     if (age === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your age.',
+            status: 'Gagal',
+            message: 'Gagal menambah member baru, age diperlukan!',
         });
         response.status(400);
         return response;
@@ -87,8 +87,8 @@ exports.signupPost = async (req, res) => {
     res.cookie('jwt', token, { httpOnly: false, maxAge: maxExpire * 1000 });
 
     const response = res.send({
-        status: 'success',
-        message: 'New user is successfully added.',
+        status: 'Sukses',
+        message: 'Member baru berhasil ditambahkan.',
         data: {
             userId: id,
         },
@@ -101,7 +101,7 @@ exports.getMemberById = async (req, res) => {
     const [rows] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
 
     if (rows.length === 0) {
-        return res.status(404).json({ message: 'User with id is not found' });
+        return res.status(404).json({ message: 'User dengan id tersebut tidak dapat ditemukan!' });
     }
 
     const response = res.status(200).json({ message: 'data found', data: rows[0] });
@@ -117,40 +117,40 @@ exports.editMemberById = async (req, res) => {
 
     if (username === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your username.',
+            status: 'Gagal',
+            message: 'Gagal  mengedit informasi user, username diperlukan!',
         });
         response.status(400);
         return response;
     }
     if (username.length < 6) {
         const response = res.send({
-            status: 'fail',
-            message: 'Username length must be atleast 6 characters!',
+            status: 'Gagal',
+            message: 'Panjang username harus 6 karakter atau lebih!',
         });
         response.status(400);
         return response;
     }
     if (password === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your password.',
+            status: 'Gagal',
+            message: 'Gagal mengedit informasi user, password diperlukan!',
         });
         response.status(400);
         return response;
     }
     if (password.length < 6) {
         const response = res.send({
-            status: 'fail',
-            message: 'Password length must be atleast 6 characters!',
+            status: 'Gagal',
+            message: 'Panjang password harus 6 karakter atau lebih!',
         });
         response.status(400);
         return response;
     }
     if (age === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your age.',
+            status: 'Gagal',
+            message: 'Gagal  mengedit informasi user, age diperlukan!',
         });
         response.status(400);
         return response;
@@ -159,7 +159,7 @@ exports.editMemberById = async (req, res) => {
     // Check if the id is exist in database.
     const [rows] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.params.id]);
     if (rows.length === 0) {
-        return res.status(404).json({ message: 'User with id is not found' });
+        return res.status(404).json({ message: 'User dengan id tersebut tidak dapat ditemukan!' });
     }
 
     // Check if the username is not used by other user.
@@ -170,13 +170,13 @@ exports.editMemberById = async (req, res) => {
 
         await db.promise().query('UPDATE users SET username = ?, password = ?,  age = ? WHERE id = ?', [username, hashedPassword, age, req.params.id]);
         return res.status(200).json(
-            { message: 'Data updated', id: req.params.id },
+            { message: 'Update data sukses!', id: req.params.id },
         );
     }
 
     // Check if the username is already used by other user.
     if (check.rows !== 0 && check[0].id !== req.params.id) {
-        return res.status(500).json({ message: 'User with that username is already exist' });
+        return res.status(500).json({ message: 'Username tersebut sudah digunakan!' });
     }
 
     const salt = await bcrypt.genSalt();
@@ -184,7 +184,7 @@ exports.editMemberById = async (req, res) => {
 
     await db.promise().query('UPDATE users SET username = ?, password = ?,  age = ? WHERE id = ?', [username, hashedPassword, age, req.params.id]);
     return res.status(200).json(
-        { message: 'Data updated', id: req.params.id },
+        { message: 'Update data sukses!', id: req.params.id },
     );
 };
 
@@ -193,11 +193,11 @@ exports.deleteMemberById = async (req, res) => {
 
     // Check if the id is found in database or not
     if (rows.length === 0) {
-        return res.status(404).json({ message: 'User with id is not found' });
+        return res.status(404).json({ message: 'User dengan id tersebut tidak ditemukan.' });
     }
 
     db.promise().query('DELETE from users WHERE id = ?', [req.params.id]);
-    return res.status(200).json({ message: 'User with the data below successfully deleted from database', data: rows });
+    return res.status(200).json({ message: 'User dengan data di bawah ini sukses dihapus dari database!', data: rows });
 };
 
 exports.login = async (req, res) => {
@@ -208,32 +208,32 @@ exports.login = async (req, res) => {
 
     if (username === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your username.',
+            status: 'Gagal',
+            message: 'Gagal menambah member baru, username diperlukan!',
         });
         response.status(400);
         return response;
     }
     if (username.length < 6) {
         const response = res.send({
-            status: 'fail',
-            message: 'Username length must be atleast 6 characters!',
+            status: 'Gagal',
+            message: 'Panjang username harus 6 karakter atau lebih!',
         });
         response.status(400);
         return response;
     }
     if (password === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your password.',
+            status: 'Gagal',
+            message: 'Gagal menambah member baru, password diperlukan!',
         });
         response.status(400);
         return response;
     }
     if (password.length < 6) {
         const response = res.send({
-            status: 'fail',
-            message: 'Password length must be atleast 6 characters!',
+            status: 'Gagal',
+            message: 'Panjang password harus 6 karakter atau lebih!',
         });
         response.status(400);
         return response;
@@ -251,10 +251,10 @@ exports.login = async (req, res) => {
             });
             return response;
         }
-        const response = res.status(404).json({ message: 'Incorrect password!' });
+        const response = res.status(404).json({ message: 'Password salah!' });
         return response;
     }
-    const response = res.status(404).json({ message: 'Username not found!' });
+    const response = res.status(404).json({ message: 'Username tidak ditemukan!' });
     return response;
 };
 
@@ -266,32 +266,32 @@ exports.loginAdmin = async (req, res) => {
 
     if (username === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your username.',
+            status: 'Gagal',
+            message: 'Gagal menambah member baru, username diperlukan!',
         });
         response.status(400);
         return response;
     }
     if (username.length < 6) {
         const response = res.send({
-            status: 'fail',
-            message: 'Username length must be atleast 6 characters!',
+            status: 'Gagal',
+            message: 'Panjang username harus 6 karakter atau lebih!',
         });
         response.status(400);
         return response;
     }
     if (password === '') {
         const response = res.send({
-            status: 'fail',
-            message: 'Failed to add new member, please fill your password.',
+            status: 'Gagal',
+            message: 'Gagal menambah member baru, password diperlukan!',
         });
         response.status(400);
         return response;
     }
     if (password.length < 6) {
         const response = res.send({
-            status: 'fail',
-            message: 'Password length must be atleast 6 characters!',
+            status: 'Gagal',
+            message: 'Panjang password harus 6 karakter atau lebih!',
         });
         response.status(400);
         return response;
@@ -304,21 +304,21 @@ exports.loginAdmin = async (req, res) => {
             const token = createTokenAdmin(rows[0].id);
             res.cookie('jwt', token, { httpOnly: false, maxAge: maxExpire * 1000 });
             const response = res.status(200).json({
-                message: 'Logged in as admin!',
+                message: 'Logged in sebagai admin!',
                 user_id: rows[0].id,
             });
             return response;
         }
-        const response = res.status(404).json({ message: 'Incorrect password!' });
+        const response = res.status(404).json({ message: 'Password salah!' });
         return response;
     }
-    const response = res.status(404).json({ message: 'Username not found!' });
+    const response = res.status(404).json({ message: 'Username tidak ditemukan!' });
     return response;
 };
 
 exports.logout = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
-    const response = res.status(200).json({ message: 'Logout success' });
+    const response = res.status(200).json({ message: 'Logout sukses!' });
     return response;
 };
 
@@ -330,7 +330,8 @@ const limits = {
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype !== 'audio/x-aac') {
-        cb(new Error('invalid file type: only .aac audio file is allowed.'));
+        // cb(new Error('invalid file type: only .aac audio file is allowed.'));
+        cb(new Error('Tipe file yang diperbolehkan hanya .aac!'));
     }
 
     cb(null, true);
@@ -347,8 +348,11 @@ exports.postAudio = upload.single('audio');
 exports.uploadController = async (req, res) => {
     const { file } = req;
 
+<<<<<<< HEAD
+=======
     // res.status(200).send({ message: 'Upload finished!' });
 
+>>>>>>> 5728a747a5cb26a8b824c8948fe168816dc8f921
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
 
@@ -441,7 +445,7 @@ exports.uploadController = async (req, res) => {
         await gcs.bucket(bucketName).upload(processedFilePath, {
             destination: `audio/${processedFile}`,
         });
-        console.log(`${processedFilePath} uploaded successfully to ${bucketName}`);
+        console.log(`${processedFilePath} sukses upload ke ${bucketName}`);
         await speechToText();
         tokenize();
         console.log(servingInput);
@@ -453,14 +457,16 @@ exports.uploadController = async (req, res) => {
         .input(`./uploads/${file.filename}`)
         .audioChannels(1)
         .on('error', (err) => {
-            console.log(`error: ${err.message}`);
             fs.emptyDir('./uploads');
+            const response = res.status(500).json({ message: `error: ${err.message}` });
+            return response;
         })
         .on('end', () => {
             console.log('audio processing finished!');
             uploadFile().catch(console.error);
             fs.emptyDir('./uploads');
             fs.emptyDir('./processed-audio');
+            res.status(200).send({ message: 'Upload selesai!' });
         })
         .save(processedFilePath);
 
