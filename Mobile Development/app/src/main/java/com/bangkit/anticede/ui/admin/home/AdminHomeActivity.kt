@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -29,6 +31,13 @@ class AdminHomeActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = "Admin Home"
+
+        val adminLoginViewModel by viewModels<AdminHomeViewModel>()
+
+        adminLoginViewModel.isLoading.observe(this){
+            showLoading(it)
+        }
+        adminLoginViewModel.getUsers(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -44,6 +53,9 @@ class AdminHomeActivity : AppCompatActivity() {
                     AdminPreferenceViewModel::class.java
                 )
                 prefview.saveUserSession("null")
+                val adminLoginViewModel by viewModels<AdminHomeViewModel>()
+                adminLoginViewModel.logoutAdmin(this)
+
                 val intentToMain = Intent(this, OnBoardingActivity::class.java)
                 intentToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intentToMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -54,4 +66,12 @@ class AdminHomeActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
             }
         }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar3.visibility = View.VISIBLE
+        } else {
+            binding.progressBar3.visibility = View.GONE
+        }
+    }
 }

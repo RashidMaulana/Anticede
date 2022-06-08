@@ -21,7 +21,7 @@ class AdminLoginViewModel : ViewModel() {
 
     fun loginAdmin(context: Context, username : String, password : String){
         _isLoading.value = true
-        val client = ApiConfig.getApiService().loginAdmin(username, password)
+        val client = ApiConfig.getApiService(context).loginAdmin(username, password)
         client.enqueue(object : retrofit2.Callback<AdminLoginResponse>{
             override fun onFailure(call: retrofit2.Call<AdminLoginResponse>, t: Throwable) {
                 _isLoading.value = false

@@ -29,7 +29,7 @@ class HomeViewModel : ViewModel() {
         file: MultipartBody.Part,
     ) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().UploadVoice(file)
+        val client = ApiConfig.getApiService(context).UploadVoice(file)
         client.enqueue(object : Callback<UploadResponse> {
             override fun onResponse(
                 call: Call<UploadResponse>,
