@@ -319,10 +319,8 @@ class HomeFragment : Fragment() {
                 )
 
                 prefView.saveUserSession("null")
-                val intentToOnboard = Intent(requireContext(), OnBoardingActivity::class.java)
-                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intentToOnboard)
+
+                homeViewModel.logout(requireContext())
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

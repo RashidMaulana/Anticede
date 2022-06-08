@@ -39,5 +39,5 @@ interface ApiService {
     fun getMembers() : Call<GetAllUserResponse>
 
     @POST("logout")
-    fun logoutAdmin() : Call<LogoutResponse>
+    fun logout() : Call<LogoutResponse>
 }

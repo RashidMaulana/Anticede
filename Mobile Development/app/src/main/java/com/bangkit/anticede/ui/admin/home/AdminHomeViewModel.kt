@@ -49,7 +49,7 @@ class AdminHomeViewModel  : ViewModel() {
 
     fun logoutAdmin(context : Context){
         _isLoading.value = true
-        val client = ApiConfig.getApiService(context).logoutAdmin()
+        val client = ApiConfig.getApiService(context).logout()
         client.enqueue(object : retrofit2.Callback<LogoutResponse>{
             override fun onFailure(call: retrofit2.Call<LogoutResponse>, t: Throwable) {
                 _isLoading.value = false

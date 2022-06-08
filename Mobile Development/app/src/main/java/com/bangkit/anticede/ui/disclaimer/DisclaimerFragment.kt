@@ -11,6 +11,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.anticede.BuildConfig
 import com.bangkit.anticede.OnBoardingActivity
@@ -19,6 +20,7 @@ import com.bangkit.anticede.databinding.FragmentDisclaimerBinding
 import com.bangkit.anticede.preferences.user.PreferenceFactory
 import com.bangkit.anticede.preferences.user.PreferenceViewModel
 import com.bangkit.anticede.preferences.user.UserPreferences
+import com.bangkit.anticede.ui.home.HomeViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class DisclaimerFragment : Fragment() {
@@ -82,14 +84,25 @@ class DisclaimerFragment : Fragment() {
                     PreferenceViewModel::class.java
                 )
 
+                val homeViewModel by viewModels<HomeViewModel>()
+
+                homeViewModel.isLoading.observe(viewLifecycleOwner) {
+                    showLoading(it)
+                }
                 prefView.saveUserSession("null")
-                val intentToOnboard = Intent(requireContext(), OnBoardingActivity::class.java)
-                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intentToOnboard)
+                homeViewModel.logout(requireContext())
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 
