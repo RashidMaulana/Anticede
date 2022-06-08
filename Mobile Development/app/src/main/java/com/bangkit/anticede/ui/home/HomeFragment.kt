@@ -188,7 +188,7 @@ class HomeFragment : Fragment() {
         binding.button.setOnClickListener {
             val fileUpload = getFile
             if (fileUpload != null) {
-                val requestVoiceFile = fileUpload.asRequestBody("audio/aac".toMediaTypeOrNull())
+                val requestVoiceFile = fileUpload.asRequestBody("audio/x-aac".toMediaTypeOrNull())
                 val requestBody =
                     MultipartBody.Part.createFormData("audio", fileUpload.name, requestVoiceFile)
                 homeViewModel.uploadVoice(requireContext(), requestBody)

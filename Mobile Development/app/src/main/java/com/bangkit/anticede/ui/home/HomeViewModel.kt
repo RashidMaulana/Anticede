@@ -12,6 +12,7 @@ import com.bangkit.anticede.api.ApiConfig
 import com.bangkit.anticede.api.response.LoginResponse
 import com.bangkit.anticede.api.response.UploadResponse
 import okhttp3.MultipartBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,7 +42,8 @@ class HomeViewModel : ViewModel() {
                     Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 } else {
                     _isLoading.value = false
-                    responseMessage = response.body()?.message
+                    val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
+                    responseMessage = jsonObj.getString("message")
                     Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 }
             }
