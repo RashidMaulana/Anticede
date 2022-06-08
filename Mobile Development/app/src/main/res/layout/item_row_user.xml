@@ -14,16 +14,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
-
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/tv_item_name"
-            android:layout_width="250dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/img_item_photo"
+            android:layout_marginStart="12dp"
             android:fontFamily="@font/montserrat_bold"
-            android:gravity="center"
             android:textSize="16sp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
@@ -31,27 +30,16 @@
 
         <TextView
             android:id="@+id/tv_item_age"
-            android:layout_width="250dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/img_item_photo"
-            android:fontFamily="@font/montserrat_bold"
-            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/montserrat_regular"
             android:textSize="16sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_item_name"
             tools:text="@string/age_label" />
-
-        <ImageView
-            android:id="@+id/img_item_photo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="12dp"
-            android:contentDescription="@string/team_member_photo"
-            card_view:layout_constraintBottom_toBottomOf="@id/tv_item_age"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="@id/tv_item_name"
-            tools:src="@drawable/ic_baseline_delete_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
