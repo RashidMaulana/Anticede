@@ -8,6 +8,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const speech = require('@google-cloud/speech');
 const axios = require('axios');
 const db = require('./database');
+const wordlist = require('./wordlist');
 require('dotenv').config();
 
 const maxExpire = 3 * 24 * 60 * 60;
@@ -347,17 +348,63 @@ exports.postAudio = upload.single('audio');
 exports.uploadController = async (req, res) => {
     const { file } = req;
 
+<<<<<<< HEAD
+=======
+    // res.status(200).send({ message: 'Upload finished!' });
+
+>>>>>>> 5728a747a5cb26a8b824c8948fe168816dc8f921
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
+
     let transcription = null;
+    const servingInput = [];
+
+    // string to index
+    const tokenize = () => {
+        const userInputString = transcription.toLowerCase().split(' ');
+
+        userInputString.forEach((element, index) => {
+            if (wordlist.indexOf(userInputString[index]) === -1) {
+                servingInput.push(0);
+            } else {
+                servingInput.push(wordlist.indexOf(userInputString[index]));
+            }
+        });
+    };
 
     // post to tf-serving
-    const postToModel = async () => {
+    const postToModel = () => {
         axios.post('http://localhost:8501/v1/models/anticede:predict', {
-            instances: [[transcription]],
+            inputs: [servingInput],
         }).then((axiosRes) => {
             console.log(`statusCode: ${axiosRes.status}`);
             console.log(axiosRes.data);
+            let { outputs } = axiosRes.data;
+            outputs = outputs.flat();
+            const index = outputs.indexOf(Math.max(...outputs));
+            console.log(outputs, index);
+
+            let responseMessage = null;
+            switch (index) {
+            case 0:
+                responseMessage = 'text is type A';
+                break;
+            case 1:
+                responseMessage = 'text is type B';
+                break;
+            case 2:
+                responseMessage = 'text is type C';
+                break;
+            case 3:
+                responseMessage = 'text is type D';
+                break;
+            default:
+                responseMessage = 'this is default response message';
+            }
+            res.status(200).send({
+                transcription,
+                message: responseMessage,
+            });
         })
             .catch((error) => {
                 console.error(error);
@@ -383,7 +430,8 @@ exports.uploadController = async (req, res) => {
             config,
         };
 
-        const [speechResponse] = await speechClient.recognize(speechRequest);
+        const [operation] = await speechClient.longRunningRecognize(speechRequest);
+        const [speechResponse] = await operation.promise();
         transcription = speechResponse.results
             .map((result) => result.alternatives[0].transcript)
             .join('\n');
@@ -399,6 +447,8 @@ exports.uploadController = async (req, res) => {
         });
         console.log(`${processedFilePath} sukses upload ke ${bucketName}`);
         await speechToText();
+        tokenize();
+        console.log(servingInput);
         postToModel();
     };
 

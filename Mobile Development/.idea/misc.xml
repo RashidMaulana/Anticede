@@ -5,11 +5,14 @@
       <map>
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/border_back.xml" value="0.293" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/border_back_auth.xml" value="0.293" />
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.28" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/ic_baseline_password_24.xml" value="0.293" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/ic_launcher_background.xml" value="0.281" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/round_background.xml" value="0.293" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/drawable/white_background.xml" value="0.293" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_about.xml" value="0.358695652173913" />
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_admin_home.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_admin_login.xml" value="0.1339918946301925" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.2" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_home.xml" value="0.18" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -20,6 +23,7 @@
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/item_row_member.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/layout/item_row_user.xml" value="0.2755208333333333" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/menu/action_bar.xml" value="0.36666666666666664" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.243" />
         <entry key="..\:/Android_projects/Anticede/Mobile Development/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.243" />

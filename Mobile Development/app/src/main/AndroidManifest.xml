@@ -28,8 +28,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Anticede">
         <activity
-            android:name=".ui.admin.login.AdminLoginActivity"
+            android:name=".ui.admin.home.AdminHomeActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.admin.login.AdminLoginActivity"
+            android:exported="false"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".OnBoardingActivity"
             android:exported="false"
