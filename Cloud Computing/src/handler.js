@@ -397,7 +397,10 @@ exports.uploadController = async (req, res) => {
             default:
                 responseMessage = 'this is default response message';
             }
-            res.status(200).send({ message: responseMessage });
+            res.status(200).send({
+                transcription,
+                message: responseMessage,
+            });
         })
             .catch((error) => {
                 console.error(error);
@@ -423,7 +426,8 @@ exports.uploadController = async (req, res) => {
             config,
         };
 
-        const [speechResponse] = await speechClient.recognize(speechRequest);
+        const [operation] = await speechClient.longRunningRecognize(speechRequest);
+        const [speechResponse] = await operation.promise();
         transcription = speechResponse.results
             .map((result) => result.alternatives[0].transcript)
             .join('\n');
