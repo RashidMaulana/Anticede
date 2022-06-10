@@ -312,32 +312,8 @@ class HomeFragment : Fragment() {
             binding.tvWarn.visibility = View.GONE
         } else {
             homeViewModel.voiceTranscription.observe(viewLifecycleOwner){
-                val transcript = it
-                when (text) {
-                    resources.getString(R.string.checkSara) -> {
-                        val sara = "\"$transcript\"" + resources.getString(R.string.resultSara)
-                        binding.tvWarn.text = sara
-                    }
-                    resources.getString(R.string.checkPNamaBaik) -> {
-                        val defamation = "\"$transcript\"" + resources.getString(R.string.resultPNamaBaik)
-                        binding.tvWarn.text = defamation
-                    }
-                    resources.getString(R.string.checkPornografi) -> {
-                        val pornographic = "\"$transcript\"" + resources.getString(R.string.resultPornografi)
-                        binding.tvWarn.text = pornographic
-                    }
-                    resources.getString(R.string.checkRadikal) -> {
-                        val radical = "\"$transcript\"" + resources.getString(R.string.resultRadikal)
-                        binding.tvWarn.text = radical
-                    }
-                    resources.getString(R.string.checkNonToxic) -> {
-                        val radical = "\"$transcript\"" + resources.getString(R.string.resultNonToxic)
-                        binding.tvWarn.text = radical
-                    }
-                    else -> {
-                        binding.tvWarn.text = resources.getString(R.string.resultDetectionError)
-                    }
-                }
+                val stats = it + text
+                binding.tvWarn.text =  stats
             }
         }
     }
