@@ -379,19 +379,19 @@ exports.uploadController = async (req, res) => {
             let responseMessage = null;
             switch (index) {
             case 0:
-                responseMessage = 'Ucapan anda termasuk pornografi.';
+                responseMessage = 'Ucapan anda termasuk pornografi dan memungkinkan untuk melanggar UU 44 Tahun 2008.';
                 break;
             case 1:
-                responseMessage = 'Ucapan anda termasuk SARA.';
+                responseMessage = 'Ucapan anda termasuk SARA dan memungkinkan untuk melanggar pasal 28 UU ITE.';
                 break;
             case 2:
-                responseMessage = 'Ucapan anda termasuk radikalisme.';
+                responseMessage = 'Ucapan anda termasuk radikalisme dan memungkinkan untuk melanggar UU nomor 5 Tahun 2018.';
                 break;
             case 3:
-                responseMessage = 'Ucapan anda termasuk pencemaran nama baik.';
+                responseMessage = 'Ucapan anda termasuk pencemaran nama baik dan memungkinkan untuk melanggar KUHP pasal 310 ayat 1.';
                 break;
             case 4:
-                responseMessage = 'Ucapan anda tidak mengandung kata-kata kotor :D.';
+                responseMessage = 'Kalimat Anda termasuk kategori yang non-toxic.';
                 break;
             default:
                 responseMessage = 'this is default response message';
