@@ -312,7 +312,7 @@ class HomeFragment : Fragment() {
             binding.tvWarn.visibility = View.GONE
         } else {
             homeViewModel.voiceTranscription.observe(viewLifecycleOwner){
-                val stats = it + text
+                val stats = "\"$it\"\n\n$text"
                 binding.tvWarn.text =  stats
             }
         }
