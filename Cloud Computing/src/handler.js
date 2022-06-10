@@ -83,8 +83,6 @@ exports.signupPost = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     await db.promise().query(`INSERT INTO users VALUES('${id}', '${username}', '${hashedPassword}', '${age}')`);
-    const token = createToken(id);
-    res.cookie('jwt', token, { httpOnly: false, maxAge: maxExpire * 1000 });
 
     const response = res.send({
         status: 'Sukses',
