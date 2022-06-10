@@ -1,4 +1,5 @@
 package com.bangkit.anticede.utilities
+
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.preference.PreferenceManager

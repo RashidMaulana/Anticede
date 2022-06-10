@@ -37,14 +37,14 @@ class RegisterFragment : Fragment() {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         binding.editTextTextUserName.doOnTextChanged { text, _, _, _ ->
-            if (text?.length!! < 6){
+            if (text?.length!! < 6) {
                 binding.editTextTextUserName.error = getString(R.string.username_warning)
             } else {
                 binding.editTextTextUserName.error = null
             }
         }
         binding.editTextTextPassword.doOnTextChanged { text, _, _, _ ->
-            if (text?.length!! < 6){
+            if (text?.length!! < 6) {
                 binding.editTextTextPassword.error = getString(R.string.password_warning2)
             } else {
                 binding.editTextTextPassword.error = null
@@ -54,14 +54,15 @@ class RegisterFragment : Fragment() {
             if (text.contentEquals(binding.editTextTextPassword.text)) {
                 binding.editTextTextConfirmationPassword.error = null
             } else {
-                binding.editTextTextConfirmationPassword.error = getString(R.string.password_warning)
+                binding.editTextTextConfirmationPassword.error =
+                    getString(R.string.password_warning)
             }
         }
 
         registerUser()
     }
 
-    private fun registerUser(){
+    private fun registerUser() {
         binding.button3.setOnClickListener {
             val username = binding.editTextTextUserName.text.trim().toString()
             val age = binding.editTextNumber.text.trim().toString()
@@ -85,7 +86,8 @@ class RegisterFragment : Fragment() {
                     return@setOnClickListener
                 }
                 password.isEmpty() -> {
-                    binding.editTextTextPassword.error = resources.getString(R.string.warning_empty_password)
+                    binding.editTextTextPassword.error =
+                        resources.getString(R.string.warning_empty_password)
                     binding.editTextTextPassword.requestFocus()
                     return@setOnClickListener
                 }
@@ -95,12 +97,14 @@ class RegisterFragment : Fragment() {
                     return@setOnClickListener
                 }
                 confirmPassword.isEmpty() -> {
-                    binding.editTextTextPassword.error = resources.getString(R.string.warning_empty_password)
+                    binding.editTextTextPassword.error =
+                        resources.getString(R.string.warning_empty_password)
                     binding.editTextTextPassword.requestFocus()
                     return@setOnClickListener
                 }
                 confirmPassword != password -> {
-                    binding.editTextTextConfirmationPassword.error = getString(R.string.password_warning)
+                    binding.editTextTextConfirmationPassword.error =
+                        getString(R.string.password_warning)
                     binding.editTextTextUserName.requestFocus()
                     return@setOnClickListener
                 }

@@ -41,7 +41,7 @@
     <string name="username_warning">Username kurang dari 6 karakter!</string>
     <string name="warning_empty_age">Umur tidak boleh kosong</string>
     <string name="warning_empty_password">Password tidak boleh kosong</string>
-    <string name="warning_expired_cookie">Silahkan logout lalu login kembali</string>
+    <string name="warning_expired_cookie"> Silahkan logout lalu login kembali</string>
     <string name="warning_empty_text">Text Masih Kosong</string>
     <string name="register_success">Register Success</string>
     <string name="register_success2">Akun anda berhasil dibuat, silahkan untuk melakukan login</string>

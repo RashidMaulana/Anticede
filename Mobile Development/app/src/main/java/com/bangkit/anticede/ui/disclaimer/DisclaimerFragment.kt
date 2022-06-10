@@ -22,6 +22,7 @@ import com.bangkit.anticede.preferences.user.UserPreferences
 import com.bangkit.anticede.ui.home.HomeViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+
 class DisclaimerFragment : Fragment() {
 
     private var _binding: FragmentDisclaimerBinding? = null

@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.anticede.databinding.ItemRowUserBinding
 import com.bangkit.anticede.model.User
 
-class AdminAdapter(private val userList: ArrayList<User>): RecyclerView.Adapter<AdminAdapter.ListViewHolder>() {
+class AdminAdapter(private val userList: ArrayList<User>) :
+    RecyclerView.Adapter<AdminAdapter.ListViewHolder>() {
     private var onItemClickCallback: OnItemClickCallback? = null
 
-    inner class ListViewHolder(val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ListViewHolder(val binding: ItemRowUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
             binding.root.setOnClickListener {
                 onItemClickCallback?.onItemClicked(user)
@@ -24,7 +26,8 @@ class AdminAdapter(private val userList: ArrayList<User>): RecyclerView.Adapter<
         viewGroup: ViewGroup,
         viewType: Int
     ): ListViewHolder {
-        val itemBinding = ItemRowUserBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        val itemBinding =
+            ItemRowUserBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         return ListViewHolder(itemBinding)
     }
 

@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -130,7 +131,7 @@ class HomeFragment : Fragment() {
             PreferenceViewModel::class.java
         )
 
-        prefView.getTokenUserSession().observe(viewLifecycleOwner){
+        prefView.getTokenUserSession().observe(viewLifecycleOwner) {
             Log.d("HomeFragment", "token: $it")
         }
 
@@ -305,15 +306,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun showText(text : String) {
+    private fun showText(text: String) {
         val homeViewModel by viewModels<HomeViewModel>()
 
-        if(text == "null"){
+        if (text == "null") {
             binding.tvWarn.visibility = View.GONE
         } else {
-            homeViewModel.voiceTranscription.observe(viewLifecycleOwner){
+            homeViewModel.voiceTranscription.observe(viewLifecycleOwner) {
                 val stats = "\"$it\"\n\n$text"
-                binding.tvWarn.text =  stats
+                binding.tvWarn.text = stats
             }
         }
     }

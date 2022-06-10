@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiConfigUser {
     companion object {
-        fun getApiService(context : Context): ApiService {
+        fun getApiService(context: Context): ApiService {
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             } else {

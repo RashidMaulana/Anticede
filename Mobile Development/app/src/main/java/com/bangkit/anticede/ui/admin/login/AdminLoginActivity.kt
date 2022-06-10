@@ -2,11 +2,10 @@ package com.bangkit.anticede.ui.admin.login
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -19,6 +18,7 @@ import com.bangkit.anticede.preferences.admin.AdminPreferenceViewModel
 import com.bangkit.anticede.ui.admin.home.AdminHomeActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "AdminSession")
+
 class AdminLoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminLoginBinding
@@ -47,15 +47,39 @@ class AdminLoginActivity : AppCompatActivity() {
             }
         }
 
-        adminLoginViewModel.getAdmin().observe(this){
+        adminLoginViewModel.getAdmin().observe(this) {
             prefView.saveUserSession(it.userId)
         }
 
         binding.button3.setOnClickListener {
-            if(binding.editTextTextPassword.text.isNullOrBlank() || binding.editTextTextUserName.text.isNullOrBlank()){
-                Toast.makeText(this,getString(R.string.warning_empty_login), Toast.LENGTH_SHORT).show()
-            } else{
-                adminLoginViewModel.loginAdmin(this, binding.editTextTextUserName.text.toString(), binding.editTextTextPassword.text.toString())
+            val username = binding.editTextTextUserName.text.trim().toString()
+            val password = binding.editTextTextPassword.text.trim().toString()
+
+            when {
+                username.isEmpty() -> {
+                    binding.editTextTextUserName.error = getString(R.string.empty_username_warning)
+                    binding.editTextTextUserName.requestFocus()
+                    return@setOnClickListener
+                }
+                username.length < 6 -> {
+                    binding.editTextTextUserName.error = getString(R.string.username_warning)
+                    binding.editTextTextUserName.requestFocus()
+                    return@setOnClickListener
+                }
+                password.isEmpty() -> {
+                    binding.editTextTextPassword.error =
+                        resources.getString(R.string.warning_empty_password)
+                    binding.editTextTextPassword.requestFocus()
+                    return@setOnClickListener
+                }
+                password.length < 6 -> {
+                    binding.editTextTextPassword.error = getString(R.string.username_warning)
+                    binding.editTextTextUserName.requestFocus()
+                    return@setOnClickListener
+                }
+                else -> {
+                    adminLoginViewModel.loginAdmin(this, username, password)
+                }
             }
         }
     }

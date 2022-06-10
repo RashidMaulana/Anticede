@@ -45,21 +45,23 @@ class HomeViewModel : ViewModel() {
                 } else {
                     _isLoading.value = false
                     val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
-                    responseMessage.value = jsonObj.getString("message") + context.getString(R.string.warning_expired_cookie)
+                    responseMessage.value =
+                        jsonObj.getString("message") + context.getString(R.string.warning_expired_cookie)
                     Toast.makeText(context, responseMessage.value, Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
                 _isLoading.value = false
-                responseMessage.value = t.message + context.getString(R.string.warning_expired_cookie)
+                responseMessage.value =
+                    t.message + context.getString(R.string.warning_expired_cookie)
                 Log.e(TAG, "onFailure: ${responseMessage.value}")
                 Toast.makeText(context, responseMessage.value, Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    fun logout(context: Context){
+    fun logout(context: Context) {
         _isLoading.value = true
         val client = ApiConfigUser.getApiService(context).logout()
         client.enqueue(object : Callback<LogoutResponse> {
@@ -78,8 +80,7 @@ class HomeViewModel : ViewModel() {
                 } else {
                     _isLoading.value = false
                     val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
-                    responseMessage.value = jsonObj.getString("message") +
-                            context.getString(R.string.warning_expired_cookie)
+                    responseMessage.value = jsonObj.getString("message")
                     Log.d(TAG, "onResponse: ${responseMessage.value}")
                     Toast.makeText(context, responseMessage.value, Toast.LENGTH_LONG).show()
                 }
@@ -88,13 +89,10 @@ class HomeViewModel : ViewModel() {
             override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
-                Toast.makeText(context, t.message.toString() +
-                        context.getString(R.string.warning_expired_cookie),
-                        Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
             }
         })
     }
-
 
 
     companion object {

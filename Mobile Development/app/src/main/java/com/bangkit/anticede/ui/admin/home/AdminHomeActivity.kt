@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -27,6 +27,7 @@ import com.bangkit.anticede.preferences.admin.AdminPreferenceFactory
 import com.bangkit.anticede.preferences.admin.AdminPreferenceViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "AdminSession")
+
 class AdminHomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminHomeBinding
@@ -43,12 +44,12 @@ class AdminHomeActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = "Admin Home"
 
-        adminLoginViewModel.isLoading.observe(this){
+        adminLoginViewModel.isLoading.observe(this) {
             showLoading(it)
         }
         adminLoginViewModel.getUsers(this)
 
-        adminLoginViewModel.getListUser().observe(this){
+        adminLoginViewModel.getListUser().observe(this) {
             setStoryData(it)
         }
     }
@@ -72,7 +73,10 @@ class AdminHomeActivity : AppCompatActivity() {
                     setPositiveButton("Ya") { _: DialogInterface, _: Int ->
                         userList.remove(idCatch)
                         adminAdapter.notifyDataSetChanged()
-                        adminLoginViewModel.deleteUser(this@AdminHomeActivity, idCatch?.id.toString())
+                        adminLoginViewModel.deleteUser(
+                            this@AdminHomeActivity,
+                            idCatch?.id.toString()
+                        )
                     }
                     setNeutralButton("Tidak") { _: DialogInterface, _: Int ->
                     }
@@ -86,8 +90,8 @@ class AdminHomeActivity : AppCompatActivity() {
     private fun catchUserId(id: User): User? {
         var select: User? = null
 
-        for(user in userList) {
-            if(user.id == id.id)
+        for (user in userList) {
+            if (user.id == id.id)
                 select = user
         }
 

@@ -8,4 +8,4 @@ data class User(
     var username: String? = null,
     var age: String? = null,
     var id: String? = null
-): Parcelable
+) : Parcelable

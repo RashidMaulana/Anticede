@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.adapter.AboutAdapter
 import com.bangkit.anticede.databinding.FragmentAboutBinding
@@ -26,6 +25,7 @@ import com.bangkit.anticede.preferences.user.UserPreferences
 import com.bangkit.anticede.ui.home.HomeViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+
 class AboutFragment : Fragment() {
 
     private var _binding: FragmentAboutBinding? = null

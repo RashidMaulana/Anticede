@@ -7,22 +7,22 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GetAllUserResponse(
 
-	@field:SerializedName("GetAllUserResponse")
-	val getAllUserResponse: List<GetAllUserResponseItem>
-): Parcelable
+    @field:SerializedName("GetAllUserResponse")
+    val getAllUserResponse: List<GetAllUserResponseItem>
+) : Parcelable
 
 @Parcelize
 data class GetAllUserResponseItem(
 
-	@field:SerializedName("password")
-	val password: String,
+    @field:SerializedName("password")
+    val password: String,
 
-	@field:SerializedName("id")
-	val id: String,
+    @field:SerializedName("id")
+    val id: String,
 
-	@field:SerializedName("age")
-	val age: Int,
+    @field:SerializedName("age")
+    val age: Int,
 
-	@field:SerializedName("username")
-	val username: String
-): Parcelable
+    @field:SerializedName("username")
+    val username: String
+) : Parcelable
