@@ -14,7 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'DEVELOPER_EMAIL','"rashid.maulana08@gmail.com"'
-        buildConfigField 'String', 'ANTICEDE_ENDPOINT','"https://anticede-test-v1-36shr4ik5a-as.a.run.app/"'
+        buildConfigField 'String', 'ANTICEDE_ENDPOINT','"https://anticede.app/"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

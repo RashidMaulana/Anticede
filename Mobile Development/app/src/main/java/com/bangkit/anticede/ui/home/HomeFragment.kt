@@ -121,6 +121,10 @@ class HomeFragment : Fragment() {
             showLoading(it)
         }
 
+        homeViewModel.responseMessage.observe(viewLifecycleOwner) {
+            showText(it)
+        }
+
         val pref = UserPreferences.getInstance(requireContext().dataStore)
         val prefView = ViewModelProvider(this, PreferenceFactory(pref)).get(
             PreferenceViewModel::class.java
@@ -296,6 +300,14 @@ class HomeFragment : Fragment() {
             binding.progressBar.visibility = View.VISIBLE
         } else {
             binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showText(text : String) {
+        if(text == "null"){
+            binding.tvWarn.visibility = View.GONE
+        } else{
+            binding.tvWarn.text = text
         }
     }
 

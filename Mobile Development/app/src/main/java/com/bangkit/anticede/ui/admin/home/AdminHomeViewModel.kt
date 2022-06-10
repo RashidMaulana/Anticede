@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bangkit.anticede.R
 import com.bangkit.anticede.api.ApiConfig
 import com.bangkit.anticede.api.response.DeleteResponse
 import com.bangkit.anticede.api.response.GetAllUserResponseItem
@@ -29,7 +30,9 @@ class AdminHomeViewModel  : ViewModel() {
             override fun onFailure(call: retrofit2.Call<List<GetAllUserResponseItem>>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
-                Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, t.message.toString() +
+                        context.getString(R.string.warning_expired_cookie),
+                        Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: retrofit2.Call<List<GetAllUserResponseItem>>,
@@ -42,7 +45,8 @@ class AdminHomeViewModel  : ViewModel() {
                 } else {
                     _isLoading.value = false
                     val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
-                    val responseMessage = jsonObj.getString("message")
+                    val responseMessage = jsonObj.getString("message") +
+                            context.getString(R.string.warning_expired_cookie)
                     Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 }
             }
@@ -60,7 +64,9 @@ class AdminHomeViewModel  : ViewModel() {
             override fun onFailure(call: retrofit2.Call<DeleteResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
-                Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, t.message.toString() +
+                        context.getString(R.string.warning_expired_cookie),
+                        Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: retrofit2.Call<DeleteResponse>, response: retrofit2.Response<DeleteResponse>) {
@@ -72,7 +78,8 @@ class AdminHomeViewModel  : ViewModel() {
                 } else {
                     _isLoading.value = false
                     val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
-                    val responseMessage = jsonObj.getString("message")
+                    val responseMessage = jsonObj.getString("message") +
+                            context.getString(R.string.warning_expired_cookie)
                     Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 }
             }
@@ -86,7 +93,8 @@ class AdminHomeViewModel  : ViewModel() {
             override fun onFailure(call: retrofit2.Call<LogoutResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
-                Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, t.message.toString(),
+                        Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: retrofit2.Call<LogoutResponse>, response: retrofit2.Response<LogoutResponse>) {
