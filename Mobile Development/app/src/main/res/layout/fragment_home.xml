@@ -38,29 +38,27 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="100dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/round_background"
         android:contentDescription="@string/record_button_description"
-        android:scaleType="centerInside"
         android:elevation="10dp"
+        android:scaleType="centerInside"
         android:src="@drawable/recordbutton"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvWarn" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="100dp"
-        android:layout_marginBottom="32dp"
         android:background="@color/white"
         android:contentDescription="@string/upload_file_description"
         android:scaleType="centerInside"
         android:src="@drawable/fileupload"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvWarn" />
 
     <TextView
         android:id="@+id/textView"
@@ -93,17 +91,23 @@
     <TextView
         android:id="@+id/tvWarn"
         android:layout_width="268dp"
-        android:layout_height="125dp"
-        android:layout_marginBottom="40dp"
+        android:layout_height="165dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/border_back"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
-        android:maxLines="4"
+        android:maxLines="8"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
         android:textAlignment="center"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/imageButton2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Button
         android:id="@+id/button"
