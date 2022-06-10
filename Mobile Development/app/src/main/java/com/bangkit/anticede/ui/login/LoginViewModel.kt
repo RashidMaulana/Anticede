@@ -8,7 +8,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bangkit.anticede.BottomNavigationActivity
+import com.bangkit.anticede.R
 import com.bangkit.anticede.api.ApiConfig
+import com.bangkit.anticede.api.ApiConfigUser
 import com.bangkit.anticede.api.response.LoginResponse
 import org.json.JSONObject
 import retrofit2.Call
@@ -25,7 +27,7 @@ class LoginViewModel : ViewModel() {
 
     fun loginUser(context: Context, username : String, password : String){
         _isLoading.value = true
-        val client = ApiConfig.getApiService(context).loginUser(username, password)
+        val client = ApiConfigUser.getApiService(context).loginUser(username, password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,
@@ -42,7 +44,8 @@ class LoginViewModel : ViewModel() {
                 } else {
                     _isLoading.value = false
                     val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())
-                    responseMessage = jsonObj.getString("message")
+                    responseMessage = jsonObj.getString("message") +
+                            context.getString(R.string.warning_expired_cookie)
                     Toast.makeText(context, responseMessage, Toast.LENGTH_LONG).show()
                 }
             }
@@ -50,7 +53,9 @@ class LoginViewModel : ViewModel() {
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
-                Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, t.message.toString() +
+                        context.getString(R.string.warning_expired_cookie),
+                        Toast.LENGTH_SHORT).show()
             }
         })
     }

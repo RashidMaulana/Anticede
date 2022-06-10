@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.anticede.BuildConfig
-import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentDisclaimerBinding
 import com.bangkit.anticede.preferences.user.PreferenceFactory

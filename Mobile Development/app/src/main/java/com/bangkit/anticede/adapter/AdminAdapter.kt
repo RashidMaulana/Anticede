@@ -1,32 +1,35 @@
 package com.bangkit.anticede.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bangkit.anticede.R
+import com.bangkit.anticede.databinding.ItemRowUserBinding
 import com.bangkit.anticede.model.User
 
 class AdminAdapter(private val userList: ArrayList<User>): RecyclerView.Adapter<AdminAdapter.ListViewHolder>() {
-    private lateinit var onItemClickCallback: OnItemClickCallback
+    private var onItemClickCallback: OnItemClickCallback? = null
 
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var username: TextView = itemView.findViewById(R.id.tv_item_name)
-        var age: TextView = itemView.findViewById(R.id.tv_item_age)
+    inner class ListViewHolder(val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(user: User) {
+            binding.root.setOnClickListener {
+                onItemClickCallback?.onItemClicked(user)
+            }
+
+            binding.tvItemName.text = user.username
+            binding.tvItemAge.text = user.age
+        }
     }
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ) = ListViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.item_row_user, viewGroup, false))
+    ): ListViewHolder {
+        val itemBinding = ItemRowUserBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        return ListViewHolder(itemBinding)
+    }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (username, age) = userList[position]
-        holder.username.text = username
-        holder.age.text = age
-
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(userList[holder.adapterPosition]) }
+        holder.bind(userList[position])
     }
 
     override fun getItemCount(): Int = userList.size
