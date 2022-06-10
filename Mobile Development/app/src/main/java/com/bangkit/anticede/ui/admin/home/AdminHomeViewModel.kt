@@ -1,11 +1,14 @@
 package com.bangkit.anticede.ui.admin.home
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.preference.PreferenceManager
+import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.api.ApiConfig
 import com.bangkit.anticede.api.response.DeleteResponse
@@ -118,7 +121,12 @@ class AdminHomeViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     logoutMessage = response.body()?.message
+                    PreferenceManager.getDefaultSharedPreferences(context).edit().clear().apply()
                     Toast.makeText(context, logoutMessage, Toast.LENGTH_SHORT).show()
+                    val intentToMain = Intent(context, OnBoardingActivity::class.java)
+                    intentToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intentToMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intentToMain)
                 } else {
                     _isLoading.value = false
                     val jsonObj = JSONObject(response.errorBody()?.charStream()!!.readText())

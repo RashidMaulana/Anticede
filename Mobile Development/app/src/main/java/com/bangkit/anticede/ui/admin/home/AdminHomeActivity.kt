@@ -114,10 +114,7 @@ class AdminHomeActivity : AppCompatActivity() {
                 val adminLoginViewModel by viewModels<AdminHomeViewModel>()
                 adminLoginViewModel.logoutAdmin(this)
 
-                val intentToMain = Intent(this, OnBoardingActivity::class.java)
-                intentToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intentToMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intentToMain)
+
                 true
             }
             else -> {

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.preference.PreferenceManager
 import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.api.ApiConfigUser
@@ -72,6 +73,7 @@ class HomeViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     responseMessage.value = response.body()?.message
+                    PreferenceManager.getDefaultSharedPreferences(context).edit().clear().apply()
                     Toast.makeText(context, responseMessage.value, Toast.LENGTH_LONG).show()
                     val intentToOnboard = Intent(context, OnBoardingActivity::class.java)
                     intentToOnboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
