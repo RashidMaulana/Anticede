@@ -87,7 +87,7 @@ class AdminHomeActivity : AppCompatActivity() {
         var select: User? = null
 
         for(user in userList) {
-            if(user.username == id.username)
+            if(user.id == id.id)
                 select = user
         }
 

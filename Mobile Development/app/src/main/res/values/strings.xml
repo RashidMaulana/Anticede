@@ -41,6 +41,8 @@
     <string name="username_warning">Username kurang dari 6 karakter!</string>
     <string name="warning_empty_age">Umur tidak boleh kosong</string>
     <string name="warning_empty_password">Password tidak boleh kosong</string>
+    <string name="warning_expired_cookie">Silahkan logout lalu login kembali</string>
+    <string name="warning_empty_text">Text Masih Kosong</string>
     <string name="register_success">Register Success</string>
     <string name="register_success2">Akun anda berhasil dibuat, silahkan untuk melakukan login</string>
     <string name="yes">OK</string>
@@ -103,5 +105,20 @@
     <string name="confirmationTitle">Hapus Akun</string>
     <string name="confirmDelete">Anda yakin ingin menghapus akun ini?</string>
 
+    <string name="checkPornografi">Ucapan anda termasuk pornografi.</string>
+    <string name="resultPornografi">\n\nUcapan anda termasuk Pornografi dan melanggar pasal X ayat Z.</string>
 
+    <string name="checkSara">Ucapan anda termasuk SARA.</string>
+    <string name="resultSara">\n\nUcapan anda termasuk SARA dan melanggar pasal X ayat Z.</string>
+
+    <string name="checkPNamaBaik">Ucapan anda termasuk pencemaran nama baik.</string>
+    <string name="resultPNamaBaik">\n\nUcapan anda termasuk Pencemaran Nama Baik dan melanggar pasal X ayat Z.</string>
+
+    <string name="checkRadikal">Ucapan anda termasuk radikalisme.</string>
+    <string name="resultRadikal">\n\nUcapan anda termasuk Radikalisme dan melanggar pasal X ayat Z.</string>
+
+    <string name="checkNonToxic">Ucapan anda tidak mengandung kata-kata kotor :D.</string>
+    <string name="resultNonToxic">\n\nUcapan anda tidak mengandung kata-kata kotor :D</string>
+
+    <string name="resultDetectionError">Maaf terjadi kesalahan, coba untuk merekam kembali suara anda.</string>
 </resources>

@@ -10,6 +10,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -21,7 +22,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.bangkit.anticede.OnBoardingActivity
 import com.bangkit.anticede.R
 import com.bangkit.anticede.databinding.FragmentHomeBinding
 import com.bangkit.anticede.preferences.user.PreferenceFactory
@@ -121,6 +121,10 @@ class HomeFragment : Fragment() {
             showLoading(it)
         }
 
+        homeViewModel.responseMessage.observe(viewLifecycleOwner) {
+            showText(it)
+        }
+
         val pref = UserPreferences.getInstance(requireContext().dataStore)
         val prefView = ViewModelProvider(this, PreferenceFactory(pref)).get(
             PreferenceViewModel::class.java
@@ -129,6 +133,8 @@ class HomeFragment : Fragment() {
         prefView.getTokenUserSession().observe(viewLifecycleOwner){
             Log.d("HomeFragment", "token: $it")
         }
+
+        binding.tvWarn.movementMethod = ScrollingMovementMethod()
 
         val toolbar = binding.toolbar
         val activity = activity as AppCompatActivity?
@@ -296,6 +302,43 @@ class HomeFragment : Fragment() {
             binding.progressBar.visibility = View.VISIBLE
         } else {
             binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showText(text : String) {
+        val homeViewModel by viewModels<HomeViewModel>()
+
+        if(text == "null"){
+            binding.tvWarn.visibility = View.GONE
+        } else {
+            homeViewModel.voiceTranscription.observe(viewLifecycleOwner){
+                val transcript = it
+                when (text) {
+                    resources.getString(R.string.checkSara) -> {
+                        val sara = "\"$transcript\"" + resources.getString(R.string.resultSara)
+                        binding.tvWarn.text = sara
+                    }
+                    resources.getString(R.string.checkPNamaBaik) -> {
+                        val defamation = "\"$transcript\"" + resources.getString(R.string.resultPNamaBaik)
+                        binding.tvWarn.text = defamation
+                    }
+                    resources.getString(R.string.checkPornografi) -> {
+                        val pornographic = "\"$transcript\"" + resources.getString(R.string.resultPornografi)
+                        binding.tvWarn.text = pornographic
+                    }
+                    resources.getString(R.string.checkRadikal) -> {
+                        val radical = "\"$transcript\"" + resources.getString(R.string.resultRadikal)
+                        binding.tvWarn.text = radical
+                    }
+                    resources.getString(R.string.checkNonToxic) -> {
+                        val radical = "\"$transcript\"" + resources.getString(R.string.resultNonToxic)
+                        binding.tvWarn.text = radical
+                    }
+                    else -> {
+                        binding.tvWarn.text = resources.getString(R.string.resultDetectionError)
+                    }
+                }
+            }
         }
     }
 

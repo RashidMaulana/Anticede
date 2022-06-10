@@ -322,7 +322,6 @@ exports.logout = (req, res) => {
     return response;
 };
 
-// TODO
 const limits = {
     files: 1,
     fileSize: 1024 * 1024 * 5,
@@ -330,7 +329,6 @@ const limits = {
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype !== 'audio/x-aac') {
-        // cb(new Error('invalid file type: only .aac audio file is allowed.'));
         cb(new Error('Tipe file yang diperbolehkan hanya .aac!'));
     }
 
@@ -360,9 +358,9 @@ exports.uploadController = async (req, res) => {
 
         userInputString.forEach((element, index) => {
             if (wordlist.indexOf(userInputString[index]) === -1) {
-                servingInput.push(0);
+                servingInput.push(1);
             } else {
-                servingInput.push(wordlist.indexOf(userInputString[index]));
+                servingInput.push(wordlist.indexOf(userInputString[index]) + 1);
             }
         });
     };
@@ -372,7 +370,6 @@ exports.uploadController = async (req, res) => {
         axios.post('http://localhost:8501/v1/models/anticede:predict', {
             inputs: [servingInput],
         }).then((axiosRes) => {
-            console.log(`statusCode: ${axiosRes.status}`);
             console.log(axiosRes.data);
             let { outputs } = axiosRes.data;
             outputs = outputs.flat();
@@ -382,16 +379,19 @@ exports.uploadController = async (req, res) => {
             let responseMessage = null;
             switch (index) {
             case 0:
-                responseMessage = 'text is type A';
+                responseMessage = 'Ucapan anda termasuk pornografi.';
                 break;
             case 1:
-                responseMessage = 'text is type B';
+                responseMessage = 'Ucapan anda termasuk SARA.';
                 break;
             case 2:
-                responseMessage = 'text is type C';
+                responseMessage = 'Ucapan anda termasuk radikalisme.';
                 break;
             case 3:
-                responseMessage = 'text is type D';
+                responseMessage = 'Ucapan anda termasuk pencemaran nama baik.';
+                break;
+            case 4:
+                responseMessage = 'Ucapan anda tidak mengandung kata-kata kotor :D.';
                 break;
             default:
                 responseMessage = 'this is default response message';
@@ -402,7 +402,7 @@ exports.uploadController = async (req, res) => {
             });
         })
             .catch((error) => {
-                console.error(error);
+                res.status(500).send({ message: `error: ${error.message}` });
             });
     };
 
@@ -458,23 +458,12 @@ exports.uploadController = async (req, res) => {
         })
         .on('end', () => {
             console.log('audio processing finished!');
-            uploadFile().catch(console.error);
-            fs.emptyDir('./uploads');
-            fs.emptyDir('./processed-audio');
-            res.status(200).send({ message: 'Upload selesai!' });
+            uploadFile().catch((error) => {
+                res.status(500).send({ message: `error: ${error.message} ` });
+            }).finally(() => {
+                fs.emptyDir('./uploads');
+                fs.emptyDir('./processed-audio');
+            });
         })
         .save(processedFilePath);
-
-    // wait for audio process to finish
-    // const interval = 1000;
-
-    // const checkLocalFile = setInterval(() => {
-    //     const isExists = fs.existsSync(processedFilePath);
-    //     if (isExists) {
-    //         uploadFile().catch(console.error);
-    //         fs.emptyDir('./uploads');
-    //         fs.emptyDir('./processed-audio');
-    //         clearInterval(checkLocalFile);
-    //     }
-    // }, interval);
 };
