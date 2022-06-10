@@ -348,11 +348,6 @@ exports.postAudio = upload.single('audio');
 exports.uploadController = async (req, res) => {
     const { file } = req;
 
-<<<<<<< HEAD
-=======
-    // res.status(200).send({ message: 'Upload finished!' });
-
->>>>>>> 5728a747a5cb26a8b824c8948fe168816dc8f921
     const processedFile = `${nanoid()}.flac`;
     const processedFilePath = `./processed-audio/${processedFile}`;
 

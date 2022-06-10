@@ -29,7 +29,7 @@ const requireAuthAdmin = (req, res, next) => {
     // Check JWT exist & is verified
     jwt.verify(token, (process.env.SECRET_STRING_ADMIN), (err) => {
         if (err) {
-            return res.status(400).json({ message: 'Request ini hanya bisa diakses oleh user!' });
+            return res.status(400).json({ message: 'Request ini hanya bisa diakses oleh admin!' });
         }
         // console.log(decodedToken);
         return next();
