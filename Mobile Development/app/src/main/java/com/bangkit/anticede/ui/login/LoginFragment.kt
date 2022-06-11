@@ -12,7 +12,6 @@ import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -27,6 +26,7 @@ import com.bangkit.anticede.preferences.user.UserPreferences
 import com.bangkit.anticede.ui.admin.login.AdminLoginActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -60,13 +60,41 @@ class LoginFragment : Fragment() {
                 prefView.saveUserSession(it.userId)
             }
 
-            if(binding.editTextTextPassword.text.isNullOrBlank() || binding.editTextTextUserName.text.isNullOrBlank()){
-                Toast.makeText(requireContext(),getString(R.string.warning_empty_login), Toast.LENGTH_SHORT).show()
-            } else{
-                loginViewModel.loginUser(requireContext(), binding.editTextTextUserName.text.toString(), binding.editTextTextPassword.text.toString())
+            val username = binding.editTextTextUserName.text.trim().toString()
+            val password = binding.editTextTextPassword.text.trim().toString()
+
+            loginViewModel.getUser().observe(viewLifecycleOwner) {
+                prefView.saveUserSession(it.userId)
+            }
+
+            when {
+                username.isEmpty() -> {
+                    binding.editTextTextUserName.error = getString(R.string.empty_username_warning)
+                    binding.editTextTextUserName.requestFocus()
+                    return@setOnClickListener
+                }
+                username.length < 6 -> {
+                    binding.editTextTextUserName.error = getString(R.string.username_warning)
+                    binding.editTextTextUserName.requestFocus()
+                    return@setOnClickListener
+                }
+                password.isEmpty() -> {
+                    binding.editTextTextPassword.error =
+                        resources.getString(R.string.warning_empty_password)
+                    binding.editTextTextPassword.requestFocus()
+                    return@setOnClickListener
+                }
+                password.length < 6 -> {
+                    binding.editTextTextPassword.error = getString(R.string.username_warning)
+                    binding.editTextTextUserName.requestFocus()
+                    return@setOnClickListener
+                }
+                else -> {
+                    loginViewModel.loginUser(requireContext(), username, password)
+
+                }
             }
         }
-
         merubahText()
     }
 

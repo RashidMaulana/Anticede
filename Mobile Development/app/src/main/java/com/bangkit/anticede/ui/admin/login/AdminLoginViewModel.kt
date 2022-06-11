@@ -19,17 +19,20 @@ class AdminLoginViewModel : ViewModel() {
     val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun loginAdmin(context: Context, username : String, password : String){
+    fun loginAdmin(context: Context, username: String, password: String) {
         _isLoading.value = true
         val client = ApiConfig.getApiService(context).loginAdmin(username, password)
-        client.enqueue(object : retrofit2.Callback<AdminLoginResponse>{
+        client.enqueue(object : retrofit2.Callback<AdminLoginResponse> {
             override fun onFailure(call: retrofit2.Call<AdminLoginResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
                 Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
             }
 
-            override fun onResponse(call: retrofit2.Call<AdminLoginResponse>, response: retrofit2.Response<AdminLoginResponse>) {
+            override fun onResponse(
+                call: retrofit2.Call<AdminLoginResponse>,
+                response: retrofit2.Response<AdminLoginResponse>
+            ) {
                 if (response.isSuccessful) {
                     _isLoading.value = false
                     adminLogin.value = response.body()

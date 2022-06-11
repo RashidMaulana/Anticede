@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -130,7 +131,7 @@ class HomeFragment : Fragment() {
             PreferenceViewModel::class.java
         )
 
-        prefView.getTokenUserSession().observe(viewLifecycleOwner){
+        prefView.getTokenUserSession().observe(viewLifecycleOwner) {
             Log.d("HomeFragment", "token: $it")
         }
 
@@ -305,39 +306,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun showText(text : String) {
+    private fun showText(text: String) {
         val homeViewModel by viewModels<HomeViewModel>()
 
-        if(text == "null"){
+        if (text == "null") {
             binding.tvWarn.visibility = View.GONE
         } else {
-            homeViewModel.voiceTranscription.observe(viewLifecycleOwner){
-                val transcript = it
-                when (text) {
-                    resources.getString(R.string.checkSara) -> {
-                        val sara = "\"$transcript\"" + resources.getString(R.string.resultSara)
-                        binding.tvWarn.text = sara
-                    }
-                    resources.getString(R.string.checkPNamaBaik) -> {
-                        val defamation = "\"$transcript\"" + resources.getString(R.string.resultPNamaBaik)
-                        binding.tvWarn.text = defamation
-                    }
-                    resources.getString(R.string.checkPornografi) -> {
-                        val pornographic = "\"$transcript\"" + resources.getString(R.string.resultPornografi)
-                        binding.tvWarn.text = pornographic
-                    }
-                    resources.getString(R.string.checkRadikal) -> {
-                        val radical = "\"$transcript\"" + resources.getString(R.string.resultRadikal)
-                        binding.tvWarn.text = radical
-                    }
-                    resources.getString(R.string.checkNonToxic) -> {
-                        val radical = "\"$transcript\"" + resources.getString(R.string.resultNonToxic)
-                        binding.tvWarn.text = radical
-                    }
-                    else -> {
-                        binding.tvWarn.text = resources.getString(R.string.resultDetectionError)
-                    }
-                }
+            homeViewModel.voiceTranscription.observe(viewLifecycleOwner) {
+                val stats = "\"$it\"\n\n$text"
+                binding.tvWarn.text = stats
             }
         }
     }

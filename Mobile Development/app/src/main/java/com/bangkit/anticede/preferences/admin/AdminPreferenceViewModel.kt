@@ -6,7 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class AdminPreferenceViewModel (private val pref: AdminPreference) : ViewModel() {
+class AdminPreferenceViewModel(private val pref: AdminPreference) : ViewModel() {
 
     fun getTokenUserSession(): LiveData<String> {
         return pref.getTokenPreference().asLiveData()

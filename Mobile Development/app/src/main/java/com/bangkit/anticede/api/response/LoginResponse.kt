@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class LoginResponse(
 
-	@field:SerializedName("user_id")
-	val userId: String,
+    @field:SerializedName("user_id")
+    val userId: String,
 
-	@field:SerializedName("message")
-	val message: String
+    @field:SerializedName("message")
+    val message: String
 ) : Parcelable

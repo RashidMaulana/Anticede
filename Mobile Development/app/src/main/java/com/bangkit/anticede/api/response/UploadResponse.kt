@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UploadResponse(
 
-	@field:SerializedName("transcription")
-	val transcription: String,
+    @field:SerializedName("transcription")
+    val transcription: String,
 
-	@field:SerializedName("message")
-	val message: String
+    @field:SerializedName("message")
+    val message: String
 ) : Parcelable

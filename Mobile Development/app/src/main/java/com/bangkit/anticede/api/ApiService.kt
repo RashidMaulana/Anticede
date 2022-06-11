@@ -36,13 +36,13 @@ interface ApiService {
     ): Call<AdminLoginResponse>
 
     @GET("members")
-    fun getMembers() : Call<List<GetAllUserResponseItem>>
+    fun getMembers(): Call<List<GetAllUserResponseItem>>
 
     @DELETE("members/{id}")
     fun deleteUser(
         @Path("id") id: String
-    ): Call <DeleteResponse>
+    ): Call<DeleteResponse>
 
     @POST("logout")
-    fun logout() : Call<LogoutResponse>
+    fun logout(): Call<LogoutResponse>
 }

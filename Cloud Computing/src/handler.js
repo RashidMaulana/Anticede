@@ -342,6 +342,8 @@ const upload = multer({ storage, limits, fileFilter });
 exports.postAudio = upload.single('audio');
 
 exports.uploadController = async (req, res) => {
+    const tfServingUrl = process.env.TFSERVING_URL;
+
     const { file } = req;
 
     const processedFile = `${nanoid()}.flac`;
@@ -365,7 +367,7 @@ exports.uploadController = async (req, res) => {
 
     // post to tf-serving
     const postToModel = () => {
-        axios.post('http://localhost:8501/v1/models/anticede:predict', {
+        axios.post(`${tfServingUrl}/v1/models/anticede:predict`, {
             inputs: [servingInput],
         }).then((axiosRes) => {
             console.log(axiosRes.data);
@@ -406,7 +408,7 @@ exports.uploadController = async (req, res) => {
 
     // speech-to-text
     const speechClient = new speech.SpeechClient();
-    const bucketName = 'anticede-speech-test';
+    const bucketName = 'anticede';
 
     const speechToText = async () => {
         const gcsUri = `gs://${bucketName}/audio/${processedFile}`;
