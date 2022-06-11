@@ -1,0 +1,1627 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Anticede API",
+    "description": "This documentation aims to explain the flow of Anticede available APIs.\n\nProject GitHub repo: [https://github.com/RashidMaulana/Anticede/](https://github.com/RashidMaulana/Anticede/)\n",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://anticede.app"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "jwtAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "jwt"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Members Auth",
+      "description": "Members Auth means that the APIs listed below are accessible if the user is logged in as **member**."
+    },
+    {
+      "name": "Admin Auth",
+      "description": "Admin Auth means that the APIs listed below are accessible if the user is logged in as **admin**."
+    },
+    {
+      "name": "Log In",
+      "description": "The APIs listed below is used to **log in**."
+    },
+    {
+      "name": "Registration",
+      "description": "The API listed below is used to **sign up** as a new member."
+    },
+    {
+      "name": "Log Out",
+      "description": "The API listed below is used to **log out** from the application."
+    },
+    {
+      "name": "Upload Audio",
+      "description": "The API listed below is used to **upload audio** to the server by using POST request."
+    }
+  ],
+  "paths": {
+    "/members/{id}": {
+      "get": {
+        "tags": [
+          "Members Auth"
+        ],
+        "summary": "Get member by ID",
+        "description": "This API is used to **get** a member data by ID by using GET request.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the user to get."
+          }
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"a7-/RLo710DEoiMnWD+f0T+yN/nKFE\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "3b2cc7741ea54d8adbf194a75c158815;o=1"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:32:06 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "167"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "data found",
+                  "data": {
+                    "id": "zSK-N3Bn34FtTu2Z",
+                    "username": "testingrashid",
+                    "password": "$2b$10$RhZ8oTvbRAgJZ4j/9sQs1ufEoRAL7hWpYThOsQab1aHk7Yv0q/il6",
+                    "age": 88
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "60"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"3c-fXtmZsOInRj5h2egmk+t06fPLdI\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:44:31 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "User dengan id tersebut tidak dapat ditemukan!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Members Auth"
+        ],
+        "summary": "Edit member by ID",
+        "description": "This API is used to **update** a member data by ID by using PUT request.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the user to edit."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "username": "Shiroky123",
+                  "password": "Shiroky123",
+                  "age": 25
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"39-hCXbGjrnLBDuqIb96gfpg01v634\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "315171685daa9936f909edb434a59cb6"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:32:56 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "57"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "example-0": {
+                    "summary": "Edit Data Success",
+                    "value": {
+                      "message": "Update data sukses!",
+                      "id": "zSK-N3Bn34FtTu2Z"
+                    }
+                  },
+                  "example-1": {
+                    "summary": "No Attribute Can be Null",
+                    "value": {
+                      "status": "Gagal",
+                      "message": "Gagal  mengedit informasi user, username diperlukan!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "60"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"3c-fXtmZsOInRj5h2egmk+t06fPLdI\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:46:18 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "User dengan id tersebut tidak dapat ditemukan!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members/": {
+      "get": {
+        "tags": [
+          "Admin Auth"
+        ],
+        "summary": "Get all members",
+        "description": "This API is used to **get all** members by using GET request.",
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"720-cUZZm77r1uET3wBcWLU45YDGuhU\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "ac0d9c2c2c820b5378b1faba2025fe3b;o=1"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:25:33 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "1824"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": [
+                  {
+                    "id": "aITpS0xU-8RljYHq",
+                    "username": "anticede",
+                    "password": "$2b$10$c35FzRveDP4QzSceNOpBru5yxctAHHqhaQ.BgaorBuWyHmFSMCCwK",
+                    "age": 90
+                  },
+                  {
+                    "id": "jXQFbajr1QN5-jBy",
+                    "username": "vasant2",
+                    "password": "$2b$10$dsbdh8H16n6k6xf4iI4uP.9C6M0mvlE03zPyA//XFqhxOWabqsUSe",
+                    "age": 99
+                  },
+                  {
+                    "id": "k8myHZQI2HG3WNc4",
+                    "username": "rashidreg",
+                    "password": "$2b$10$9x43leiVDwaxDyG.Hh8xfOfTlP0aMi/dyMCUx1ybb19sWSSgGRpkG",
+                    "age": 12
+                  },
+                  {
+                    "id": "LQErg8z-csR_-_Wk",
+                    "username": "gamma5",
+                    "password": "$2b$10$mlh30voo58BzOf78iAx4V..Z2PJIsfpcxMcSeskxBheZ2LMEq0dke",
+                    "age": 99
+                  },
+                  {
+                    "id": "LwmyijwIGz1TSBoG",
+                    "username": "alpha5",
+                    "password": "$2b$10$cxooSt1gC4/sTd3v/O0jfuwkc2/91EGnIz1UQsFb3QbRqr/0wiVna",
+                    "age": 65
+                  },
+                  {
+                    "id": "PMANdt9Hb1lK4VGq",
+                    "username": "Shiroky",
+                    "password": "$2b$10$yDR/btXi0z/G2oXUbN.hqes0x.itnnnTGU9XVsjouqVBBAsXu.rCy",
+                    "age": 25
+                  },
+                  {
+                    "id": "qvuU3J1rn9miXxCP",
+                    "username": "delta5",
+                    "password": "$2b$10$4zNgM16HrdfNsLAk0O1PZOIjJ0K6642lCyOgGWcQnQomztABKxFDW",
+                    "age": 30
+                  },
+                  {
+                    "id": "sej8Ap-ALT82WStE",
+                    "username": "rashid",
+                    "password": "$2b$10$z81OCouQ4U0JZHAW4sprD.J0582CRawVxYqtsXSbXMbolmDEBPkq2",
+                    "age": 21
+                  },
+                  {
+                    "id": "tNCs115yKk4pumKh",
+                    "username": "charlie5",
+                    "password": "$2b$10$Tjq7r4U8b65m1nFjAwMwX.M/aoSAgmVrKD9DCN3cZsIaCs31sD6r2",
+                    "age": 22
+                  },
+                  {
+                    "id": "UePTNXEl9xsW5ER6",
+                    "username": "hans63",
+                    "password": "$2b$10$H1L20ERzUvUnPOKaMp89N.kvealzodD.gTvy1sd/kkezl8NDt4fdS",
+                    "age": 55
+                  },
+                  {
+                    "id": "uI3e6uPzzxlfrIjj",
+                    "username": "brian5",
+                    "password": "$2b$10$9UIMKeQsW17XAKZfMX6TFORjbpAUhhRlewqFuQBKbhrzo5p7hVCZm",
+                    "age": 22
+                  },
+                  {
+                    "id": "V-NW8umQedX1oGNp",
+                    "username": "denmark",
+                    "password": "$2b$10$s57DXfA08a.L6zDA8cJEJOHSVqirv6lQmV1LH2mnpEOfhDvRW1K7W",
+                    "age": 44
+                  },
+                  {
+                    "id": "vWw6k1foNbzl4N2z",
+                    "username": "vasant",
+                    "password": "$2b$10$sht6z5EreB/KVPTs8TrWSeVh.oTkdPfoZzJB/GRvNH4eS3kxmuYS2",
+                    "age": 99
+                  },
+                  {
+                    "id": "zSK-N3Bn34FtTu2Z",
+                    "username": "testingrashid",
+                    "password": "$2b$10$RhZ8oTvbRAgJZ4j/9sQs1ufEoRAL7hWpYThOsQab1aHk7Yv0q/il6",
+                    "age": 88
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "56"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"38-6gA9R3AD/M70x5Wxe8e4AfDc9UY\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:47:13 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "example-0": {
+                    "summary": "Request Declined",
+                    "value": {
+                      "message": "Request ini hanya bisa diakses oleh admin!"
+                    }
+                  },
+                  "example-1": {
+                    "summary": "No Token Detected",
+                    "value": {
+                      "message": "Token tidak terdeteksi, harap login terlebih dahulu!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members/{userId}": {
+      "delete": {
+        "tags": [
+          "Admin Auth"
+        ],
+        "summary": "Delete member by ID",
+        "description": "This API is used to **delete** a member data by ID by using DEL request.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the user to delete."
+          }
+        ],
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"d3-Avku2zc/3YX0QW/JPdiEvVDdZcc\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "47889bc415a0149f2c928ef2bb0a8a30;o=1"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:26:31 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "211"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "User dengan data di bawah ini sukses dihapus dari database!",
+                  "data": [
+                    {
+                      "id": "LwmyijwIGz1TSBoG",
+                      "username": "alpha5",
+                      "password": "$2b$10$cxooSt1gC4/sTd3v/O0jfuwkc2/91EGnIz1UQsFb3QbRqr/0wiVna",
+                      "age": 65
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "56"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"38-6gA9R3AD/M70x5Wxe8e4AfDc9UY\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:47:26 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Request ini hanya bisa diakses oleh admin!"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "54"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"36-tUo7EboHG8+SoqvkbcbNLCr3J9M\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:54:47 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "User dengan id tersebut tidak ditemukan."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Log In"
+        ],
+        "summary": "Member Login",
+        "description": "Request the server to **log in** as a **member** and get the cookies by using POST request.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "username": "dummyaccount",
+                  "password": "dummyaccount"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "set-cookie": {
+                "schema": {
+                  "type": "string",
+                  "example": "jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlZLQlNaNl9fdzBpSWZxMEQiLCJpYXQiOjE2NTQ5NTc4NjYsImV4cCI6MTY1NTIxNzA2Nn0.zWm2yMAwg14OUO-soo3S7WCjdb7mWCIAjWbpGjj78DM; Max-Age=259200; Path=/; Expires=Tue, 14 Jun 2022 14:31:06 GMT"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"35-r3Vj+fT6zsq1+aXmqG7mhBPkC8E\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "4c9f23b9a54867efd1e9250fdff901d0;o=1"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:31:06 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "53"
+                }
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:31:06 GMT"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Logged in!",
+                  "user_id": "VKBSZ6__w0iIfq0D"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "39"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"27-rhd0mRcH8/w+HVqQ0CRf/InRN/8\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:43:49 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "example-0": {
+                    "summary": "Wrong Username",
+                    "value": {
+                      "message": "Username tidak ditemukan!"
+                    }
+                  },
+                  "example-1": {
+                    "summary": "Wrong Password",
+                    "value": {
+                      "message": "Password salah!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login_admin": {
+      "post": {
+        "tags": [
+          "Log In"
+        ],
+        "summary": "Admin Login",
+        "description": "Request the server to **log in** as an **admin** and get the cookies by using POST request.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "username": "dummyadmin",
+                  "password": "dummyadmin"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "set-cookie": {
+                "schema": {
+                  "type": "string",
+                  "example": "jwt=eyJhbtciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFWYm1rbjE1UGlsVVpaNlgiLCJpYXQiOjE2NTQ5NTc0OTusImV4cCI6MTY1NTIxNjY5Mn0.FOpH9gZFbkPmj51kXLtWHViiXXVekL_2cxcVMIM0Qf8; Max-Age=259200; Path=/; Expires=Tue, 14 Jun 2022 14:24:52 GMT"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"43-vxxI3nXbl/DSTqibNCvZYddVSMs\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "84ce5ef2e8e19ef53c41c13f4623a37e"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:24:52 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "67"
+                }
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:24:52 GMT"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Logged in sebagai admin!",
+                  "user_id": "AVbmkn15PilUZZ6X"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "29"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"1d-hXFx/bbe4w50x1TIyvrh6584iuo\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:52:48 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "example-0": {
+                    "summary": "Wrong Password",
+                    "value": {
+                      "message": "Password salah!"
+                    }
+                  },
+                  "example-1": {
+                    "summary": "Wrong Username",
+                    "value": {
+                      "message": "Username tidak ditemukan!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members": {
+      "post": {
+        "tags": [
+          "Registration"
+        ],
+        "summary": "Post new member",
+        "description": "User are **signing up** as a **new member** by using POST request to server.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "username": "dummyaccount",
+                  "password": "dummyaccount",
+                  "age": 23
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"66-goRjXYpOvVtUu1NY8cfKyUBjeYw\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "c9ba89ec7abb7b7e10fd0a11e1d572bb;o=1"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:28:56 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "102"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "example-0": {
+                    "summary": "Sign-Up Success",
+                    "value": {
+                      "status": "Sukses",
+                      "message": "Member baru berhasil ditambahkan.",
+                      "data": {
+                        "userId": "VKBSZ6__w0iIfq0D"
+                      }
+                    }
+                  },
+                  "example-1": {
+                    "summary": "Sign-Up Error. 6 Characters Needed",
+                    "value": {
+                      "status": "Gagal",
+                      "message": "Panjang username harus 6 karakter atau lebih!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "54"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"36-cPLKSiyfgMbEaQEic85DcGkWth4\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:52:01 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "User with that username is already exist"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "Log Out"
+        ],
+        "summary": "Log Out",
+        "description": "User are requesting to **log out** from the application and the cookies will also be deleted by using POST request.",
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "set-cookie": {
+                "schema": {
+                  "type": "string",
+                  "example": "jwt=; Max-Age=0; Path=/; Expires=Sat, 11 Jun 2022 14:27:21 GMT"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"1c-abDQYOuUPs2nSfLeIvzkhpox+i0\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "ea083153d03cbe693f409f73b3109490;o=1"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:27:21 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "28"
+                }
+              },
+              "Expires": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:27:21 GMT"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "private"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Logout sukses!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/upload_audio": {
+      "post": {
+        "tags": [
+          "Upload Audio"
+        ],
+        "summary": "Upload Audio",
+        "description": "User are requesting with POST request to **upload** their attached **audio file** to the server.",
+        "security": [
+          {
+            "jwtAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "audio": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-powered-by": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "access-control-allow-origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "content-type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"ab-++/M4t32f68TJueAymc9UeyEXM0\""
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "37d30cb1cda00a4a8ede945ec8f3600e;o=1"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 14:36:43 GMT"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "Google Frontend"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "171"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "transcription": "Orang itu sekarang jahat sekali",
+                  "message": "Ucapan anda termasuk pencemaran nama baik dan memungkinkan untuk melanggar KUHP pasal 310 ayat 1."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string",
+                  "example": "*"
+                }
+              },
+              "Content-Type": {
+                "schema": {
+                  "type": "string",
+                  "example": "application/json; charset=utf-8"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer",
+                  "example": "66"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"42-jGTKvMSoDsvpmRQcdxs+Qz+NZyw\""
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 11 Jun 2022 13:55:34 GMT"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Keep-Alive": {
+                "schema": {
+                  "type": "string",
+                  "example": "timeout=5"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "message": "Anda tidak memiliki hak untuk mengakses request ini!"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
