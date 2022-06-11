@@ -145,7 +145,7 @@ exports.editMemberById = async (req, res) => {
         response.status(400);
         return response;
     }
-    if (age === '') {
+    if (age === undefined) {
         const response = res.send({
             status: 'Gagal',
             message: 'Gagal  mengedit informasi user, age diperlukan!',
