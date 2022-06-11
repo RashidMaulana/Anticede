@@ -1,6 +1,8 @@
 # Anticede
 Bangkit Capstone Project C22-PS229
 
+![logo app](https://github.com/RashidMaulana/Anticede/blob/main/Logo.jpg)
+
 # Overview
 Anticede is a voice profanity detection app to detect user's voice recorded sound. It can detect whether te sound sent is a hate speech, ethnical harassment, radicalism, and curse or swear words. By making this application, we want to make everyone aware that profanity can shape ourselves. Therefore, we included the law violation too.
 
