@@ -848,7 +848,7 @@
         "tags": [
           "Log In"
         ],
-        "summary": "Member Login",
+        "summary": "Member login",
         "description": "Request the server to **log in** as a **member** and get the cookies by using POST request.",
         "requestBody": {
           "content": {
@@ -1028,7 +1028,7 @@
         "tags": [
           "Log In"
         ],
-        "summary": "Admin Login",
+        "summary": "Admin login",
         "description": "Request the server to **log in** as an **admin** and get the cookies by using POST request.",
         "requestBody": {
           "content": {
@@ -1209,7 +1209,7 @@
           "Registration"
         ],
         "summary": "Post new member",
-        "description": "User are **signing up** as a **new member** by using POST request to server.",
+        "description": "User can **sign up** as a **new member** by sending POST request to server.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1375,8 +1375,8 @@
         "tags": [
           "Log Out"
         ],
-        "summary": "Log Out",
-        "description": "User are requesting to **log out** from the application and the cookies will also be deleted by using POST request.",
+        "summary": "Log out",
+        "description": "User can request to **log out** from the application and the cookies will also be deleted by using POST request.",
         "requestBody": {
           "content": {}
         },
@@ -1470,8 +1470,8 @@
         "tags": [
           "Upload Audio"
         ],
-        "summary": "Upload Audio",
-        "description": "User are requesting with POST request to **upload** their attached **audio file** to the server.",
+        "summary": "Upload audio",
+        "description": "User can send POST request to **upload** their attached **audio file** to the server.",
         "security": [
           {
             "jwtAuth": []

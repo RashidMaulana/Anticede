@@ -21,7 +21,3 @@ app.use(routes);
 app.listen(PORT, () => {
     console.log(`Server running on port: http://localhost:${PORT}/`);
 });
-
-app.get('/', (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/19923907/Uz5Nisvw');
-});
