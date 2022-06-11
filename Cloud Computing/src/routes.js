@@ -1,7 +1,8 @@
 const express = require('express');
-const { requireAuthMember, requireAuthAdmin } = require('./middlewares');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../docs/anticede-openapi.json');
 
-const routes = express.Router();
+const { requireAuthMember, requireAuthAdmin } = require('./middlewares');
 
 const {
     getAllMember,
@@ -15,6 +16,11 @@ const {
     uploadController,
     loginAdmin,
 } = require('./handler');
+
+const routes = express.Router();
+
+routes.use('/', swaggerUi.serve);
+routes.get('/', swaggerUi.setup(swaggerDocument));
 
 routes.get('/members', requireAuthAdmin, getAllMember);
 routes.post('/members', signupPost);

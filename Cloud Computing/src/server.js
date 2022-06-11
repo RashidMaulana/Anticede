@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-// const swaggerUi = require('swagger-ui-express');
 const routes = require('./routes');
 
 const app = express();
@@ -20,8 +19,4 @@ app.use(routes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port: http://localhost:${PORT}/`);
-});
-
-app.get('/', (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/19923907/Uz5Nisvw');
 });
