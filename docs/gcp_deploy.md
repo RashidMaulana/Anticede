@@ -140,7 +140,7 @@ gcloud artifacts repositories create anticede \
 
 This part is mostly manual because we didn't configure a CI/CD pipeline.
 
-### Build and push TensorFlow Serving Docker image to Artifact Registry
+### TensorFlow Serving
 
 - In local
 
@@ -183,7 +183,7 @@ This part is mostly manual because we didn't configure a CI/CD pipeline.
         gcloud run services describe anticede-model --platform managed --region $REGION --format 'value(status.url)'
         ```
 
-### Build and push Node.js server Docker image to Artifact Registry
+### Node.js web server
 
 - In local
 
