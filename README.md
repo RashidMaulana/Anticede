@@ -65,6 +65,8 @@ You can check the API documentation on [https://anticede.app](https://anticede.a
 If the link above doesn't work, check [here](https://app.swaggerhub.com/apis-docs/tsanva/anticede-api/1.0.0)
 or [here](https://documenter.getpostman.com/view/19923907/Uz5Nisvw).
 
+We also made a JSON document using OpenAPI Specification, check [here](https://github.com/RashidMaulana/Anticede/blob/main/Cloud%20Computing/docs/anticede-openapi.json).
+
 ## Future Developments
 
 TBD
