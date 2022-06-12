@@ -17,6 +17,9 @@ Anticede is a voice profanity detection app to detect user's voice recorded soun
 |    Rashid Adani Maulana Jatri      |  A7214F1985   |      Mobile Development     |
 |    Rio Risqi Akbar Herlambang      |  A2214F1986   |      Mobile Development     |
 
+# Tech Stack
+![Tech Stack](https://raw.githubusercontent.com/RashidMaulana/Anticede/main/docs/tech%20stack.png)
+
 
 # Library used for Android Application
 1. [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
