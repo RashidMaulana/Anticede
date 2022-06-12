@@ -30,6 +30,12 @@ Anticede is a voice profanity detection app to detect user's voice recorded soun
 6. [Shared Preferences](https://developer.android.com/reference/android/content/SharedPreferences)
 7. [Datastore](https://developer.android.com/topic/libraries/architecture/datastore)
 
+# Library used for Backend System
+1. [Express JS](https://expressjs.com)
+2. [Mysql2](https://www.npmjs.com/package/mysql2)
+3. [Nanoid](https://www.npmjs.com/package/nanoid)
+4. [@google-cloud/storage](https://www.npmjs.com/package/@google-cloud/storage)
+
 # How to use our app
 You can install the APK to your phone by downloading it from [here](https://drive.google.com/file/d/1yUKNMWpcXSTz37HKpPKrEpuRATCeW-8l/view?usp=sharing)
 
