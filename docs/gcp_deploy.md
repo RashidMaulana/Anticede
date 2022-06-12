@@ -10,6 +10,10 @@ GCP services used:
 - Cloud Storage
 - Speech-to-Text API
 
+## GCP architecture
+
+![GCP architecture](gcp-architecture.png)
+
 ## Set environment variables and enable services
 
 ```bash

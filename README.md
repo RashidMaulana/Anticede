@@ -1,27 +1,30 @@
 # Anticede
+
 Bangkit Capstone Project C22-PS229
 
 ![logo app](https://github.com/RashidMaulana/Anticede/blob/main/Logo.jpg)
 
-# Overview
+## Overview
+
 Anticede is a voice profanity detection app to detect user's voice recorded sound. It can detect whether te sound sent is a hate speech, ethnical harassment, radicalism, and curse or swear words. By making this application, we want to make everyone aware that profanity can shape ourselves. Therefore, we included the law violation too.
 
-# Project Team Member
+## Project Team Member
 
-|          Nama         | Bangkit-ID |       Path       |
-|:---------------------:|:----------:|:----------------:|
-|  Muchammad Alfi Karom  |  M7012F1248   | Machine Learning |
-|  Martina Steffany Darmawan  |  M2002G0035   | Machine Learning |
-|   Vasant Paradissa Nuno Sakti    |  C2214F1987   |  Cloud Computing |
-|  Muhammad Zaky Al Fatih  |  C2012F1251   |  Cloud Computing |
-|    Rashid Adani Maulana Jatri      |  A7214F1985   |      Mobile Development     |
-|    Rio Risqi Akbar Herlambang      |  A2214F1986   |      Mobile Development     |
+|            Nama             | Bangkit-ID |        Path        |
+| :-------------------------: | :--------: | :----------------: |
+|    Muchammad Alfi Karom     | M7012F1248 |  Machine Learning  |
+|  Martina Steffany Darmawan  | M2002G0035 |  Machine Learning  |
+| Vasant Paradissa Nuno Sakti | C2214F1987 |  Cloud Computing   |
+|   Muhammad Zaky Al Fatih    | C2012F1251 |  Cloud Computing   |
+| Rashid Adani Maulana Jatri  | A7214F1985 | Mobile Development |
+| Rio Risqi Akbar Herlambang  | A2214F1986 | Mobile Development |
 
-# Tech Stack
+## Tech Stack
+
 ![Tech Stack](https://raw.githubusercontent.com/RashidMaulana/Anticede/main/docs/tech%20stack.png)
 
+## Library used for Android Application
 
-# Library used for Android Application
 1. [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
 2. [Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle)
 3. [Glide](https://github.com/bumptech/glide)
@@ -30,7 +33,8 @@ Anticede is a voice profanity detection app to detect user's voice recorded soun
 6. [Shared Preferences](https://developer.android.com/reference/android/content/SharedPreferences)
 7. [Datastore](https://developer.android.com/topic/libraries/architecture/datastore)
 
-# Library used for Backend System
+## Library used for Back-end System (Node.js with NPM)
+
 1. [Express JS](https://expressjs.com)
 2. [Mysql2](https://www.npmjs.com/package/mysql2)
 3. [Nanoid](https://www.npmjs.com/package/nanoid)
@@ -46,8 +50,21 @@ Anticede is a voice profanity detection app to detect user's voice recorded soun
 13. [Cors](https://www.npmjs.com/package/cors)
 14. [Cookie-parser](https://www.npmjs.com/package/cookie-parser)
 
-# How to use our app
-You can install the APK to your phone by downloading it from [here](https://drive.google.com/file/d/1yUKNMWpcXSTz37HKpPKrEpuRATCeW-8l/view?usp=sharing)
+## How to use our app
 
-# Future Developments
-**TBD**
+You can install the APK to your phone by downloading it from [here](https://drive.google.com/file/d/1yUKNMWpcXSTz37HKpPKrEpuRATCeW-8l/view?usp=sharing).
+
+## Deploying to GCP
+
+For documentation on deploying to GCP, check this [document](https://github.com/RashidMaulana/Anticede/blob/main/docs/gcp_deploy.md).
+
+## API Documentation
+
+You can check the API documentation on [https://anticede.app](https://anticede.app)
+
+If the link above doesn't work, check [here](https://app.swaggerhub.com/apis-docs/tsanva/anticede-api/1.0.0)
+or [here](https://documenter.getpostman.com/view/19923907/Uz5Nisvw).
+
+## Future Developments
+
+TBD
