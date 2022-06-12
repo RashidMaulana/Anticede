@@ -35,6 +35,16 @@ Anticede is a voice profanity detection app to detect user's voice recorded soun
 2. [Mysql2](https://www.npmjs.com/package/mysql2)
 3. [Nanoid](https://www.npmjs.com/package/nanoid)
 4. [@google-cloud/storage](https://www.npmjs.com/package/@google-cloud/storage)
+5. [fs-extra](https://www.npmjs.com/package/fs-extra)
+6. [Multer](https://www.npmjs.com/package/multer)
+7. [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken)
+8. [Bcrypt](https://www.npmjs.com/package/bcrypt)
+9. [Fluent-ffmpeg](https://www.npmjs.com/package/fluent-ffmpeg)
+10. [@google-cloud/speeh](https://www.npmjs.com/package/@google-cloud/speech)
+11. [Axios](https://www.npmjs.com/package/axios)
+12. [Dotenv](https://www.npmjs.com/package/dotenv)
+13. [Cors](https://www.npmjs.com/package/cors)
+14. [Cookie-parser](https://www.npmjs.com/package/cookie-parser)
 
 # How to use our app
 You can install the APK to your phone by downloading it from [here](https://drive.google.com/file/d/1yUKNMWpcXSTz37HKpPKrEpuRATCeW-8l/view?usp=sharing)
