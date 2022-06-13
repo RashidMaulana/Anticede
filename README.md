@@ -50,6 +50,9 @@ Anticede is a voice profanity detection app to detect user's voice recorded soun
 13. [Cors](https://www.npmjs.com/package/cors)
 14. [Cookie-parser](https://www.npmjs.com/package/cookie-parser)
 
+## Prototype
+You can see it [here](https://www.figma.com/file/wkuYbKCbiLsCX4wgSEYPcF/Anticede?node-id=6%3A3)
+
 ## How to use our app
 
 You can install the APK to your phone by downloading it from [here](https://drive.google.com/file/d/1yUKNMWpcXSTz37HKpPKrEpuRATCeW-8l/view?usp=sharing).
